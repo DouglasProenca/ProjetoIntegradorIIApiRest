@@ -14,7 +14,7 @@ public class User implements Serializable{
 
 	    private static final long serialVersionUID = 1L;
 	    @Id
-		private int id;
+		private Long  id;
 	    private String mail;
 	    @Column(name = "mailPassword")
 	    private String mailPassword;
@@ -27,7 +27,7 @@ public class User implements Serializable{
 	    public User() {
 	    }
 
-	    public User(int id, String mail, String mailPassword, String user, String password, Date date) {
+	    public User(Long  id, String mail, String mailPassword, String user, String password, Date date) {
 	        this.id = id;
 	        this.mail = mail;
 	        this.mailPassword = mailPassword;
@@ -40,11 +40,11 @@ public class User implements Serializable{
 	        return data;
 	    }
 
-	    public int getId() {
+	    public Long  getId() {
 	        return id;
 	    }
 
-	    public void setId(int id) {
+	    public void setId(Long  id) {
 	        this.id = id;
 	    }
 
