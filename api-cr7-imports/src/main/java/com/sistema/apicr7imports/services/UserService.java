@@ -1,10 +1,8 @@
 package com.sistema.apicr7imports.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.domain.User;
@@ -16,17 +14,32 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repo;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return repo.findAll();
 	}
-	
-	public User findbyId(String id){
+
+	public User findbyId(String id) {
 		User user = repo.findById(Long.valueOf(id)).orElse(null);
-		if(user == null) {
+		if (user == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado");
 		}
 		return user;
 	}
-	
+
+	public void delete(String id) {
+		findbyId(id);
+		repo.deleteById(Long.valueOf(id));
+	}
+
+	public User update(User obj) {
+		User newObj = findbyId(String.valueOf(obj.getId()));
+		updateData(newObj,obj);
+		return repo.save(obj);
+	}
+
+	private void updateData(User newObj, User obj) {
+		newObj.setUser(obj.getUser());
+		newObj.setMail(obj.getMail());
+	}
 }

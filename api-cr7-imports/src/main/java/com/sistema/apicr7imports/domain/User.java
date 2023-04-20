@@ -27,17 +27,21 @@ public class User implements Serializable{
 	    public User() {
 	    }
 
-	    public User(Long  id, String mail, String mailPassword, String user, String password, Date date) {
+	    public User(Long  id, String mail, String mailPassword, String user, String password, Date data) {
 	        this.id = id;
 	        this.mail = mail;
 	        this.mailPassword = mailPassword;
 	        this.user = user;
 	        this.password = password;
-	        this.data = date;
+	        this.data = data;
 	    }
 
-	    public Date getDate() {
+	    public Date getData() {
 	        return data;
+	    }
+	    
+	    public void setData(Date data) {
+	        this.data = data;
 	    }
 
 	    public Long  getId() {
