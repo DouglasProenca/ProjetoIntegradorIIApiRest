@@ -31,6 +31,11 @@ public class UserService {
 		findbyId(id);
 		repo.deleteById(Long.valueOf(id));
 	}
+	
+	public User insert(User obj) {
+		repo.insert(obj);
+		return obj;
+	}
 
 	public User update(User obj) {
 		User newObj = findbyId(String.valueOf(obj.getId()));
