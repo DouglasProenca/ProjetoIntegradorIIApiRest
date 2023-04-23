@@ -26,6 +26,14 @@ public class UserService {
 		}
 		return user;
 	}
+	
+	public List<User> findbyUser(String text) {
+		List<User> user = repo.findByUser(text);
+		if (user.size() == 0) {
+			throw new ObjectNotFoundException("Objeto não encontrado");
+		}
+		return user;
+	}
 
 	public void delete(String id) {
 		findbyId(id);
