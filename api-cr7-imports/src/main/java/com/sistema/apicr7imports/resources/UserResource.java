@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.User;
+import com.sistema.apicr7imports.resources.util.CryptoUtils;
 import com.sistema.apicr7imports.resources.util.URL;
 import com.sistema.apicr7imports.services.UserService;
 
@@ -45,6 +46,7 @@ public class UserResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody User obj) {
+		obj.setPassword(CryptoUtils.gerarhashSenha(obj.getPassword()));
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
