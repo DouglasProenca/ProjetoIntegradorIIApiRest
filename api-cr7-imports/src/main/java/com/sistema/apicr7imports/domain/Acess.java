@@ -9,7 +9,6 @@ public class Acess {
 	@Id
 	private Long  id;
 	private String user;
-	private String acess;
 	private String token;
 
 	public Acess() {
@@ -17,10 +16,10 @@ public class Acess {
 	}
 	
 
-	public Acess(String user, String acess, String token) {
+	public Acess(Long id,String user, String acess, String token) {
 		super();
+		this.id = id;
 		this.user = user;
-		this.acess = acess;
 		this.token = token;
 	}
 
@@ -31,14 +30,6 @@ public class Acess {
 
 	public void setUser(String user) {
 		this.user = user;
-	}
-
-	public String getAcess() {
-		return acess;
-	}
-
-	public void setAcess(String acess) {
-		this.acess = acess;
 	}
 
 	public String getToken() {

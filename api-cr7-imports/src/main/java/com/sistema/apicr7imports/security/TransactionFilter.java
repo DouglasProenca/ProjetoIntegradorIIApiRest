@@ -19,13 +19,10 @@ import com.sistema.apicr7imports.services.exception.ObjectNotFoundException;
 @Order(1)
 public class TransactionFilter implements Filter {
 
-	// private final static Logger LOG =
-	// Logger.getLogger(RequestFilter.class.getName());
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if (!((HttpServletRequest) request).getRequestURI().equals("/acesso/login")) {
+		if (!((HttpServletRequest) request).getRequestURI().equals("/apicr7imports/acesso/login")) {
 			AcessService autenticator = AcessService.getInstance();
 			HttpServletRequest req = (HttpServletRequest) request;
 			System.out.println(((HttpServletRequest) request).getRequestURI());
