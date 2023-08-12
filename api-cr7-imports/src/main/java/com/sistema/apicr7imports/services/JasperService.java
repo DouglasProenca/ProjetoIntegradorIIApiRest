@@ -26,9 +26,9 @@ public class JasperService {
 		Connection conn = repo.getDatabaseConnection();
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
-
+		
 		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("jasper/").toString());
-
+		
 		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

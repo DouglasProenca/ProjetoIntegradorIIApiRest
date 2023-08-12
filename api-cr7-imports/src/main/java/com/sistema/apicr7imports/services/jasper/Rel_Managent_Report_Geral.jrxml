@@ -33,9 +33,7 @@
 	<columnHeader>
 		<band height="602">
 			<subreport>
-				<reportElement x="0" y="17" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="0" y="17" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -52,9 +50,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Marcas.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="0" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
 				<subreportParameter name="data2">
 					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -62,9 +58,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Produto.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="434" width="555" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="0" y="434" width="555" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
 				<subreportParameter name="data2">
 					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -80,9 +74,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Tabela.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="281" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="281" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
 				<subreportParameter name="data2">
 					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
 				</subreportParameter>

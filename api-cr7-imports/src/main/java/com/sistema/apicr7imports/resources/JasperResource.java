@@ -25,7 +25,7 @@ public class JasperResource {
 	@Autowired
 	private JasperService service;
 
-	@GetMapping(value = "/download-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> downloadPDF() throws SQLException, JRException {
 		byte[] pdfBytes = service.GerarManagentmentReport();
 
