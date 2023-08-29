@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistema.apicr7imports.domain.Country;
 import com.sistema.apicr7imports.services.CountryService;
 
+import io.swagger.annotations.Api;
+
 @RestController
+@Api(value = "Paises")
 @RequestMapping(value = "/country")
 public class CountryResource {
 	

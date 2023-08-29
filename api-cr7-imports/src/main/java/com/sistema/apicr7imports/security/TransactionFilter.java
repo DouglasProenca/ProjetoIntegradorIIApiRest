@@ -22,10 +22,12 @@ public class TransactionFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		if (!((HttpServletRequest) request).getRequestURI().equals("/apicr7imports/acesso/login")) {
+		if (!(((HttpServletRequest) request).getRequestURI().equals("/apicr7imports/acesso/login") || ((HttpServletRequest) request).getRequestURI().contains("swagger") 
+				 || ((HttpServletRequest) request).getRequestURI().contains("api-docs"))) {
 			AcessService autenticator = AcessService.getInstance();
 			HttpServletRequest req = (HttpServletRequest) request;
 
+			System.out.println(((HttpServletRequest) request).getRequestURI());
 			if (req.getHeader("key") == null || req.getHeader("key").equals("")) {
 				throw new InvalidJwtAuthenticationException("Falta de Token no header");
 			}
