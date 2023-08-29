@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.resources.exception;
+package com.sistema.apicr7imports.exception.handeler;
 
 import java.io.Serializable;
 

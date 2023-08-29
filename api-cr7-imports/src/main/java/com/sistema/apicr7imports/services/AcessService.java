@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.domain.Acess;
 import com.sistema.apicr7imports.domain.User;
+import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.repository.UserRepository;
 import com.sistema.apicr7imports.resources.util.CryptoUtils;
-import com.sistema.apicr7imports.services.exception.ObjectNotFoundException;
+
 
 @Service
 public class AcessService {
@@ -33,7 +34,7 @@ public class AcessService {
 		return autenticator;
 	}
 
-	public Acess login(String user, String password) throws ObjectNotFoundException {
+	public Acess login(String user, String password) throws InvalidJwtAuthenticationException {
 		
 		List<User> usarios = repo.findByUser(user);
 		
@@ -45,7 +46,7 @@ public class AcessService {
 				return new Acess(usarios.get(0).getId(),user, password, auth);
 			}
 		}
-		throw new ObjectNotFoundException("Falha no Login");
+		throw new InvalidJwtAuthenticationException("Falha no Login");
 	}
 
 	public boolean isTokenValid(String token) {
@@ -55,11 +56,11 @@ public class AcessService {
 		return false;
 	}
 
-	public void logout(String token) throws ObjectNotFoundException {
+	public void logout(String token) throws InvalidJwtAuthenticationException {
 		if (isTokenValid(token)) {
 				tokens.remove(token);
 				return;
 		}
-		throw new ObjectNotFoundException("Falha no Login");
+		throw new InvalidJwtAuthenticationException("Falha no Login");
 	}
 }

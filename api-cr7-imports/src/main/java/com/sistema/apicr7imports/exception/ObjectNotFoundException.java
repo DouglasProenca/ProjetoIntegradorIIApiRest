@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.services.exception;
+package com.sistema.apicr7imports.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
 

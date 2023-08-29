@@ -13,7 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.sistema.apicr7imports.services.AcessService;
-import com.sistema.apicr7imports.services.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 
 @Component
 @Order(1)
@@ -25,14 +25,13 @@ public class TransactionFilter implements Filter {
 		if (!((HttpServletRequest) request).getRequestURI().equals("/apicr7imports/acesso/login")) {
 			AcessService autenticator = AcessService.getInstance();
 			HttpServletRequest req = (HttpServletRequest) request;
-			System.out.println(((HttpServletRequest) request).getRequestURI());
 
 			if (req.getHeader("key") == null || req.getHeader("key").equals("")) {
-				throw new ObjectNotFoundException("Falta de Token no header");
+				throw new InvalidJwtAuthenticationException("Falta de Token no header");
 			}
 
 			if (!autenticator.isTokenValid(req.getHeader("key"))) {
-				throw new ObjectNotFoundException("Token Errado");
+				throw new InvalidJwtAuthenticationException("Token Errado");
 			}
 		}
 		chain.doFilter(request, response);

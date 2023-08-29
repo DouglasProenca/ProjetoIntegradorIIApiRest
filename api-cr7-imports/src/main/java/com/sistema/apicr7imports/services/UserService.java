@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.repository.UserRepository;
-import com.sistema.apicr7imports.services.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
