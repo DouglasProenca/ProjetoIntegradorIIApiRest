@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.services.JasperService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.sf.jasperreports.engine.JRException;
 
+@Api(tags = "Relatorios Da Aplicação") 
 @RestController
 @RequestMapping(value = "/jasper")
 public class JasperResource {
@@ -25,6 +28,7 @@ public class JasperResource {
 	@Autowired
 	private JasperService service;
 
+	@ApiOperation(value = "Relatorio Gerencial")
 	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> downloadPDF() throws SQLException, JRException {
 		byte[] pdfBytes = service.GerarManagentmentReport();
@@ -37,6 +41,7 @@ public class JasperResource {
 		return ResponseEntity.ok().headers(headers).body(pdfBytes);
 	}
 
+	@ApiOperation(value = "Relatorio Analitico")
 	@GetMapping(value = "/analyticalReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> analitycalPDF(@RequestParam(value = "dateini", defaultValue = "") String ini_date,
 			@RequestParam(value = "datefin", defaultValue = "") String fin_date) throws JRException, SQLException, ParseException {
@@ -50,6 +55,7 @@ public class JasperResource {
 		return ResponseEntity.ok().headers(headers).body(pdfBytes);
 	}
 	
+	@ApiOperation(value = "Relatorio Sintetico")
 	@GetMapping(value = "/syntheticReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> syntheticPDF(@RequestParam(value = "dateini", defaultValue = "") String ini_date,
 			@RequestParam(value = "datefin", defaultValue = "") String fin_date) throws JRException, SQLException, ParseException {

@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistema.apicr7imports.domain.Acess;
 import com.sistema.apicr7imports.services.AcessService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "Autenticação Da Aplicação") 
 @RestController
 @RequestMapping(value = "/acesso")
 public class AcessResource {
@@ -19,13 +23,15 @@ public class AcessResource {
 	@Autowired
 	private AcessService service;
 
+	@ApiOperation(value = "Autenticar usuario e retornar um token de acesso")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Object> login(@FormParam("user") String user, @FormParam("password") String password) {
+	public ResponseEntity<Object> login(@FormParam("username") String username, @FormParam("password") String password) {
 
-		Acess acess = service.login(user, password);
+		Acess acess = service.login(username, password);
 		return ResponseEntity.ok().body(acess);
 	}
 
+	@ApiOperation(value = "Deslogar Usuario da aplicação")
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public ResponseEntity<Object> logout(@RequestHeader("key") String key) {
 

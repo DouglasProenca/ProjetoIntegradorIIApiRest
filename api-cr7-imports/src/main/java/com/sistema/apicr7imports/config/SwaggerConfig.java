@@ -29,11 +29,11 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfo(
-				"RESTful API With Spring Boot 2.1.3", 
-				"Some description about your API.",
+				"API Rest CR7 Imports", 
+				"",
 				"v1",
-				"Terms Of Service Url",
-				new Contact("Leandro Costa", "www.erudio.com.br", "your_email@gmail.com"),
+				"",
+				new Contact("Douglas Proença", "https://www.linkedin.com/in/douglas-proen%C3%A7a/", "douglasp.r.desouza@gmail.com"),
 				"License of API", "License of URL", Collections.emptyList());
 	}
 }

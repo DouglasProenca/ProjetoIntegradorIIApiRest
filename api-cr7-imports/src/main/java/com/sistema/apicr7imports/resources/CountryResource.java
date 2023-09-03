@@ -13,21 +13,24 @@ import com.sistema.apicr7imports.domain.Country;
 import com.sistema.apicr7imports.services.CountryService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value = "Paises")
+@Api(tags = "Paises") 
 @RequestMapping(value = "/country")
 public class CountryResource {
 	
 	@Autowired
 	private CountryService service;
 
+	@ApiOperation(value = "Trazer todos os paises cadastrados")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Country>> findAll() {
 		List<Country> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@ApiOperation(value = "Trazer pais cadastrado por id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Country> findById(@PathVariable String id) {
 		Country country = service.findbyId(id);
