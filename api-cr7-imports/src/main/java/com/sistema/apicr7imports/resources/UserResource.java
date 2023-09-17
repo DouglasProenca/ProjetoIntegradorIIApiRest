@@ -32,12 +32,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@RequestMapping(value = "/searchuser", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/searchuser", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> findByUser(@RequestParam(value= "user", defaultValue = "") String user) {
 		user = URL.decodeParam(user);
 		List<User> list = service.findbyUser(user);
 		return ResponseEntity.ok().body(list);
-	}
+	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id) {

@@ -27,9 +27,9 @@ public class UserService {
 		return user;
 	}
 	
-	public List<User> findbyUser(String text) {
-		List<User> user = repo.findByUser(text);
-		if (user.size() == 0) {
+	public User findbyUser(String text) {
+		User user = repo.findByUsername(text);
+		if (user == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado");
 		}
 		return user;
@@ -52,7 +52,7 @@ public class UserService {
 	}
 
 	private void updateData(User newObj, User obj) {
-		newObj.setUser(obj.getUser());
+		newObj.setUserName(obj.getUsername());
 		newObj.setMail(obj.getMail());
 	}
 }
