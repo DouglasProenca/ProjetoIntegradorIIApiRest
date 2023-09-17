@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.resources.util.CodeString;
 import com.sistema.apicr7imports.resources.util.CryptoUtils;
-import com.sistema.apicr7imports.resources.util.URL;
 import com.sistema.apicr7imports.services.UserService;
 
 @RestController
