@@ -56,7 +56,7 @@ public class CategoryResource {
 	@ApiOperation(value = "Insere uma Categoria")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Category category) {
-		category = service.insert(category);
+		service.insert(category);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(category.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -64,7 +64,7 @@ public class CategoryResource {
 	@ApiOperation(value = "Atualiza uma Categoria")
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Category category) {
-		category = service.update(category);
+		service.update(category);
 		return ResponseEntity.noContent().build();
 	}
 }

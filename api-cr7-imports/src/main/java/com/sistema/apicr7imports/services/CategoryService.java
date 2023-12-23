@@ -51,9 +51,9 @@ public class CategoryService {
 		return repo.save(obj);
 	}
 
-	private void updateData(Category newObj, Category obj) {
-		newObj.setCategoria(obj.getCategoria());
-		newObj.setData(obj.getData());
-		newObj.setUser(obj.getUser());
+	private void updateData(Category newObj, Category category) {
+		newObj.setCategoria(category.getCategoria());
+		newObj.setData(category.getData());
+		newObj.setUser(category.getUser());
 	}
 }
