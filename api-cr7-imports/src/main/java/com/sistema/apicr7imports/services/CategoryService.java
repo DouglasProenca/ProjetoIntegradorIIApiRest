@@ -19,11 +19,41 @@ public class CategoryService {
 		return repo.findAll();
 	}
 
-	public Category findbyId(String id) {
+	public Category findbyId(Long id) {
 		Category country = repo.findById(Long.valueOf(id)).orElse(null);
 		if (country == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado");
 		}
 		return country;
+	}
+
+	public List<Category> findbyCategory(String text) {
+		List<Category> category = repo.findByCategoria(text);
+		if (category == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado");
+		}
+		return category;
+	}
+
+	public void delete(Long id) {
+		findbyId(id);
+		repo.deleteById(id);
+	}
+	
+	public Category insert(Category obj) {
+		repo.insert(obj);
+		return obj;
+	}
+	
+	public Category update(Category obj) {
+		Category newObj = findbyId(Long.valueOf(obj.getId()));
+		updateData(newObj,obj);
+		return repo.save(obj);
+	}
+
+	private void updateData(Category newObj, Category obj) {
+		newObj.setCategoria(obj.getCategoria());
+		newObj.setData(obj.getData());
+		newObj.setUser(obj.getUser());
 	}
 }

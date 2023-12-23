@@ -23,6 +23,13 @@ public class UserDTO implements Serializable {
 	@Column(name = "[user]", unique = true)
 	private String userName;
 	
+    public UserDTO() {
+     
+    }	
+	
+    public UserDTO(int id) {
+        this.id = Long.valueOf(id);
+    }
 	
 	public Long getId() {
 		return id;
