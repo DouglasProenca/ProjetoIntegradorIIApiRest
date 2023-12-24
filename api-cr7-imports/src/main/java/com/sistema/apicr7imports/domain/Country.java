@@ -31,6 +31,10 @@ public class Country implements Serializable {
 		this.nameEng = nameEng;
 	}
 
+	public Country(int id) {
+		this.id = Long.valueOf(id);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -41,5 +45,5 @@ public class Country implements Serializable {
 
 	public String getNameEng() {
 		return nameEng;
-	}	
+	}
 }
