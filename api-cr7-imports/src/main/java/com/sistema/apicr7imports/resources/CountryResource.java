@@ -31,7 +31,7 @@ public class CountryResource {
 
 	@ApiOperation(value = "Pais cadastrado por id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Country> findById(@PathVariable String id) {
+	public ResponseEntity<Country> findById(@PathVariable long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 }

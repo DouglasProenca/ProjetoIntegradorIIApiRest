@@ -19,8 +19,8 @@ public class CountryService {
 		return repo.findAll();
 	}
 
-	public Country findbyId(String id) {
-		Country country = repo.findById(Long.valueOf(id)).orElse(null);
+	public Country findbyId(long id) {
+		Country country = repo.findById(id).orElse(null);
 		if (country == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado");
 		}
