@@ -1,7 +1,5 @@
 package com.sistema.apicr7imports.exception.handeler;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import com.sistema.apicr7imports.exception.ExceptionResponse;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
@@ -19,22 +16,28 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 @RestController
 public class ResourceExceptionHandler {
 	
+	@ExceptionHandler(Exception.class)
+	public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception e, WebRequest request) {
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		ExceptionResponse err = new ExceptionResponse(System.currentTimeMillis(), status.value(), "Erro Geral",
+				e.getMessage(), request.getDescription(false));
+		return ResponseEntity.status(status).body(err);
+	}
+	
 	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+	public final ResponseEntity<ExceptionResponse> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Não encotrado",
+		ExceptionResponse err = new ExceptionResponse(System.currentTimeMillis(), status.value(), "Não encotrado",
 				e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 
 	}
 	
 	@ExceptionHandler(InvalidJwtAuthenticationException.class)
-	public final ResponseEntity<ExceptionResponse> invalidJwtAuthenticationException(Exception ex, WebRequest request) {
-		ExceptionResponse exceptionResponse = 
-				new ExceptionResponse(
-						new Date(),
-						ex.getMessage(),
-						request.getDescription(false));
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	public final ResponseEntity<ExceptionResponse> invalidJwtAuthenticationException(Exception ex, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		ExceptionResponse err = new ExceptionResponse(System.currentTimeMillis(), status.value(), "Erro de Acesso",
+				ex.getMessage(), request.getRequestURI());
+		return new ResponseEntity<>(err, status);
 	}
 }
