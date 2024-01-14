@@ -14,6 +14,7 @@ import com.sistema.apicr7imports.services.CountryService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(tags = "Paises")
@@ -24,14 +25,14 @@ public class CountryResource {
 	private CountryService service;
 
 	@ApiOperation(value = "Todos os paises cadastrados")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<Country>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@ApiOperation(value = "Pais cadastrado por id")
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Country> findById(@PathVariable long id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<Country> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true) @PathVariable long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 }

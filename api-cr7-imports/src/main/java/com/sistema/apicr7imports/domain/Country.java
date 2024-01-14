@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "rc_pais")
 public class Country implements Serializable {
@@ -15,6 +17,7 @@ public class Country implements Serializable {
 	@Id
 	@Column(name = "paisId")
 	private Long id;
+	@ApiModelProperty(value = "Nome do Pais em Português.")
 	@Column(name = "paisNome")
 	private String namePort;
 	@Column(name = "paisName")

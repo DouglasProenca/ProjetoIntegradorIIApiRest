@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import com.sistema.apicr7imports.domain.Dto.UserDTO;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "rc_marca")
 public class Brand implements Serializable {
@@ -22,6 +24,7 @@ public class Brand implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
+	@ApiModelProperty(value = "Nome da marca")
 	@Column(name = "marca")
 	private String marca;
 	

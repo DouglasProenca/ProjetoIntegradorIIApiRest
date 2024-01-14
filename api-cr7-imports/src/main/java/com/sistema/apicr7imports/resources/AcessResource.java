@@ -8,21 +8,22 @@ import javax.ws.rs.FormParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
-import com.sistema.apicr7imports.repository.UserRepository;
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
+import com.sistema.apicr7imports.services.AcessService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Api(tags = "Autenticação Da Aplicação")
 @RestController
@@ -30,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 public class AcessResource {
 
 	@Autowired
-	UserRepository repository;
+	AcessService service;
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -39,28 +40,27 @@ public class AcessResource {
 	JwtTokenProvider tokenProvider;
 
 	@ApiOperation(value = "Autenticar usuario e retornar um token de acesso")
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Object> login(@FormParam("username") String username,@FormParam("password") String password) {
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
+		})
+	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<Object> login(
+			@ApiParam(value = "Usuário de Cadastro", required = true) @FormParam("username") String username,
+			@ApiParam(value = "Senha de Cadastro", required = true) @FormParam("password") String password) {
 		try {
 
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-			User user = repository.findByUsername(username);
+			User user = (User) service.loadUserByUsername(username);
 
-			String token = "";
+			String token = tokenProvider.createToken(username, user.getRoles());
 
-			if (user != null) {
-				token = tokenProvider.createToken(username, user.getRoles());
-			} else {
-				throw new UsernameNotFoundException("Username " + username + " not found!");
-			}
-
-			Map<String, String> model = new HashMap<String,String>();
+			Map<String, String> model = new HashMap<String, String>();
 			model.put("username", username);
 			model.put("token", token);
 			return ResponseEntity.ok().body(model);
 		} catch (AuthenticationException e) {
-			e.printStackTrace();
 			throw new InvalidJwtAuthenticationException("Usuário ou senha Inválidos!");
 		}
 	}
