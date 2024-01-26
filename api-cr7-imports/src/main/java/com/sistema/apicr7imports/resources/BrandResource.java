@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.Brand;
+import com.sistema.apicr7imports.domain.VO.BrandVO;
 import com.sistema.apicr7imports.resources.util.URL;
 import com.sistema.apicr7imports.services.BrandService;
 
@@ -31,7 +32,7 @@ public class BrandResource {
 
 	@ApiOperation(value = "Trazer todos os tipos de marcas cadastradas")
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Brand>> findAll() {
+	public ResponseEntity<List<BrandVO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
@@ -43,7 +44,7 @@ public class BrandResource {
 
 	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
 	@RequestMapping(value = "/searchbrand", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Brand>> findByCategoria(@RequestParam(value = "marca") String brand) {
+	public ResponseEntity<List<BrandVO>> findByCategoria(@RequestParam(value = "marca") String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(URL.decodeParam(brand)));
 	}
 
