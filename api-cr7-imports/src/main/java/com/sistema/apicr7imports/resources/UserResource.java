@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.sistema.apicr7imports.bcrypt.CryptoUtils;
+import com.sistema.apicr7imports.codeString.CodeString;
 import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.resources.util.CodeString;
-import com.sistema.apicr7imports.resources.util.CryptoUtils;
 import com.sistema.apicr7imports.services.UserService;
 
 @RestController
