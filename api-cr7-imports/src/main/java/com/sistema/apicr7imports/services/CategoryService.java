@@ -12,43 +12,40 @@ import com.sistema.apicr7imports.repository.CategoryRepository;
 @Service
 public class CategoryService {
 
-	@Autowired
-	private CategoryRepository repo;
+	@Autowired 
+	private CategoryRepository categoryRepository;
 
 	public List<Category> findAll() {
-		return repo.findAll();
+		return categoryRepository.findAll();
 	}
 
 	public Category findbyId(Long id) {
-		Category country = repo.findById(Long.valueOf(id)).orElse(null);
-		if (country == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
-		return country;
+		return categoryRepository.findById(Long.valueOf(id))
+				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
 	}
 
 	public List<Category> findbyCategory(String text) {
-		List<Category> category = repo.findByCategoria(text);
-		if (category == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
+		List<Category> category = categoryRepository.findByCategoria(text);
+		if (category.isEmpty()) {
+			throw new ObjectNotFoundException("Categoria não encontrada!");
 		}
 		return category;
 	}
 
 	public void delete(Long id) {
 		findbyId(id);
-		repo.deleteById(id);
+		categoryRepository.deleteById(id);
 	}
-	
+
 	public Category insert(Category obj) {
-		repo.insert(obj);
+		categoryRepository.insert(obj);
 		return obj;
 	}
-	
+
 	public Category update(Category obj) {
 		Category newObj = findbyId(Long.valueOf(obj.getId()));
-		updateData(newObj,obj);
-		return repo.save(obj);
+		updateData(newObj, obj);
+		return categoryRepository.save(obj);
 	}
 
 	private void updateData(Category newObj, Category category) {
