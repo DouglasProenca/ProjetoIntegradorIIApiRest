@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.resources.util;
+package com.sistema.apicr7imports.bcrypt;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
