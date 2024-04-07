@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.bcrypt.CryptoUtils;
 import com.sistema.apicr7imports.codeString.CodeString;
 import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.services.UserService;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -45,7 +46,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody User obj) {
-		obj.setPassword(CryptoUtils.gerarhashSenha(obj.getPassword()));
+		obj.setPassword(BCrypt.withDefaults().hashToString(8, obj.getPassword().toCharArray()));
 		obj.setMailPassword(CodeString.codeString(obj.getMailPassword()));
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -55,7 +56,7 @@ public class UserController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody User obj, @PathVariable String id) {
 		obj.setId(Long.valueOf(id));
-		obj.setPassword(CryptoUtils.gerarhashSenha(obj.getPassword()));
+		obj.setPassword(BCrypt.withDefaults().hashToString(8, obj.getPassword().toCharArray()));
 		obj.setMailPassword(CodeString.codeString(obj.getMailPassword()));
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
