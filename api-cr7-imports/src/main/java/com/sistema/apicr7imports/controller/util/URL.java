@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.resources.util;
+package com.sistema.apicr7imports.controller.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

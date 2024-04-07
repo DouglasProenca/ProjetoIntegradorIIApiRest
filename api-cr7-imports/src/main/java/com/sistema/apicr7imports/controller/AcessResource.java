@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.resources;
+package com.sistema.apicr7imports.controller;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.resources;
+package com.sistema.apicr7imports.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.Category;
-import com.sistema.apicr7imports.resources.util.URL;
+import com.sistema.apicr7imports.controller.util.URL;
 import com.sistema.apicr7imports.services.CategoryService;
 
 import io.swagger.annotations.Api;
