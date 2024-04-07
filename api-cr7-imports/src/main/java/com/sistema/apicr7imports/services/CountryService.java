@@ -13,17 +13,13 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 public class CountryService {
 
 	@Autowired
-	private CountryRepository repo;
+	private CountryRepository countryRepository;
 
 	public List<Country> findAll() {
-		return repo.findAll();
+		return countryRepository.findAll();
 	}
 
 	public Country findbyId(long id) {
-		Country country = repo.findById(id).orElse(null);
-		if (country == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
-		return country;
+		return countryRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pais não encontrado"));
 	}
 }
