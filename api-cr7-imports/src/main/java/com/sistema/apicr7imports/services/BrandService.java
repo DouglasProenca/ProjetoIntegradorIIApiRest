@@ -15,48 +15,45 @@ import com.sistema.apicr7imports.repository.BrandRepository;
 public class BrandService {
 
 	@Autowired
-	BrandRepository repository;
-	
+	BrandRepository brandRepository;
+
 	public List<BrandVO> findAll() {
-		return DozerMapper.parseListObject(repository.findAll(), BrandVO.class);
+		return DozerMapper.parseListObject(brandRepository.findAll(), BrandVO.class);
 	}
-	
+
 	public Brand findbyId(Long id) {
-		Brand brand = repository.findById(Long.valueOf(id)).orElse(null);
-		if (brand == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
-		return brand;
+		return brandRepository.findById(Long.valueOf(id))
+				.orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
 	}
 
 	public List<BrandVO> findbyBrand(String text) {
-		List<Brand> brandList = repository.findByMarca(text);
-		if (brandList == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
+		List<Brand> brandList = brandRepository.findByMarca(text);
+		if (brandList.isEmpty()) {
+			throw new ObjectNotFoundException("Marca não encontrada!");
 		}
 		return DozerMapper.parseListObject(brandList, BrandVO.class);
 	}
 
 	public void delete(Long id) {
-		findbyId(id);
-		repository.deleteById(id);
-	}
-	
-	public Brand insert(Brand obj) {
-		repository.insert(obj);
-		return obj;
-	}
-	
-	public Brand update(Brand obj) {
-		Brand newObj = findbyId(Long.valueOf(obj.getId()));
-		updateData(newObj,obj);
-		return repository.save(obj);
+		this.findbyId(id);
+		brandRepository.deleteById(id);
 	}
 
-	private void updateData(Brand newObj, Brand brand) {
-		newObj.setMarca(brand.getMarca());
-		newObj.setCountry(brand.getCountry());
-		newObj.setData(brand.getData());
-		newObj.setUser(brand.getUser());
+	public Brand insert(Brand obj) {
+		brandRepository.save(obj);
+		return obj;
+	}
+
+	public Brand update(Brand obj) {
+		Brand newObj = findbyId(Long.valueOf(obj.getId()));
+		updateData(newObj, obj);
+		return brandRepository.save(newObj);
+	}
+
+	private void updateData(Brand newBrand, Brand brand) {
+		newBrand.setMarca(brand.getMarca());
+		newBrand.setCountry(brand.getCountry());
+		newBrand.setData(brand.getData());
+		newBrand.setUser(brand.getUser());
 	}
 }
