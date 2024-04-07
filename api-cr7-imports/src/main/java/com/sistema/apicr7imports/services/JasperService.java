@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -25,9 +26,9 @@ public class JasperService {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		Connection conn = repo.getDatabaseConnection();
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
+		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Managent_Report_Geral.jasper");
 		
-		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("jasper/").toString());
+		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("/jasper/").toString());
 		
 		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
 
@@ -41,7 +42,7 @@ public class JasperService {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		Connection conn = repo.getDatabaseConnection();
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("jasper/Rel_Analytical_Report_Geral.jasper");
+		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Analytical_Report_Geral.jasper");
 
 		parametros.put("data1", initial_date);
 		parametros.put("data2", final_date);
@@ -58,7 +59,7 @@ public class JasperService {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		Connection conn = repo.getDatabaseConnection();
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("jasper/Rel_Synthetic_Report_Geral.jasper");
+		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Synthetic_Report_Geral.jasper");
 
 		parametros.put("data1", initial_date);
 		parametros.put("data2", final_date);
