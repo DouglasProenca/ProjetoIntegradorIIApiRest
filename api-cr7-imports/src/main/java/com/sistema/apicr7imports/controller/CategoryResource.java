@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.Category;
-import com.sistema.apicr7imports.controller.util.URL;
 import com.sistema.apicr7imports.services.CategoryService;
 
 import io.swagger.annotations.Api;
@@ -43,7 +42,7 @@ public class CategoryResource {
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
 	@RequestMapping(value = "/searchcategory", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> findByCategoria(@RequestParam(value= "categoria") String categoria) {
-		return ResponseEntity.ok().body(service.findbyCategory(URL.decodeParam(categoria)));
+		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
 	
 	@ApiOperation(value = "Deleta uma Categoria")
