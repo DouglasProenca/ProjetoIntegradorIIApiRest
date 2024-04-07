@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 150470
+    
+  flyway:
+    baselineOnMigrate: true
+    
+  jpa:
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        dialect: org.hibernate.dialect.SQLServerDialect.
+        show-sql: false
+        security:
+        jwt:
+        token:
+        expire-length: 3600000
+        secret-key: secret
+        
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    servlet:
+      path: /apicr7imports
