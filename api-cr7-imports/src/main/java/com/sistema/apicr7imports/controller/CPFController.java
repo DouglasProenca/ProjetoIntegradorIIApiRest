@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @Api(tags = "CPF")
 @RequestMapping(value = "/private/cpf")
-public class CPFResource {
+public class CPFController {
 
 	@Autowired
 	CPFService cpfService;

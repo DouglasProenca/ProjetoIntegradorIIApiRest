@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Autenticação Da Aplicação")
 @RestController
 @RequestMapping(value = "/acesso")
-public class AcessResource {
+public class AcessController {
 
 	@Autowired
 	AcessService service;

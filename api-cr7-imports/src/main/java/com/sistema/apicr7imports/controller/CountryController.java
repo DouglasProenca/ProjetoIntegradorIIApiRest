@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @Api(tags = "Paises")
 @RequestMapping(value = "/private/country")
-public class CountryResource {
+public class CountryController {
 
 	@Autowired
 	private CountryService service;

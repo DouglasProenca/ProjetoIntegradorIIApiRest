@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Tipos de Roupas") 
 @RequestMapping(value = "/private/category")
-public class CategoryResource {
+public class CategoryController {
 	
 	@Autowired
 	private CategoryService service;

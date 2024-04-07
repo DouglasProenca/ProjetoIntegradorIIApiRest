@@ -23,7 +23,7 @@ import net.sf.jasperreports.engine.JRException;
 @Api(tags = "Relatorios Da Aplicação") 
 @RestController
 @RequestMapping(value = "/private/jasper")
-public class JasperResource {
+public class JasperController {
 
 	@Autowired
 	private JasperService service;

@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @Api(tags = "Tipos de Marcas")
 @RequestMapping(value = "/private/brand")
-public class BrandResource {
+public class BrandController {
 
 	@Autowired
 	private BrandService service;
