@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.services;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.repository.CategoryRepository;
+import com.sistema.apicr7imports.services.excel.Excel;
+
+import jxl.write.WriteException;
 
 @Service
 public class CategoryService {
@@ -52,5 +57,14 @@ public class CategoryService {
 		newObj.setCategoria(category.getCategoria());
 		newObj.setData(category.getData());
 		newObj.setUser(category.getUser());
+	}
+	
+	public byte[] createExcel() throws WriteException, IOException {
+		
+		Excel excel = new Excel();
+		ArrayList<?> dados = (ArrayList<?>) findAll();
+		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};
+		
+		return excel.exportExcel(dados, "Categorias", titulos).toByteArray();
 	}
 }

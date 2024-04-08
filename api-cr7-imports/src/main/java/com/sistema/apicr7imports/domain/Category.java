@@ -69,4 +69,9 @@ public class Category implements Serializable{
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return id + ";" + categoria + ";" + data + ";" + user.getUserName();
+	}
 }
