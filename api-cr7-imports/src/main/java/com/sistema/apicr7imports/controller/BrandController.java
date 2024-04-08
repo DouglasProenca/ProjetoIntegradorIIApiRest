@@ -1,9 +1,13 @@
 package com.sistema.apicr7imports.controller;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +24,7 @@ import com.sistema.apicr7imports.services.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import jxl.write.WriteException;
 
 @RestController
 @Api(tags = "Tipos de Marcas")
@@ -67,5 +72,15 @@ public class BrandController {
 	public ResponseEntity<Void> update(@RequestBody Brand brand) {
 		service.update(brand);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@ApiOperation(value = "Gera Excel das Marcas")
+	@RequestMapping(value = "/excel",method = RequestMethod.GET, produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> downloadExcel () throws WriteException, IOException{		
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.attachment().filename("marca.xls").build());
+
+		return ResponseEntity.ok().headers(headers).body(service.createExcel());
 	}
 }

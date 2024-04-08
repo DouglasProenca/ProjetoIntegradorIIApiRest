@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.services;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import com.sistema.apicr7imports.domain.VO.BrandVO;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.BrandRepository;
+import com.sistema.apicr7imports.services.excel.Excel;
+
+import jxl.write.WriteException;
 
 @Service
 public class BrandService {
@@ -55,5 +60,14 @@ public class BrandService {
 		newBrand.setCountry(brand.getCountry());
 		newBrand.setData(brand.getData());
 		newBrand.setUser(brand.getUser());
+	}
+	
+	public byte[] createExcel() throws WriteException, IOException {
+		
+		Excel excel = new Excel();
+		ArrayList<?> dados = (ArrayList<?>) findAll();
+		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
+		
+		return excel.exportExcel(dados, "Marcas", titulos).toByteArray();
 	}
 }
