@@ -88,4 +88,9 @@ public class BrandVO implements Serializable {
 	public void setUser(UserVO user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return id + ";" + marca + ";" + country.getNamePort() + ";" + data + ";" + user.getUserName();
+	}
 }

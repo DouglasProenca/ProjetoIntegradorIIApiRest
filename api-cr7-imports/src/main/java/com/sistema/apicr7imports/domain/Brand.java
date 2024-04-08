@@ -82,5 +82,10 @@ public class Brand implements Serializable {
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return id + ";" + marca + ";" + country.getNamePort() + ";" + data + ";" + user.getUserName();
+	}
 	
 }
