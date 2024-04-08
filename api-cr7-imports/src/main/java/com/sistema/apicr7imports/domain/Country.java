@@ -15,12 +15,12 @@ public class Country implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "paisId")
+	@Column(name = "paisid")
 	private Long id;
 	@ApiModelProperty(value = "Nome do Pais em Português.")
-	@Column(name = "paisNome")
+	@Column(name = "paisnome")
 	private String namePort;
-	@Column(name = "paisName")
+	@Column(name = "paisname")
 	private String nameEng;
 
 	public Country() {
