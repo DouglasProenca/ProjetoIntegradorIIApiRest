@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -31,41 +33,40 @@ public class JasperController {
 	@ApiOperation(value = "Relatorio Gerencial")
 	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> downloadPDF() throws SQLException, JRException {
-		byte[] pdfBytes = service.GerarManagentmentReport();
-
-		// Definir o cabeçalho Content-Disposition para fazer o navegador baixar o
-		// arquivo
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("generated.pdf").build());
 
-		return ResponseEntity.ok().headers(headers).body(pdfBytes);
+		return ResponseEntity.created(null).headers(headers).body(service.GerarManagentmentReport());
 	}
 
 	@ApiOperation(value = "Relatorio Analitico")
 	@GetMapping(value = "/analyticalReport", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> analitycalPDF(@RequestParam(value = "dateini", defaultValue = "") String ini_date,
-			@RequestParam(value = "datefin", defaultValue = "") String fin_date) throws JRException, SQLException, ParseException {
+	public ResponseEntity<byte[]> analitycalPDF(@NotNull @RequestParam(value = "dateini") String ini_date,
+			                                    @NotNull @RequestParam(value = "datefin") String fin_date) throws JRException, SQLException, ParseException {
 
-		byte[] pdfBytes = service.gerarAnalyticalReport(new SimpleDateFormat("yyyy-MM-dd").parse(ini_date),
-				new SimpleDateFormat("yyyy-MM-dd").parse(fin_date));
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		byte[] pdfBytes = service.gerarAnalyticalReport(simpleDateFormat.parse(ini_date),simpleDateFormat.parse(fin_date));
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("analitycal.pdf").build());
 
-		return ResponseEntity.ok().headers(headers).body(pdfBytes);
+		return ResponseEntity.created(null).headers(headers).body(pdfBytes);
 	}
 	
 	@ApiOperation(value = "Relatorio Sintetico")
 	@GetMapping(value = "/syntheticReport", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> syntheticPDF(@RequestParam(value = "dateini", defaultValue = "") String ini_date,
-			@RequestParam(value = "datefin", defaultValue = "") String fin_date) throws JRException, SQLException, ParseException {
+	public ResponseEntity<byte[]> syntheticPDF(@NotNull @RequestParam(value = "dateini") String ini_date,
+											   @NotNull @RequestParam(value = "datefin") String fin_date) throws JRException, SQLException, ParseException {
 
-		byte[] pdfBytes = service.gerarSyntheticReport(new SimpleDateFormat("yyyy-MM-dd").parse(ini_date),
-				new SimpleDateFormat("yyyy-MM-dd").parse(fin_date));
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		byte[] pdfBytes = service.gerarSyntheticReport(simpleDateFormat.parse(ini_date),simpleDateFormat.parse(fin_date));
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("Synthetic.pdf").build());
 
-		return ResponseEntity.ok().headers(headers).body(pdfBytes);
+		return ResponseEntity.created(null).headers(headers).body(pdfBytes);
 	}
 }

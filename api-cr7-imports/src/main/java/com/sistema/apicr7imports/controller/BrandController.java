@@ -9,12 +9,7 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.Brand;
@@ -35,32 +30,32 @@ public class BrandController {
 	private BrandService service;
 
 	@ApiOperation(value = "Trazer todos os tipos de marcas cadastradas")
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	@GetMapping( produces = "application/json")
 	public ResponseEntity<List<BrandVO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@ApiOperation(value = "Trazer tipo de marca cadastrada por id")
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true) @PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 
 	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
-	@RequestMapping(value = "/searchbrand", method = RequestMethod.GET, produces = "application/json")
+	@GetMapping(value = "/searchbrand", produces = "application/json")
 	public ResponseEntity<List<BrandVO>> findByCategoria(@RequestParam(value = "marca") String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(brand));
 	}
 
 	@ApiOperation(value = "Deleta uma marca")
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@ApiOperation(value = "Insere uma marca")
-	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
+	@PostMapping( produces = "application/json")
 	public ResponseEntity<Void> insert(@RequestBody Brand brand) {
 		service.insert(brand);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brand.getId()).toUri();
@@ -68,14 +63,14 @@ public class BrandController {
 	}
 
 	@ApiOperation(value = "Atualiza uma Marca")
-	@RequestMapping(method = RequestMethod.PUT, produces = "application/json")
+	@PutMapping( produces = "application/json")
 	public ResponseEntity<Void> update(@RequestBody Brand brand) {
 		service.update(brand);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@ApiOperation(value = "Gera Excel das Marcas")
-	@RequestMapping(value = "/excel",method = RequestMethod.GET, produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> downloadExcel () throws WriteException, IOException{		
 		
 		HttpHeaders headers = new HttpHeaders();

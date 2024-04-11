@@ -3,9 +3,14 @@ package com.sistema.apicr7imports.domain.VO;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.dozermapper.core.Mapping;
+
 public class BrandVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@Mapping("id")
+	@JsonProperty("id")
 	private Long id;
 	private String marca;
 	private CountryVO country;

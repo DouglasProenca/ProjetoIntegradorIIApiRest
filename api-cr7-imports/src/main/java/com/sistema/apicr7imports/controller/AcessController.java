@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.domain.User;
@@ -44,7 +44,7 @@ public class AcessController {
 		    @ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
 		    @ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
 		})
-	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+	@PostMapping(value = "/login", produces = "application/json")
 	public ResponseEntity<Object> login(
 			@ApiParam(value = "Usuário de Cadastro", required = true) @FormParam("username") String username,
 			@ApiParam(value = "Senha de Cadastro", required = true) @FormParam("password") String password) {
@@ -54,11 +54,9 @@ public class AcessController {
 
 			User user = (User) service.loadUserByUsername(username);
 
-			String token = tokenProvider.createToken(username, user.getRoles());
-
 			Map<String, String> model = new HashMap<String, String>();
 			model.put("username", username);
-			model.put("token", token);
+			model.put("token", tokenProvider.createToken(username, user.getRoles()));
 			return ResponseEntity.ok().body(model);
 		} catch (AuthenticationException e) {
 			throw new InvalidJwtAuthenticationException("Usuário ou senha Inválidos!");

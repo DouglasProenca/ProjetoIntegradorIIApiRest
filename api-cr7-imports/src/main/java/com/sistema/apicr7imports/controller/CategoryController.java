@@ -9,12 +9,7 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.domain.Category;
@@ -33,32 +28,32 @@ public class CategoryController {
 	private CategoryService service;
 
 	@ApiOperation(value = "Trazer todos os tipos de roupas cadastrados")
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<Category>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por id")
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping("/{id}")
 	public ResponseEntity<Category> findById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
-	@RequestMapping(value = "/searchcategory", method = RequestMethod.GET)
+	@GetMapping("/searchcategory")
 	public ResponseEntity<List<Category>> findByCategoria(@RequestParam(value= "categoria") String categoria) {
 		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
 	
 	@ApiOperation(value = "Deleta uma Categoria")
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@ApiOperation(value = "Insere uma Categoria")
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody Category category) {
 		service.insert(category);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(category.getId()).toUri();
@@ -66,14 +61,14 @@ public class CategoryController {
 	}
 	
 	@ApiOperation(value = "Atualiza uma Categoria")
-	@RequestMapping(method = RequestMethod.PUT)
+	@PutMapping
 	public ResponseEntity<Void> update(@RequestBody Category category) {
 		service.update(category);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@ApiOperation(value = "Gera Excel das Marcas")
-	@RequestMapping(value = "/excel",method = RequestMethod.GET, produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> downloadExcel () throws WriteException, IOException{		
 		
 		HttpHeaders headers = new HttpHeaders();
