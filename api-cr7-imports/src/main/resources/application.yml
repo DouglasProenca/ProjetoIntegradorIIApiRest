@@ -11,7 +11,8 @@ spring:
   jpa:
     defer-datasource-initialization: false
     properties:
-      hibernate:
+      hibernate: 
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         dialect: org.hibernate.dialect.SQLServerDialect.
@@ -27,3 +28,7 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
     servlet:
       path: /apicr7imports
+
+viacep:
+  api:
+    url: "https://viacep.com.br/ws/codigoPostal/json/"
