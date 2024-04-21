@@ -26,11 +26,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtTokenProvider {
 	
-	@Value("${security.jwt.token.secret-key:secret}")
-	private String secretKey = "secret";
+	@Value("${spring.security.jwt.token.secret-key}")
+	private String secretKey;
 	
-	@Value("${security.jwt.token.expire-length:3600000}")
-	private long validityInMilliseconds = 3600000; //1h
+	@Value("${spring.security.jwt.token.expire-length}")
+	private String validityInMilliseconds; //1h
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -45,7 +45,7 @@ public class JwtTokenProvider {
 		claims.put("roles", roles);
 		
 		Date now = new Date();
-		Date validity = new Date(now.getTime() + validityInMilliseconds);
+		Date validity = new Date(now.getTime() + Long.valueOf(validityInMilliseconds));
 		
 		return Jwts.builder()
 				.setClaims(claims)
