@@ -11,6 +11,7 @@ import com.sistema.apicr7imports.domain.CEP;
 import com.sistema.apicr7imports.services.ViaCEPService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Controller
@@ -21,6 +22,7 @@ public class CEPController {
 	@Autowired
 	ViaCEPService viaCEPService;
 	
+	@ApiOperation(value = "Trazer informações do CEP")
 	@GetMapping(value = "/{cep}", produces = "application/json")
 	public ResponseEntity<CEP> findById(@ApiParam(value = "CEP do Endereço.", required = true) @PathVariable String cep) {
 		return ResponseEntity.ok().body(viaCEPService.cep(cep));
