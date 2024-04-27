@@ -38,7 +38,7 @@ public class CountryController {
 		    @ApiResponse(code = 404, message = "Pais não encontrado."),
 		})
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Country> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true) @PathVariable long id) {
+	public ResponseEntity<Country> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 }

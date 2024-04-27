@@ -37,7 +37,7 @@ public class BrandController {
 
 	@ApiOperation(value = "Trazer tipo de marca cadastrada por id")
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true) @PathVariable Long id) {
+	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 
@@ -49,7 +49,7 @@ public class BrandController {
 
 	@ApiOperation(value = "Deleta uma marca")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
