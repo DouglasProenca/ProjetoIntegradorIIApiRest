@@ -15,10 +15,6 @@ public class AcessService implements UserDetailsService{
 	
 	@Autowired
 	UserRepository repository;
-	
-	public AcessService(UserRepository repository) {
-		this.repository = repository;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
