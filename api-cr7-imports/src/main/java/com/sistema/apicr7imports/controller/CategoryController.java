@@ -55,8 +55,7 @@ public class CategoryController {
 	@ApiOperation(value = "Insere uma Categoria")
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody Category category) {
-		service.insert(category);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(category.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(category).getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	

@@ -57,8 +57,7 @@ public class BrandController {
 	@ApiOperation(value = "Insere uma marca")
 	@PostMapping( produces = "application/json")
 	public ResponseEntity<Void> insert(@RequestBody Brand brand) {
-		service.insert(brand);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brand.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(brand).getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
