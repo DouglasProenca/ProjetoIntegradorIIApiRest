@@ -15,6 +15,8 @@ import com.sistema.apicr7imports.services.CPFService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Controller
 @Api(tags = "CPF")
@@ -25,6 +27,10 @@ public class CPFController {
 	CPFService cpfService;
 
 	@ApiOperation(value = "Verficar se o CPF é válido")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Valida o CPF."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		})
 	@GetMapping(value = "/{cpf}", produces = "application/json")
 	public ResponseEntity<CpfResponse> verifyCPF(@ApiParam(value = "CPF", required = true) @PathVariable String cpf) throws SQLException {
 		return ResponseEntity.ok().body(cpfService.verifyCPF(cpf));

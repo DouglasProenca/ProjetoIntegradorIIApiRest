@@ -13,6 +13,8 @@ import com.sistema.apicr7imports.services.ViaCEPService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Controller
 @Api(tags = "CEP")
@@ -24,6 +26,10 @@ public class CEPController {
 	
 	@ApiOperation(value = "Trazer informações do CEP")
 	@GetMapping(value = "/{cep}", produces = "application/json")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Informações do CEP."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		})
 	public ResponseEntity<CEP> findById(@ApiParam(value = "CEP do Endereço.", required = true) @PathVariable String cep) {
 		return ResponseEntity.ok().body(viaCEPService.cep(cep));
 	}

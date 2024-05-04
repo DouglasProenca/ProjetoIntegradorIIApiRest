@@ -24,8 +24,12 @@ public class CountryController {
 
 	@Autowired
 	private CountryService service;
-
+	
 	@ApiOperation(value = "Todos os paises cadastrados")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os paises cadastrados."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso.")
+		})
 	@GetMapping( produces = "application/json")
 	public ResponseEntity<List<Country>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
