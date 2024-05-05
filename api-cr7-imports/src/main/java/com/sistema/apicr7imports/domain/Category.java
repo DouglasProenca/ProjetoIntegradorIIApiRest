@@ -1,6 +1,7 @@
 package com.sistema.apicr7imports.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -75,6 +76,6 @@ public class Category implements Serializable{
 
 	@Override
 	public String toString() {
-		return id + ";" + categoria + ";" + data + ";" + user.getUserName();
+		return id + ";" + categoria + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUserName();
 	}
 }

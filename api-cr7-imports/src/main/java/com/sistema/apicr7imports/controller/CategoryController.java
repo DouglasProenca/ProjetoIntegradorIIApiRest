@@ -70,7 +70,7 @@ public class CategoryController {
 	public ResponseEntity<byte[]> downloadExcel () throws IOException{		
 		
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("categoria.xls").build());
+		headers.setContentDisposition(ContentDisposition.attachment().filename("categorias.xlsx").build());
 
 		return ResponseEntity.ok().headers(headers).body(service.createExcel());
 	}
