@@ -17,7 +17,6 @@ import com.sistema.apicr7imports.services.CategoryService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jxl.write.WriteException;
 
 @RestController
 @Api(tags = "Tipos de Roupas") 
@@ -68,7 +67,7 @@ public class CategoryController {
 	
 	@ApiOperation(value = "Gera Excel das Marcas")
 	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<byte[]> downloadExcel () throws WriteException, IOException{		
+	public ResponseEntity<byte[]> downloadExcel () throws IOException{		
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("categoria.xls").build());

@@ -14,13 +14,13 @@ import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.BrandRepository;
 import com.sistema.apicr7imports.services.excel.Excel;
 
-import jxl.write.WriteException;
-
 @Service
 public class BrandService {
 
 	@Autowired
 	BrandRepository brandRepository;
+	
+	private Excel excel = new Excel();
 
 	public List<BrandVO> findAll() {
 		return DozerMapper.parseListObject(brandRepository.findAll(), BrandVO.class);
@@ -62,12 +62,8 @@ public class BrandService {
 		newBrand.setUser(brand.getUser());
 	}
 	
-	public byte[] createExcel() throws WriteException, IOException {
-		
-		Excel excel = new Excel();
-		ArrayList<?> dados = (ArrayList<?>) findAll();
+	public byte[] createExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		
-		return excel.exportExcel(dados, "Marcas", titulos).toByteArray();
+		return excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray();
 	}
 }

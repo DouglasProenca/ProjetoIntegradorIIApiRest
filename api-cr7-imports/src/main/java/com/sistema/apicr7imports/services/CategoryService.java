@@ -12,8 +12,6 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.repository.CategoryRepository;
 import com.sistema.apicr7imports.services.excel.Excel;
 
-import jxl.write.WriteException;
-
 @Service
 public class CategoryService {
 
@@ -59,7 +57,7 @@ public class CategoryService {
 		newObj.setUser(category.getUser());
 	}
 	
-	public byte[] createExcel() throws WriteException, IOException {
+	public byte[] createExcel() throws IOException {
 		
 		Excel excel = new Excel();
 		ArrayList<?> dados = (ArrayList<?>) findAll();

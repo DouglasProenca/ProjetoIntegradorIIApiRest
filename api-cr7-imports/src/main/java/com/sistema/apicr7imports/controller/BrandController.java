@@ -19,7 +19,6 @@ import com.sistema.apicr7imports.services.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import jxl.write.WriteException;
 
 @RestController
 @Api(tags = "Tipos de Marcas")
@@ -70,10 +69,10 @@ public class BrandController {
 	
 	@ApiOperation(value = "Gera Excel das Marcas")
 	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<byte[]> downloadExcel () throws WriteException, IOException{		
+	public ResponseEntity<byte[]> downloadExcel () throws IOException{		
 		
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("marca.xls").build());
+		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());
 
 		return ResponseEntity.ok().headers(headers).body(service.createExcel());
 	}
