@@ -1,6 +1,7 @@
 package com.sistema.apicr7imports.domain.VO;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -96,6 +97,6 @@ public class BrandVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return id + ";" + marca + ";" + country.getNamePort() + ";" + data + ";" + user.getUserName();
+		return id + ";" + marca + ";" + country.getNamePort() + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUserName();
 	}
 }
