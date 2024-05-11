@@ -7,6 +7,8 @@ import java.util.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +20,13 @@ import net.sf.jasperreports.engine.JasperPrint;
 
 @Service
 public class JasperService {
-
+	
 	@Autowired
-	private DatabaseService repo;
+	DataSource dataSource;
 
 	public byte[] GerarManagentmentReport() throws SQLException, JRException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = repo.getDatabaseConnection();
+		Connection conn = dataSource.getConnection();
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Managent_Report_Geral.jasper");
 		
@@ -40,7 +42,7 @@ public class JasperService {
 
 	public byte[] gerarAnalyticalReport(Date initial_date, Date final_date) throws JRException, SQLException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = repo.getDatabaseConnection();
+		Connection conn = dataSource.getConnection();
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Analytical_Report_Geral.jasper");
 
@@ -57,7 +59,7 @@ public class JasperService {
 
 	public byte[] gerarSyntheticReport(Date initial_date, Date final_date) throws JRException, SQLException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = repo.getDatabaseConnection();
+		Connection conn = dataSource.getConnection();
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Synthetic_Report_Geral.jasper");
 
