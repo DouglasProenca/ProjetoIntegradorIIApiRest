@@ -31,9 +31,10 @@ public class ProductService {
 
 	public List<Product> findbyBrand(String text) {
 		List<Product> brandList = productRepository.findByNome(text);
-		if (brandList.isEmpty()) {
+		
+		if (brandList.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
-		}
+		
 		return brandList;
 	}
 
