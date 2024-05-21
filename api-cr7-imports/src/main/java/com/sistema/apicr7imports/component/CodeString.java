@@ -1,7 +1,10 @@
-package com.sistema.apicr7imports.codeString;
+package com.sistema.apicr7imports.component;
 
 import java.io.UnsupportedEncodingException;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CodeString {
 
 	public static String decodeString(String string) throws UnsupportedEncodingException, NullPointerException {

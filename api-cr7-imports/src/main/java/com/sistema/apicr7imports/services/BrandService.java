@@ -7,12 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Brand;
 import com.sistema.apicr7imports.domain.VO.BrandVO;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.BrandRepository;
-import com.sistema.apicr7imports.services.excel.Excel;
+
 
 @Service
 public class BrandService {
@@ -20,7 +21,8 @@ public class BrandService {
 	@Autowired
 	BrandRepository brandRepository;
 	
-	private Excel excel = new Excel();
+	@Autowired
+	Excel excel;
 
 	public List<BrandVO> findAll() {
 		return DozerMapper.parseListObject(brandRepository.findAll(), BrandVO.class);

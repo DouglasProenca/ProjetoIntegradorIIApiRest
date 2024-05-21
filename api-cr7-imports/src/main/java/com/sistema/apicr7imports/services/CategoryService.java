@@ -7,16 +7,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.repository.CategoryRepository;
-import com.sistema.apicr7imports.services.excel.Excel;
 
 @Service
 public class CategoryService {
 
 	@Autowired 
-	private CategoryRepository categoryRepository;
+	CategoryRepository categoryRepository;
+	
+	@Autowired
+	Excel excel;
 
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
@@ -58,8 +61,6 @@ public class CategoryService {
 	}
 	
 	public byte[] createExcel() throws IOException {
-		
-		Excel excel = new Excel();
 		ArrayList<?> dados = (ArrayList<?>) findAll();
 		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};
 		

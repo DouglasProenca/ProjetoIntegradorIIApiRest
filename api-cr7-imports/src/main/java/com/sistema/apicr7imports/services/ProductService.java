@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Product;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.repository.ProductRepository;
-import com.sistema.apicr7imports.services.excel.Excel;
 
 @Service
 public class ProductService {
@@ -18,7 +18,8 @@ public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
 	
-	private Excel excel = new Excel();
+	@Autowired
+	Excel excel;
 	
 	public List<Product> findAll() {
 		return productRepository.findAll();
@@ -54,11 +55,12 @@ public class ProductService {
 		return productRepository.save(newObj);
 	}
 
-	private void updateData(Product newBrand, Product brand) {
-		//newBrand.setMarca(brand.getMarca());
-		//newBrand.setCountry(brand.getCountry());
-		newBrand.setData(brand.getData());
-		newBrand.setUser(brand.getUser());
+	private void updateData(Product newProduct, Product product) {
+		newProduct.setNome(product.getNome());
+		newProduct.setQuantidade(product.getQuantidade());
+		newProduct.setValor(product.getValor());
+		newProduct.setData(product.getData());
+		newProduct.setUser(product.getUser());
 	}
 	
 	public byte[] createExcel() throws IOException {
