@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.controller;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class CPFController {
 		    @ApiResponse(code = 200, message = "Valida o CPF."),
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		})
-	@GetMapping(value = "/{cpf}", produces = "application/json")
+	@GetMapping(value = "/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CpfResponse> verifyCPF(@ApiParam(value = "CPF", required = true) @PathVariable String cpf) throws SQLException {
 		return ResponseEntity.ok().body(cpfService.verifyCPF(cpf));
 	}

@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class CountryController {
 		    @ApiResponse(code = 200, message = "Todos os paises cadastrados."),
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso.")
 		})
-	@GetMapping( produces = "application/json")
+	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Country>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
@@ -41,7 +42,7 @@ public class CountryController {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 404, message = "Pais não encontrado."),
 		})
-	@GetMapping(value = "/{id}", produces = "application/json")
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Country> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}

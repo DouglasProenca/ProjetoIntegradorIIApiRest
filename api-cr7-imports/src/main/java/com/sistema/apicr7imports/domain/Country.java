@@ -7,16 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "rc_pais")
-public class Country implements Serializable {
+public class Country extends RepresentationModel<Country> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "paisid")
-	private Long id;
+	private Long idCountry;
 	@ApiModelProperty(value = "Nome do Pais em Português.")
 	@Column(name = "paisnome")
 	private String namePort;
@@ -27,19 +29,19 @@ public class Country implements Serializable {
 
 	}
 
-	public Country(Long id, String namePort, String nameEng) {
+	public Country(Long idCountry, String namePort, String nameEng) {
 		super();
-		this.id = id;
+		this.idCountry = idCountry;
 		this.namePort = namePort;
 		this.nameEng = nameEng;
 	}
 
 	public Country(int id) {
-		this.id = Long.valueOf(id);
+		this.idCountry = Long.valueOf(id);
 	}
 
 	public Long getId() {
-		return id;
+		return idCountry;
 	}
 
 	public String getNamePort() {

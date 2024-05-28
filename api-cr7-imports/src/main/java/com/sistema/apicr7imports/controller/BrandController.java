@@ -29,19 +29,19 @@ public class BrandController {
 	private BrandService service;
 
 	@ApiOperation(value = "Trazer todos os tipos de marcas cadastradas")
-	@GetMapping( produces = "application/json")
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<BrandVO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@ApiOperation(value = "Trazer tipo de marca cadastrada por id")
-	@GetMapping(value = "/{id}", produces = "application/json")
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 
 	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
-	@GetMapping(value = "/searchbrand", produces = "application/json")
+	@GetMapping(value = "/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<BrandVO>> findByCategoria(@RequestParam(value = "marca") String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(brand));
 	}
@@ -54,14 +54,14 @@ public class BrandController {
 	}
 
 	@ApiOperation(value = "Insere uma marca")
-	@PostMapping( produces = "application/json")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> insert(@RequestBody Brand brand) {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(brand).getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@ApiOperation(value = "Atualiza uma Marca")
-	@PutMapping( produces = "application/json")
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> update(@RequestBody Brand brand) {
 		service.update(brand);
 		return ResponseEntity.noContent().build();

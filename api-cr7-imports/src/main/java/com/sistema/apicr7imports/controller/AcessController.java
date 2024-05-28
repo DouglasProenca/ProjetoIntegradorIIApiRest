@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.controller;
 import javax.ws.rs.FormParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +42,7 @@ public class AcessController {
 	@ApiResponses(value = { 
 			@ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
 			@ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."), })
-	@PostMapping(value = "/login", produces = "application/json")
+	@PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AcessResponse> login(
 			@ApiParam(value = "Usuário de Cadastro", required = true) @FormParam("username") String username,
 			@ApiParam(value = "Senha de Cadastro", required = true) @FormParam("password") String password) {

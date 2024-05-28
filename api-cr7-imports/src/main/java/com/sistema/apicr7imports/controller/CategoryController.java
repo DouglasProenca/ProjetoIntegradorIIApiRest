@@ -27,39 +27,39 @@ public class CategoryController {
 	private CategoryService service;
 
 	@ApiOperation(value = "Trazer todos os tipos de roupas cadastrados")
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Category>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por id")
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> findById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
-	@GetMapping("/searchcategory")
+	@GetMapping(value = "/searchcategory",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Category>> findByCategoria(@RequestParam(value= "categoria") String categoria) {
 		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
 	
 	@ApiOperation(value = "Deleta uma Categoria")
-	@DeleteMapping("/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@ApiOperation(value = "Insere uma Categoria")
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> insert(@RequestBody Category category) {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(category).getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@ApiOperation(value = "Atualiza uma Categoria")
-	@PutMapping
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> update(@RequestBody Category category) {
 		service.update(category);
 		return ResponseEntity.noContent().build();
