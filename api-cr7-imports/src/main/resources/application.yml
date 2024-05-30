@@ -18,18 +18,25 @@ spring:
         dialect: org.hibernate.dialect.SQLServerDialect.
         show-sql: false
         
-  security:
-         jwt:
-           token:
-               expire-length: 3600000
-               secret-key: secret
-        
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+                
+     
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
     servlet:
       path: /apicr7imports
 
-  viacep:
-    api:
-      url: https://viacep.com.br/ws/codigoPostal/json/
+viacep:
+    url: https://viacep.com.br/ws/codigoPostal/json/  
+    
+security:
+         jwt:
+           token:
+               expire-length: 3600000
+               secret-key: secret    

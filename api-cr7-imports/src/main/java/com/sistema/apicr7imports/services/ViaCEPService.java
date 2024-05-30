@@ -13,7 +13,7 @@ public class ViaCEPService {
 	@Autowired
 	RestTemplate restTemplate;
 
-	@Value("${spring.viacep.api.url}")
+	@Value("${viacep.url}")
 	private String url;
 
 	public CEP cep(String cep) {
