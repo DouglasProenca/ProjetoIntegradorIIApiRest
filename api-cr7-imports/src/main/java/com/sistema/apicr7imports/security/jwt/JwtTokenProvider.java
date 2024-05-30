@@ -26,11 +26,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtTokenProvider {
 	
-	@Value("${security.jwt.token.secret-key}")
+	@Value("${security.jwt.token.secret_key}")
 	private String secretKey;
 	
-	@Value("${security.jwt.token.expire-length}")
-	private String validityInMilliseconds; //1h
+	@Value("${security.jwt.token.expire_length}")
+	private String validityInMilliseconds;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;

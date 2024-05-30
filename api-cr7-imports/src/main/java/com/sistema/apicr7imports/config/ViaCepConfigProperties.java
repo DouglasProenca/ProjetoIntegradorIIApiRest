@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "viacep")
-public class ViaCepConfig {
+@ConfigurationProperties(prefix = "viacep.api")
+public class ViaCepConfigProperties {
 	
 	private String url;
 
