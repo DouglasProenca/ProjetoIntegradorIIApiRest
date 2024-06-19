@@ -41,6 +41,23 @@ public class Category implements Serializable{
 	public Category() {
 		
 	}
+	
+
+	/**
+	 * @param id
+	 * @param categoria
+	 * @param data
+	 * @param user
+	 */
+	public Category(Long id, String categoria, Date data, UserDTO user) {
+		super();
+		this.id = id;
+		this.categoria = categoria;
+		this.data = data;
+		this.user = user;
+	}
+
+
 
 	public Long getId() {
 		return id;
