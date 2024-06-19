@@ -51,4 +51,13 @@ public class Country extends RepresentationModel<Country> implements Serializabl
 	public String getNameEng() {
 		return nameEng;
 	}
+
+	/**
+	 * @param idCountry the idCountry to set
+	 */
+	public void setIdCountry(Long idCountry) {
+		this.idCountry = idCountry;
+	}
+	
+	
 }
