@@ -1,0 +1,30 @@
+## docker-compose up 
+version: '3'
+services:
+  app:
+    image: openjdk:8
+    container_name: cr7ImportsAPI
+    environment:
+      - TZ=America/Sao_Paulo
+      - SPRING_BOOT_ENVIRONMENT=Production
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=150470
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./target/api-cr7-imports-0.0.1-SNAPSHOT.jar:/usr/src/app/api-cr7-imports-0.0.1-SNAPSHOT.jar
+    working_dir: /usr/src/app
+    command: ["java", "-jar", "api-cr7-imports-0.0.1-SNAPSHOT.jar"]
+
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/users.yml:/data/users.yml
+    ports:
+      - 9999:8080
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
