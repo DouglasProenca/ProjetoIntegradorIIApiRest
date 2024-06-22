@@ -41,8 +41,7 @@ public class CategoryService {
 	}
 
 	public Category insert(Category obj) {
-		categoryRepository.insert(obj);
-		return obj;
+		return categoryRepository.save(obj);
 	}
 
 	public Category update(Category obj) {
