@@ -1,4 +1,4 @@
-CREATE PROCEDURE sp_insert_rc_user  
+CREATE OR ALTER PROCEDURE sp_insert_rc_user  
     @nome VARCHAR(500)
   , @password VARCHAR(1000)
   , @email VARCHAR(1000)
