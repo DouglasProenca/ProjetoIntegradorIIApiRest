@@ -9,10 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.domain.User;
+import com.sistema.apicr7imports.domain.request.AcessRequest;
 import com.sistema.apicr7imports.domain.response.AcessResponse;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
@@ -53,6 +55,24 @@ public class AcessController {
 			User user = (User) service.loadUserByUsername(username);
 
 			return ResponseEntity.ok().body(new AcessResponse(username, tokenProvider.createToken(username, user.getRoles())));
+		} catch (AuthenticationException e) {
+			throw new InvalidJwtAuthenticationException("Usuário ou senha Inválidos!");
+		}
+	}
+	
+	@ApiOperation(value = "Autenticar usuario e retornar um token de acesso por request Body")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
+			@ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."), })
+	@PostMapping(value = "/login/byrequestBody", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest) {
+		try {
+
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(acessRequest.getUsername(), acessRequest.getPassword()));
+
+			User user = (User) service.loadUserByUsername(acessRequest.getUsername());
+
+			return ResponseEntity.ok().body(new AcessResponse(acessRequest.getUsername(), tokenProvider.createToken(acessRequest.getUsername(), user.getRoles())));
 		} catch (AuthenticationException e) {
 			throw new InvalidJwtAuthenticationException("Usuário ou senha Inválidos!");
 		}
