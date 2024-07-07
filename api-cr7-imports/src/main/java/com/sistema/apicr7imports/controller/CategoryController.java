@@ -33,13 +33,13 @@ public class CategoryController {
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por id")
-	@GetMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Category> findById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
-	@GetMapping(value = "/searchcategory",consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/searchcategory",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Category>> findByCategoria(@RequestParam(value= "categoria") String categoria) {
 		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
