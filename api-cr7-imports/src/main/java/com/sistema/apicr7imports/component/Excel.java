@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.services.excel;
+package com.sistema.apicr7imports.component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,7 +13,9 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Excel {
 
 	public ByteArrayOutputStream exportExcel(ArrayList<?> dados, String Titulo, String[] titulos) throws IOException {
