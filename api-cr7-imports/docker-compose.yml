@@ -10,7 +10,7 @@ services:
       - SPRING_BOOT_ENVIRONMENT=Production
       - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
       - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=MyPassword123#
+      - SPRING_DATASOURCE_PASSWORD=Banana!90
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - "8088:8080"
@@ -30,7 +30,7 @@ services:
       - SPRING_BOOT_ENVIRONMENT=Production
       - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
       - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=MyPassword123#
+      - SPRING_DATASOURCE_PASSWORD=Banana!90
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - API_URL=http://localhost:8088	  
     ports:

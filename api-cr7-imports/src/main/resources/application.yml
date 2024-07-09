@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
     username: sa
-    password: MyPassword123#
+    password: Banana!90
     
   flyway:
     baselineOnMigrate: true
