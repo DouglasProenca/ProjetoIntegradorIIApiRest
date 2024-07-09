@@ -39,6 +39,9 @@ public class Product implements Serializable {
 	private double valor;
 
 	private int quantidade;
+	
+	private Boolean ativo;
+	 
 
 	@Column(name = "[date]")
 	private Date data;
@@ -126,6 +129,20 @@ public class Product implements Serializable {
 	 */
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	/**
+	 * @return the ativo
+	 */
+	public boolean getAtivo() {
+		return ativo;
+	}
+
+	/**
+	 * @param ativo the ativo to set
+	 */
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	/**
