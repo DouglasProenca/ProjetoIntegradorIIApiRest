@@ -45,6 +45,16 @@ public class Brand implements Serializable {
 	public Brand() {
 		
 	}
+	
+	
+	/**
+	 * @param id
+	 */
+	public Brand(Long id) {
+		super();
+		this.id = id;
+	}
+
 
 	public Long getId() {
 		return id;

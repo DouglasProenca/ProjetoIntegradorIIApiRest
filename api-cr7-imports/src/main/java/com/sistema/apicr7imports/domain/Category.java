@@ -57,6 +57,13 @@ public class Category implements Serializable{
 		this.user = user;
 	}
 
+	/**
+	 * @param id
+	 */
+	public Category(Long id) {
+		super();
+		this.id = id;
+	}
 
 
 	public Long getId() {

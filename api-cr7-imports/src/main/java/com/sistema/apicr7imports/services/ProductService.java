@@ -58,6 +58,8 @@ public class ProductService {
 	private void updateData(Product newProduct, Product product) {
 		newProduct.setNome(product.getNome());
 		newProduct.setQuantidade(product.getQuantidade());
+		newProduct.setBrand(product.getBrand());
+		newProduct.setCategory(product.getCategory());
 		newProduct.setValor(product.getValor());
 		newProduct.setData(product.getData());
 		newProduct.setUser(product.getUser());
