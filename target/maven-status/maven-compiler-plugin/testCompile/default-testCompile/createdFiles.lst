@@ -1,0 +1,5 @@
+com/sistema/apicr7imports/services/CountryServiceTest.class
+com/sistema/apicr7imports/mocks/MockCountry.class
+com/sistema/apicr7imports/mocks/MockCategory.class
+com/sistema/apicr7imports/services/CategoryServiceTest.class
+com/sistema/apicr7imports/ApiCr7ImportsApplicationTests.class
