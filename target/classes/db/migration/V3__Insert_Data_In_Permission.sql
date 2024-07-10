@@ -1,1 +1,0 @@
-insert into rc_permission values('Administrador')
