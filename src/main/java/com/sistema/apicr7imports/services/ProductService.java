@@ -60,6 +60,7 @@ public class ProductService {
 		newProduct.setQuantidade(product.getQuantidade());
 		newProduct.setBrand(product.getBrand());
 		newProduct.setCategory(product.getCategory());
+		newProduct.setAtivo(product.getAtivo());
 		newProduct.setValor(product.getValor());
 		newProduct.setData(product.getData());
 		newProduct.setUser(product.getUser());
