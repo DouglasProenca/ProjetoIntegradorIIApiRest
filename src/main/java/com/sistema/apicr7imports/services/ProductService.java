@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
@@ -69,5 +71,9 @@ public class ProductService {
 	public byte[] createExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
 		return excel.exportExcel((ArrayList<?>) findAll(), "Produtos", titulos).toByteArray();
+	}
+	
+	public Page<Product> findAllPage(Pageable pageable) {
+		return productRepository.findAll(pageable);
 	}
 }

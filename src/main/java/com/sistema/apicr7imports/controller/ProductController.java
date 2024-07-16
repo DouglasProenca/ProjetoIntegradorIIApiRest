@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import com.sistema.apicr7imports.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Controller
 @Api(tags = "Produtos")
@@ -82,5 +86,17 @@ public class ProductController {
 		headers.setContentDisposition(ContentDisposition.attachment().filename("produtos.xlsx").build());
 
 		return ResponseEntity.ok().headers(headers).body(productService.createExcel());
+	}
+	
+	@ApiOperation(value = "Todos os produtos cadastrados de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os produtos cadastrados."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<Product>> findAllPage(@RequestParam(value = "page",defaultValue = "0") int page
+			                                        ,@RequestParam(value = "limit",defaultValue = "10") int limit) {
+		return ResponseEntity.ok().body(productService.findAllPage(PageRequest.of(page, limit)));
 	}
 }
