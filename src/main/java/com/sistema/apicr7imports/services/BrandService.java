@@ -28,8 +28,8 @@ public class BrandService {
 		return DozerMapper.parseListObject(brandRepository.findAll(), BrandVO.class);
 	}
 
-	public Brand findbyId(Long id) {
-		return brandRepository.findById(Long.valueOf(id))
+	public Brand findbyId(Integer id) {
+		return brandRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
 	}
 
@@ -41,7 +41,7 @@ public class BrandService {
 		return DozerMapper.parseListObject(brandList, BrandVO.class);
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		this.findbyId(id);
 		brandRepository.deleteById(id);
 	}
@@ -52,7 +52,7 @@ public class BrandService {
 	}
 
 	public Brand update(Brand obj) {
-		Brand newObj = findbyId(Long.valueOf(obj.getId()));
+		Brand newObj = findbyId(obj.getId());
 		updateData(newObj, obj);
 		return brandRepository.save(newObj);
 	}

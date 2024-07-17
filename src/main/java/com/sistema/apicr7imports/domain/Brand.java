@@ -25,7 +25,7 @@ public class Brand implements Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@ApiModelProperty(value = "Nome da marca")
 	@Column(name = "marca")
@@ -50,17 +50,17 @@ public class Brand implements Serializable {
 	/**
 	 * @param id
 	 */
-	public Brand(Long id) {
+	public Brand(Integer id) {
 		super();
 		this.id = id;
 	}
 
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

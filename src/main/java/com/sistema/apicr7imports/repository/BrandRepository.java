@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.apicr7imports.domain.Brand;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, Long>{
+public interface BrandRepository extends JpaRepository<Brand, Integer>{
 
 	@Query("SELECT b FROM Brand b WHERE b.marca like %:marca%")
 	public List<Brand> findByMarca(@Param("marca") String marca);

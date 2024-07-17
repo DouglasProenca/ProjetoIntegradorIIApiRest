@@ -26,7 +26,7 @@ public class Category implements Serializable{
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@Column(name = "categoria")
 	private String categoria;
@@ -49,7 +49,7 @@ public class Category implements Serializable{
 	 * @param data
 	 * @param user
 	 */
-	public Category(Long id, String categoria, Date data, UserDTO user) {
+	public Category(Integer id, String categoria, Date data, UserDTO user) {
 		super();
 		this.id = id;
 		this.categoria = categoria;
@@ -60,17 +60,17 @@ public class Category implements Serializable{
 	/**
 	 * @param id
 	 */
-	public Category(Long id) {
+	public Category(Integer id) {
 		super();
 		this.id = id;
 	}
 
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

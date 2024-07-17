@@ -34,7 +34,7 @@ public class CategoryController {
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por id")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Category> findById(@PathVariable Long id) {
+	public ResponseEntity<Category> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
@@ -46,7 +46,7 @@ public class CategoryController {
 	
 	@ApiOperation(value = "Deleta uma Categoria")
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

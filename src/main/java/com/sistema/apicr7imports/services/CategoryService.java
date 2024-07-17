@@ -23,8 +23,8 @@ public class CategoryService {
 		return categoryRepository.findAll();
 	}
 
-	public Category findbyId(Long id) {
-		return categoryRepository.findById(Long.valueOf(id))
+	public Category findbyId(Integer id) {
+		return categoryRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
 	}
 
@@ -36,7 +36,7 @@ public class CategoryService {
 		return category;
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		findbyId(id);
 		categoryRepository.deleteById(id);
 	}
@@ -46,7 +46,7 @@ public class CategoryService {
 	}
 
 	public Category update(Category obj) {
-		Category newObj = findbyId(Long.valueOf(obj.getId()));
+		Category newObj = findbyId(obj.getId());
 		updateData(newObj, obj);
 		return categoryRepository.save(obj);
 	}

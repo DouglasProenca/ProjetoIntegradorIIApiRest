@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.apicr7imports.domain.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	@Query("SELECT c FROM Category c WHERE c.categoria like %:categoria%")
 	public List<Category> findByCategoria(@Param("categoria") String categoria);
