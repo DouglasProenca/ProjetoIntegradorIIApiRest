@@ -79,9 +79,9 @@ class CategoryServiceTest {
 	void testFindbyId() {
 		Category category = input.mockEntity(1);
 
-		when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+		when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
 
-		Category result = service.findbyId(1L);
+		Category result = service.findbyId(1);
 
 		assertNotNull(result);
 		assertNotNull(result.getId());
@@ -129,9 +129,9 @@ class CategoryServiceTest {
 		Category entity = input.mockEntity(1);
 
 		Category persisted = entity;
-		persisted.setId(1L);
+		persisted.setId(1);
 
-		when(categoryRepository.findById(1L)).thenReturn(Optional.of(entity));
+		when(categoryRepository.findById(1)).thenReturn(Optional.of(entity));
 		when(categoryRepository.save(entity)).thenReturn(persisted);
 
 		Category categoryUpdate = persisted;
@@ -143,7 +143,7 @@ class CategoryServiceTest {
 		assertNotNull(result.getId());
 
 		assertEquals("teste2", result.getCategoria());
-		assertEquals(1L, result.getId());
+		assertEquals(1, result.getId());
 
 	}
 
@@ -151,7 +151,7 @@ class CategoryServiceTest {
 	void testeDelete() {
 		Category category = input.mockEntity(1);
 
-		when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+		when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
 
 		service.delete(category.getId());
 

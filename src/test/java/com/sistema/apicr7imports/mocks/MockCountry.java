@@ -20,6 +20,6 @@ public class MockCountry {
 	    }
 	    
 	    public Country mockEntity(Integer number) {
-	        return new Country(number.longValue(),"Name Port Test" + number,"Name Eng Test" + number);
+	        return new Country(number,"Name Port Test" + number,"Name Eng Test" + number);
 	    }
 }

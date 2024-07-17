@@ -22,6 +22,6 @@ public class MockCategory {
 	    }
 	    
 	    public Category mockEntity(Integer number) {
-	        return new Category(number.longValue(),"Category name Test" + number, new Date(), new UserDTO());
+	        return new Category(number,"Category name Test" + number, new Date(), new UserDTO());
 	    }
 }

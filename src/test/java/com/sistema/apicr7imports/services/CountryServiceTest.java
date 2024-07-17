@@ -48,9 +48,9 @@ class CountryServiceTest {
 	void testFindbyId() {
 		Country country = input.mockEntity(1);
 		
-		when(countryRepository.findById(1L)).thenReturn(Optional.of(country));
+		when(countryRepository.findById(1)).thenReturn(Optional.of(country));
 		
-		Country result = service.findbyId(1L);
+		Country result = service.findbyId(1);
 		
 		assertNotNull(result);
 		assertNotNull(result.getId());
