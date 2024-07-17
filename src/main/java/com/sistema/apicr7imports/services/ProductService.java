@@ -27,8 +27,8 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 	
-	public Product findbyId(Long id) {
-		return productRepository.findById(Long.valueOf(id))
+	public Product findbyId(Integer id) {
+		return productRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
 	}
 
@@ -41,7 +41,7 @@ public class ProductService {
 		return brandList;
 	}
 
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		this.findbyId(id);
 		productRepository.deleteById(id);
 	}
@@ -52,7 +52,7 @@ public class ProductService {
 	}
 
 	public Product update(Product obj) {
-		Product newObj = findbyId(Long.valueOf(obj.getId()));
+		Product newObj = findbyId(obj.getId());
 		updateData(newObj, obj);
 		return productRepository.save(newObj);
 	}

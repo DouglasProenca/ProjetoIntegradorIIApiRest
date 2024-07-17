@@ -18,7 +18,7 @@ public class Country extends RepresentationModel<Country> implements Serializabl
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "paisid")
-	private Long idCountry;
+	private Integer idCountry;
 	@ApiModelProperty(value = "Nome do Pais em Português.")
 	@Column(name = "paisnome")
 	private String namePort;
@@ -29,18 +29,18 @@ public class Country extends RepresentationModel<Country> implements Serializabl
 
 	}
 
-	public Country(Long idCountry, String namePort, String nameEng) {
+	public Country(Integer idCountry, String namePort, String nameEng) {
 		super();
 		this.idCountry = idCountry;
 		this.namePort = namePort;
 		this.nameEng = nameEng;
 	}
 
-	public Country(int id) {
-		this.idCountry = Long.valueOf(id);
+	public Country(Integer id) {
+		this.idCountry = id;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return idCountry;
 	}
 
@@ -55,7 +55,7 @@ public class Country extends RepresentationModel<Country> implements Serializabl
 	/**
 	 * @param idCountry the idCountry to set
 	 */
-	public void setIdCountry(Long idCountry) {
+	public void setIdCountry(Integer idCountry) {
 		this.idCountry = idCountry;
 	}
 	

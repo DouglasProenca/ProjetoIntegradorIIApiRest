@@ -47,7 +47,7 @@ public class CountryService {
 	}
 	
 
-	public Country findbyId(long id) {
+	public Country findbyId(Integer id) {
 		Country country = countryRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pais não encontrado"));
 		country.add(linkTo(methodOn(CountryController.class).findById(id)).withSelfRel());
 		return country;

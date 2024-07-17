@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.apicr7imports.domain.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	@Query("SELECT b FROM Product b WHERE b.nome like %:nome%")
 	public List<Product> findByNome(@Param("nome") String nome);

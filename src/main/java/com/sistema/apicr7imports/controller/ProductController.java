@@ -47,7 +47,7 @@ public class ProductController {
 	
 	@ApiOperation(value = "Trazer produto por id")
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Product> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
+	public ResponseEntity<Product> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id) {
 		return ResponseEntity.ok().body(productService.findbyId(id));
 	}
 	
@@ -59,7 +59,7 @@ public class ProductController {
 
 	@ApiOperation(value = "Deleta um produto")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
+	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id) {
 		productService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
