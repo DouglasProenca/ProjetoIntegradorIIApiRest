@@ -15,9 +15,9 @@ services:
     ports:
       - "8088:8080"
     volumes:
-      - ./target/api-cr7-imports-0.0.1-SNAPSHOT.jar:/usr/src/app/api-cr7-imports-0.0.1-SNAPSHOT.jar
+      - ./target/cr7-api-imports.jar:/usr/src/app/cr7-api-imports.jar
     working_dir: /usr/src/app
-    command: ["java", "-jar", "api-cr7-imports-0.0.1-SNAPSHOT.jar"]
+    command: ["java", "-jar", "cr7-api-imports.jar"]
     networks:
       - my-network  # Adicionando o serviço à rede my-network
 
@@ -38,9 +38,9 @@ services:
     depends_on:
       - Api	  
     volumes:
-      - ./target/webServiceCR7-0.0.1-SNAPSHOT.jar:/usr/src/app/webServiceCR7-0.0.1-SNAPSHOT.jar
+      - ./target/web-service-cr7imports.jar:/usr/src/app/web-service-cr7imports.jar
     working_dir: /usr/src/app
-    command: ["java", "-jar", "webServiceCR7-0.0.1-SNAPSHOT.jar"]
+    command: ["java", "-jar", "web-service-cr7imports.jar"]
     networks:
       - my-network  # Adicionando o serviço à rede my-network
 
