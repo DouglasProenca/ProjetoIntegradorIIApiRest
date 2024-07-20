@@ -34,8 +34,10 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Product>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                        ,@RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<Product>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                         @ApiParam(value = "limite.",required=false,example = "10")
+			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
 	@ApiOperation(value = "Gera Excel dos produtos")
 	@ApiResponses(value = {
