@@ -59,7 +59,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> insert(@RequestBody Category category);
+	public ResponseEntity<Category> insert(@RequestBody Category category);
 	
 	@ApiOperation(value = "Atualiza uma Categoria")
 	@ApiResponses(value = {
@@ -68,7 +68,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> update(@RequestBody Category category);
+	public ResponseEntity<Category> update(@RequestBody Category category);
 	
 	@ApiOperation(value = "Deleta uma Categoria")
 	@ApiResponses(value = {

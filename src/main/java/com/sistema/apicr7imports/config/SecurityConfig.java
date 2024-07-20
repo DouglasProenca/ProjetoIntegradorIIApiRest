@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.sistema.apicr7imports.security.jwt.JwtConfigurer;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
 
 @EnableWebSecurity
@@ -36,20 +38,19 @@ public class SecurityConfig {
 	 @Bean
 	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        return http
-	                .httpBasic().disable()
-	                .csrf(AbstractHttpConfigurer::disable)
-	                .sessionManagement(
-	            		session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	                .authorizeHttpRequests(
-	                    authorizeHttpRequests -> authorizeHttpRequests
-	                        .antMatchers("/acesso/login", "/api-docs/**", "/swagger-ui/**").permitAll()
-	                        .antMatchers("/apicr7imports/private/**").authenticated().antMatchers("/apicr7imports/users").denyAll()
-	                )
-	                .cors()
-	                .and()
-	                .apply(new JwtConfigurer(tokenProvider))
-	                .and()
-	                 .build();
+                    .httpBasic(basic -> basic.disable())
+                    .csrf(AbstractHttpConfigurer::disable)
+                    .sessionManagement(
+                            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .authorizeHttpRequests(
+                            authorizeHttpRequests -> authorizeHttpRequests
+                                    .antMatchers("/acesso/login", "/api-docs/**", "/swagger-ui/**").permitAll()
+                                    .antMatchers("/apicr7imports/private/**").authenticated().antMatchers("/apicr7imports/users").denyAll()
+                    )
+                    .cors(withDefaults())
+                    .apply(new JwtConfigurer(tokenProvider))
+                    .and()
+                    .build();
 	 
 	    }
 

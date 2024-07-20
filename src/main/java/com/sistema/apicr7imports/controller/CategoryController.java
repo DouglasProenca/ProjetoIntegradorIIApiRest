@@ -1,12 +1,16 @@
 package com.sistema.apicr7imports.controller;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.CategoryControllerInterface;
 import com.sistema.apicr7imports.domain.Category;
@@ -26,7 +30,9 @@ public class CategoryController implements CategoryControllerInterface{
 	
 	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		return service.createExcel();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.attachment().filename("categorias.xlsx").build());
+		return ResponseEntity.ok().headers(headers).body(service.createExcel());
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,19 +45,21 @@ public class CategoryController implements CategoryControllerInterface{
 		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
 	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> insert(@RequestBody Category category) {
-		return service.insert(category);
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Category> insert(@RequestBody Category category) {
+		Category categoryCreate = service.insert(category);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getId()).toUri();
+		return ResponseEntity.created(uri).body(categoryCreate);
 	}
 	
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> update(@RequestBody Category category) {
-		service.update(category);
-		return ResponseEntity.noContent().build();
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Category> update(@RequestBody Category category) {
+		return ResponseEntity.ok().body(service.update(service.update(category)));
 	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -39,17 +39,17 @@ public class ProductController implements ProductControllerInterface {
 		return ResponseEntity.ok().body(productService.findAllPage(PageRequest.of(page, limit)));
 	}
 	
-	@GetMapping( produces = "application/json")
+	@GetMapping(MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Product>> findAll() {
 		return ResponseEntity.ok().body(productService.findAll());
 	}
 	
-	@GetMapping(value = "/{id}", produces = "application/json")
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(productService.findbyId(id));
 	}
 	
-	@GetMapping(value = "/searchproduct", produces = "application/json")
+	@GetMapping(value = "/searchproduct", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Product>> findByProduct(@RequestParam(value = "product") String product) {
 		return ResponseEntity.ok().body(productService.findbyBrand(product));
 	}
@@ -60,24 +60,22 @@ public class ProductController implements ProductControllerInterface {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping( produces = "application/json")
-	public ResponseEntity<Void> insert(@RequestBody Product product) {
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productService.insert(product).getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Product> insert(@RequestBody Product product) {
+		Product productCreate = productService.insert(product);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
+		return ResponseEntity.created(uri).body(productCreate);
 	}
 
-	@PutMapping( produces = "application/json")
-	public ResponseEntity<Void> update(@RequestBody Product product) {
-		productService.update(product);
-		return ResponseEntity.noContent().build();
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Product> update(@RequestBody Product product) {
+		return ResponseEntity.ok().body(productService.update(product));
 	}
 	
 	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("produtos.xlsx").build());
-
 		return ResponseEntity.ok().headers(headers).body(productService.createExcel());
 	}
 

@@ -1,16 +1,11 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Category;
@@ -23,6 +18,9 @@ public class CategoryService {
 
 	@Autowired 
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	Excel excel;
 
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
@@ -41,15 +39,13 @@ public class CategoryService {
 		return category;
 	}
 
-	public ResponseEntity<Void> delete(Integer id) {
+	public void delete(Integer id) {
 		findbyId(id);
 		categoryRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
 	}
 
-	public ResponseEntity<Void> insert(Category obj) {
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryRepository.save(obj).getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public Category insert(Category category) {
+		return categoryRepository.save(category);
 	}
 
 	public Category update(Category category) {
@@ -62,15 +58,8 @@ public class CategoryService {
 		return categoryRepository.save(category);
 	}
 	
-	public ResponseEntity<byte[]> createExcel() throws IOException {
-		
-		Excel excel = new Excel();
-		ArrayList<?> dados = (ArrayList<?>) findAll();
-		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("categorias.xlsx").build());
-
-		return ResponseEntity.ok().headers(headers).body(excel.exportExcel(dados, "Categorias", titulos).toByteArray());
+	public byte[] createExcel() throws IOException {
+		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};	
+		return excel.exportExcel((ArrayList<?>) findAll(), "Categorias", titulos).toByteArray();
 	}
 }

@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,22 +41,26 @@ public class BrandController implements BrandControllerInterface {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		return service.delete(id);
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> insert(@RequestBody Brand brand) {
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(brand).getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Brand> insert(@RequestBody Brand brand) {
+		Brand brandCreate = service.insert(brand);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getId()).toUri();
+		return ResponseEntity.created(uri).body(brandCreate);
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> update(@RequestBody Brand brand) {
-		return service.update(brand);
+	public ResponseEntity<Brand> update(@RequestBody Brand brand) {
+		return ResponseEntity.ok().body(service.update(brand));
 	}
 	
 	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		return service.getExcel();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());
+		return ResponseEntity.ok().headers(headers).body(service.getExcel());
 	}
 }

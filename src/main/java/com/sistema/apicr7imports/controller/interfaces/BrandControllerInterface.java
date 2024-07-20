@@ -61,7 +61,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> insert(@RequestBody Brand brand);
+	public ResponseEntity<Brand> insert(@RequestBody Brand brand);
 	
 	@ApiOperation(value = "Atualiza uma Marca")
 	@ApiResponses(value = {
@@ -70,7 +70,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 404, message = "Marca não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> update(@RequestBody Brand brand);
+	public ResponseEntity<Brand> update(@RequestBody Brand brand);
 	
 	@ApiOperation(value = "Deleta uma marca")
 	@ApiResponses(value = {

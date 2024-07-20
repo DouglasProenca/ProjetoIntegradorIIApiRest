@@ -71,7 +71,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> insert(@RequestBody Product product);
+	public ResponseEntity<Product> insert(@RequestBody Product product);
 	
 	@ApiOperation(value = "Atualiza um produto")
 	@ApiResponses(value = {
@@ -80,7 +80,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 404, message = "Produto não encontrado."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> update(@RequestBody Product product);
+	public ResponseEntity<Product> update(@RequestBody Product product);
 	
 	@ApiOperation(value = "Deleta um produto")
 	@ApiResponses(value = {
