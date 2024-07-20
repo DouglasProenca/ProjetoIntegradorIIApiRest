@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
@@ -41,31 +44,35 @@ public class BrandService {
 		return DozerMapper.parseListObject(brandList, BrandVO.class);
 	}
 
-	public void delete(Integer id) {
-		this.findbyId(id);
+	public ResponseEntity<Void> delete(Integer id) {
+		findbyId(id);
 		brandRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 
-	public Brand insert(Brand obj) {
-		brandRepository.save(obj);
-		return obj;
+	public Brand insert(Brand brand) {
+		brandRepository.save(brand);
+		return brand;
 	}
 
-	public Brand update(Brand obj) {
-		Brand newObj = findbyId(obj.getId());
-		updateData(newObj, obj);
-		return brandRepository.save(newObj);
-	}
-
-	private void updateData(Brand newBrand, Brand brand) {
+	public ResponseEntity<Void> update(Brand brand) {
+		Brand newBrand = findbyId(brand.getId());
 		newBrand.setMarca(brand.getMarca());
 		newBrand.setCountry(brand.getCountry());
 		newBrand.setData(brand.getData());
 		newBrand.setUser(brand.getUser());
+		
+		brandRepository.save(newBrand);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
-	public byte[] createExcel() throws IOException {
+	public ResponseEntity<byte[]> getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());
+
+		return ResponseEntity.ok().headers(headers).body(excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray());
 	}
 }
