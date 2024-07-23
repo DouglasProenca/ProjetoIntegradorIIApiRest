@@ -33,9 +33,9 @@ public class CategoryService {
 
 	public List<Category> findbyCategory(String text) {
 		List<Category> category = categoryRepository.findByCategoria(text);
-		if (category.isEmpty()) {
+		if (category.isEmpty()) 
 			throw new ObjectNotFoundException("Categoria não encontrada!");
-		}
+		
 		return category;
 	}
 

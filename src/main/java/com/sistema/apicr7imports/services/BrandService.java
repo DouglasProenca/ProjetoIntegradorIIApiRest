@@ -35,9 +35,9 @@ public class BrandService {
 
 	public List<BrandVO> findbyBrand(String text) {
 		List<Brand> brandList = brandRepository.findByMarca(text);
-		if (brandList.isEmpty()) {
+		if (brandList.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
-		}
+		
 		return DozerMapper.parseListObject(brandList, BrandVO.class);
 	}
 
