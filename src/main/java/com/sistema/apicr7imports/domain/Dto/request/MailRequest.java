@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain.request;
+package com.sistema.apicr7imports.domain.Dto.request;
 
 import com.sistema.apicr7imports.domain.VO.UserVO;
 

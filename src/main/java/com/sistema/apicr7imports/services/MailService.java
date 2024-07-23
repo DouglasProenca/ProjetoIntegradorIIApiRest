@@ -12,7 +12,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.domain.request.MailRequest;
+import com.sistema.apicr7imports.domain.Dto.request.MailRequest;
+
 
 @Service
 public class MailService {

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.sistema.apicr7imports.domain.request.MailRequest;
+
+import com.sistema.apicr7imports.domain.Dto.request.MailRequest;
 import com.sistema.apicr7imports.services.MailService;
 
 import io.swagger.annotations.Api;
