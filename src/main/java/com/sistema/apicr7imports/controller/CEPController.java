@@ -22,7 +22,7 @@ public class CEPController implements CEPControllerInterface {
 	
 	@GetMapping(value = "/{cep}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CEPResponse> findById(@PathVariable String cep) {
-		return ResponseEntity.ok().body(viaCEPService.cep(cep));
+		return ResponseEntity.ok().body(viaCEPService.getCEPResponse(cep));
 	}
 	
 }

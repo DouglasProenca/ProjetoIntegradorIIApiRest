@@ -1,23 +1,15 @@
 package com.sistema.apicr7imports.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sistema.apicr7imports.domain.Dto.response.CEPResponse;
 
 
-@Controller
-public class ViaCEPService {
+@FeignClient(name = "cep", url = "https://viacep.com.br")
+public interface ViaCEPService {
 
-	@Autowired
-	RestTemplate restTemplate;
-
-	@Value("${viacep.api.url}")
-	private String url;
-
-	public CEPResponse cep(String cep) {
-		return restTemplate.getForObject(url.replace("codigoPostal", cep), CEPResponse.class);
-	}
+	@GetMapping("/ws/{cep}/json")
+	CEPResponse getCEPResponse(@PathVariable("cep") String cep);
 }
