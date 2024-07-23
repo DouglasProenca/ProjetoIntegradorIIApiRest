@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.interfaces.CEPControllerInterface;
-import com.sistema.apicr7imports.domain.CEP;
+import com.sistema.apicr7imports.domain.Dto.response.CEPResponse;
 import com.sistema.apicr7imports.services.ViaCEPService;
 
 
@@ -21,7 +21,7 @@ public class CEPController implements CEPControllerInterface {
 	ViaCEPService viaCEPService;
 	
 	@GetMapping(value = "/{cep}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CEP> findById(@PathVariable String cep) {
+	public ResponseEntity<CEPResponse> findById(@PathVariable String cep) {
 		return ResponseEntity.ok().body(viaCEPService.cep(cep));
 	}
 	

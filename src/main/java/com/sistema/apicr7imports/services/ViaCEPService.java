@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
-import com.sistema.apicr7imports.domain.CEP;
+import com.sistema.apicr7imports.domain.Dto.response.CEPResponse;
+
 
 @Controller
 public class ViaCEPService {
@@ -16,7 +17,7 @@ public class ViaCEPService {
 	@Value("${viacep.api.url}")
 	private String url;
 
-	public CEP cep(String cep) {
-		return restTemplate.getForObject(url.replace("codigoPostal", cep), CEP.class);
+	public CEPResponse cep(String cep) {
+		return restTemplate.getForObject(url.replace("codigoPostal", cep), CEPResponse.class);
 	}
 }
