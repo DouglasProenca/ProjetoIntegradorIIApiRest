@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.interfaces.CPFControllerInterface;
-import com.sistema.apicr7imports.domain.response.CpfResponse;
+import com.sistema.apicr7imports.domain.Dto.response.CpfResponse;
 import com.sistema.apicr7imports.services.CPFService;
 
 @RestController

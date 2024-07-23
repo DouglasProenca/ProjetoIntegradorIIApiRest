@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain.response;
+package com.sistema.apicr7imports.domain.Dto.response;
 
 public class CpfResponse {
 

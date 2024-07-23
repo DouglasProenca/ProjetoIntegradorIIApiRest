@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.sistema.apicr7imports.domain.response.CpfResponse;
+import com.sistema.apicr7imports.domain.Dto.response.CpfResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

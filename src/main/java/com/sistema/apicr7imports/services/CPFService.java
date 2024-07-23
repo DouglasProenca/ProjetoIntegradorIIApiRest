@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.domain.response.CpfResponse;
+import com.sistema.apicr7imports.domain.Dto.response.CpfResponse;
 import com.sistema.apicr7imports.repository.CPFRepository;
 
 @Service
