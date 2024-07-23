@@ -5,8 +5,8 @@ import javax.ws.rs.FormParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.sistema.apicr7imports.domain.request.AcessRequest;
-import com.sistema.apicr7imports.domain.response.AcessResponse;
+import com.sistema.apicr7imports.domain.Dto.request.AcessRequest;
+import com.sistema.apicr7imports.domain.Dto.response.AcessResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

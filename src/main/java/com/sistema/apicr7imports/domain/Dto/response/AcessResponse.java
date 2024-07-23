@@ -1,18 +1,18 @@
-package com.sistema.apicr7imports.domain.request;
+package com.sistema.apicr7imports.domain.Dto.response;
 
-public class AcessRequest {
+public class AcessResponse {
 	
 	private String username;
-	private String password;
+	private String token;
 	
 	/**
 	 * @param username
 	 * @param token
 	 */
-	public AcessRequest(String username, String password) {
+	public AcessResponse(String username, String token) {
 		super();
 		this.username = username;
-		this.password = password;
+		this.token = token;
 	}
 
 	/**
@@ -30,16 +30,16 @@ public class AcessRequest {
 	}
 
 	/**
-	 * @return the password
+	 * @return the token
 	 */
-	public String getPassword() {
-		return password;
+	public String getToken() {
+		return token;
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param token the token to set
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setToken(String token) {
+		this.token = token;
 	}
 }
