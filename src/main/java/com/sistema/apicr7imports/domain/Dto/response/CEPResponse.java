@@ -1,6 +1,6 @@
-package com.sistema.apicr7imports.domain;
+package com.sistema.apicr7imports.domain.Dto.response;
 
-public class CEP {
+public class CEPResponse {
 
 	private String cep;
 	private String logradouro;
