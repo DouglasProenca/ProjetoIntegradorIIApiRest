@@ -47,9 +47,9 @@ public class XYChart implements JRChartCustomizer {
 		}
 
 		XYPlot plot = (XYPlot) chart.getPlot();
-		if (xyRenderer) {
+		if (xyRenderer)
 			plot.setRenderer(new XYAreaRenderer());
-		}
+		
 		plot.setRangeGridlinesVisible(rangeGridlinesVisible);
 		plot.setDomainGridlinesVisible(domainGridlinesVisible);
 		plot.getRangeAxis().setTickMarksVisible(horTickMarksVisible);
