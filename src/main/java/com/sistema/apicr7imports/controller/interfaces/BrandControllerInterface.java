@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.controller.interfaces;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,17 @@ public interface BrandControllerInterface {
 		})
 	public ResponseEntity<List<BrandVO>> findAll();
 	
+	@ApiOperation(value = "Todas as marcas cadastradas de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos as marcas cadastradas."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	public ResponseEntity<Page<Brand>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                         @ApiParam(value = "limite.",required=false,example = "10")
+			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	
 	@ApiOperation(value = "Gera Excel das Marcas")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Excel de marcas de roupa."),
@@ -46,6 +58,19 @@ public interface BrandControllerInterface {
 		})
 	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
 
+	@ApiOperation(value = "Todos os produtos cadastrados por nome de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os produtos cadastrados por nome."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	public ResponseEntity<Page<Brand>> findByBrandPage(@ApiParam(value = "Nome da marca.", required = true,example = "teste") 
+														   @RequestParam(value = "brand") String brand,
+			                                               @ApiParam(value = "Página.",required= false,example = "1")
+			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                               @ApiParam(value = "limite.",required=false,example = "10")
+			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	
 	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Marcas de roupas."),

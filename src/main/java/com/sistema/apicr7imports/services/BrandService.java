@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
@@ -35,6 +37,7 @@ public class BrandService {
 
 	public List<BrandVO> findbyBrand(String text) {
 		List<Brand> brandList = brandRepository.findByMarca(text);
+		
 		if (brandList.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
 		
@@ -63,5 +66,18 @@ public class BrandService {
 	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
 		return excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray();
+	}
+	
+	public Page<Brand> findAllPage(Pageable pageable) {
+		return brandRepository.findAll(pageable);
+	}
+	
+	public Page<Brand> findbyBrandPageable(String text,Pageable pageable) {
+		Page<Brand> brandList = brandRepository.findByMarcaPageable(text,pageable);
+		
+		if (brandList.isEmpty()) 
+			throw new ObjectNotFoundException("Marca não encontrada!");
+
+		return brandList;
 	}
 }
