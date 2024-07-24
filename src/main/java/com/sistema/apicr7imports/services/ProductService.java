@@ -33,31 +33,25 @@ public class ProductService {
 	}
 
 	public List<Product> findbyProduct(String text) {
-		List<Product> brandList = productRepository.findByNome(text);
+		List<Product> productList = productRepository.findByNome(text);
 		
-		if (brandList.isEmpty()) 
+		if (productList.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return brandList;
+		return productList;
 	}
 
 	public void delete(Integer id) {
-		this.findbyId(id);
+		findbyId(id);
 		productRepository.deleteById(id);
 	}
 
 	public Product insert(Product obj) {
-		productRepository.save(obj);
-		return obj;
+		return productRepository.save(obj);
 	}
 
-	public Product update(Product obj) {
-		Product newObj = findbyId(obj.getId());
-		updateData(newObj, obj);
-		return productRepository.save(newObj);
-	}
-
-	private void updateData(Product newProduct, Product product) {
+	public Product update(Product product) {
+		Product newProduct = findbyId(product.getId());
 		newProduct.setNome(product.getNome());
 		newProduct.setQuantidade(product.getQuantidade());
 		newProduct.setBrand(product.getBrand());
@@ -66,6 +60,8 @@ public class ProductService {
 		newProduct.setValor(product.getValor());
 		newProduct.setData(product.getData());
 		newProduct.setUser(product.getUser());
+		
+		return productRepository.save(newProduct);
 	}
 	
 	public byte[] createExcel() throws IOException {
@@ -78,11 +74,11 @@ public class ProductService {
 	}
 	
 	public Page<Product> findbyProductPageable(String text,Pageable pageable) {
-		Page<Product> brandList = productRepository.findByNomePageable(text,pageable);
+		Page<Product> productList = productRepository.findByNomePageable(text,pageable);
 		
-		if (brandList.isEmpty()) 
+		if (productList.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return brandList;
+		return productList;
 	}
 }
