@@ -56,6 +56,19 @@ public interface ProductControllerInterface {
 		})
 	public ResponseEntity<Product> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
 
+	@ApiOperation(value = "Todos os produtos cadastrados por nome de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os produtos cadastrados por nome."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	public ResponseEntity<Page<Product>> findByProductPage(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") 
+														   @RequestParam(value = "prouduct") String product,
+			                                               @ApiParam(value = "Página.",required= false,example = "1")
+			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                               @ApiParam(value = "limite.",required=false,example = "10")
+			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	
 	@ApiOperation(value = "Trazer tipos de produtos cadastrados por nome")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Produtos."),
@@ -63,7 +76,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 404, message = "Produto não encontrado."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<Product>> findByProduct(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") @RequestParam(value = "marca") String product);
+	public ResponseEntity<List<Product>> findByProduct(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") @RequestParam(value = "prouduct") String product);
 	
 	@ApiOperation(value = "Insere um produto")
 	@ApiResponses(value = {

@@ -32,12 +32,12 @@ public class ProductService {
 				.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
 	}
 
-	public List<Product> findbyBrand(String text) {
+	public List<Product> findbyProduct(String text) {
 		List<Product> brandList = productRepository.findByNome(text);
 		
 		if (brandList.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
-		
+
 		return brandList;
 	}
 
@@ -75,5 +75,14 @@ public class ProductService {
 	
 	public Page<Product> findAllPage(Pageable pageable) {
 		return productRepository.findAll(pageable);
+	}
+	
+	public Page<Product> findbyProductPageable(String text,Pageable pageable) {
+		Page<Product> brandList = productRepository.findByNomePageable(text,pageable);
+		
+		if (brandList.isEmpty()) 
+			throw new ObjectNotFoundException("Produto não encontrado!");
+
+		return brandList;
 	}
 }

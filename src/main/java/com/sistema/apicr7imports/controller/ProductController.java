@@ -49,9 +49,16 @@ public class ProductController implements ProductControllerInterface {
 		return ResponseEntity.ok().body(productService.findbyId(id));
 	}
 	
+	@GetMapping(value = "/pagelist/searchproduct", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<Product>> findByProductPage(@RequestParam(value = "product") String product
+			                                              ,@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                              ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+		return ResponseEntity.ok().body(productService.findbyProductPageable(product,PageRequest.of(page, limit)));
+	}
+	
 	@GetMapping(value = "/searchproduct", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Product>> findByProduct(@RequestParam(value = "product") String product) {
-		return ResponseEntity.ok().body(productService.findbyBrand(product));
+		return ResponseEntity.ok().body(productService.findbyProduct(product));
 	}
 
 	@DeleteMapping("/{id}")
