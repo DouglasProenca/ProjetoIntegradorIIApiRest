@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.controller.interfaces;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,17 @@ public interface CategoryControllerInterface {
 		})
 	public ResponseEntity<List<Category>> findAll();
 	
+	@ApiOperation(value = "Todos os tipos de roupas cadastrados por categoria de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os tipos de roupas cadastradas por categoria."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	public ResponseEntity<Page<Category>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                         @ApiParam(value = "limite.",required=false,example = "10")
+			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrados por id")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Categoria cadastrada por id."),
@@ -35,6 +47,19 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<Category> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	
+	@ApiOperation(value = "Todos os tipos de roupas cadastradas por categoria de forma paginada")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Todos os tipos de roupas cadastradas por categoria."),
+		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		})
+	public ResponseEntity<Page<Category>> findByCategoryPage(@ApiParam(value = "Nome da categoria.", required = true,example = "teste") 
+														   @RequestParam(value = "category") String category,
+			                                               @ApiParam(value = "Página.",required= false,example = "1")
+			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                               @ApiParam(value = "limite.",required=false,example = "10")
+			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
 	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
 	@ApiResponses(value = {
@@ -59,7 +84,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Category> insert(@RequestBody Category category);
+	public ResponseEntity<Category> save(@RequestBody Category category);
 	
 	@ApiOperation(value = "Atualiza uma Categoria")
 	@ApiResponses(value = {

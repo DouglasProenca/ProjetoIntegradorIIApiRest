@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
@@ -17,35 +19,35 @@ import com.sistema.apicr7imports.repository.CategoryRepository;
 public class CategoryService {
 
 	@Autowired 
-	private CategoryRepository categoryRepository;
+	private CategoryRepository repository;
 	
 	@Autowired
 	Excel excel;
 
 	public List<Category> findAll() {
-		return categoryRepository.findAll();
+		return repository.findAll();
 	}
 
 	public Category findbyId(Integer id) {
-		return categoryRepository.findById(id)
+		return repository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
 	}
 
-	public List<Category> findbyCategory(String text) {
-		List<Category> category = categoryRepository.findByCategoria(text);
-		if (category.isEmpty()) 
+	public List<Category> findbyCategory(String name) {
+		List<Category> list = repository.findByCategoria(name);
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Categoria não encontrada!");
 		
-		return category;
+		return list;
 	}
 
 	public void delete(Integer id) {
 		findbyId(id);
-		categoryRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
-	public Category insert(Category category) {
-		return categoryRepository.save(category);
+	public Category save(Category category) {
+		return repository.save(category);
 	}
 
 	public Category update(Category category) {
@@ -55,11 +57,24 @@ public class CategoryService {
 		newObj.setData(category.getData());
 		newObj.setUser(category.getUser());
 		
-		return categoryRepository.save(category);
+		return repository.save(category);
 	}
 	
-	public byte[] createExcel() throws IOException {
+	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};	
 		return excel.exportExcel((ArrayList<?>) findAll(), "Categorias", titulos).toByteArray();
+	}
+	
+	public Page<Category> findAllPage(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
+	
+	public Page<Category> findbyBrandPageable(String name,Pageable pageable) {
+		Page<Category> list = repository.findByCategoriaPageable(name,pageable);
+		
+		if (list.isEmpty()) 
+			throw new ObjectNotFoundException("Categoria não encontrada!");
+
+		return list;
 	}
 }
