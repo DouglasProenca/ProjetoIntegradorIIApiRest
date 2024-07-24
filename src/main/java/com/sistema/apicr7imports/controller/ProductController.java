@@ -68,8 +68,8 @@ public class ProductController implements ProductControllerInterface {
 	}
 
 	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Product> insert(@RequestBody Product product) {
-		Product productCreate = productService.insert(product);
+	public ResponseEntity<Product> save(@RequestBody Product product) {
+		Product productCreate = productService.save(product);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(productCreate);
 	}
@@ -83,7 +83,7 @@ public class ProductController implements ProductControllerInterface {
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("produtos.xlsx").build());
-		return ResponseEntity.ok().headers(headers).body(productService.createExcel());
+		return ResponseEntity.ok().headers(headers).body(productService.getExcel());
 	}
 
 }

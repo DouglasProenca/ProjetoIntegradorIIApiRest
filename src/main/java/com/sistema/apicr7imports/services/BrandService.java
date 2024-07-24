@@ -35,13 +35,13 @@ public class BrandService {
 				.orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
 	}
 
-	public List<BrandVO> findbyBrand(String text) {
-		List<Brand> brandList = brandRepository.findByMarca(text);
+	public List<BrandVO> findbyBrand(String name) {
+		List<Brand> list = brandRepository.findByMarca(name);
 		
-		if (brandList.isEmpty()) 
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
 		
-		return DozerMapper.parseListObject(brandList, BrandVO.class);
+		return DozerMapper.parseListObject(list, BrandVO.class);
 	}
 
 	public void delete(Integer id) {
@@ -49,7 +49,7 @@ public class BrandService {
 		brandRepository.deleteById(id);
 	}
 
-	public Brand insert(Brand brand) {
+	public Brand save(Brand brand) {
 		return brandRepository.save(brand);
 	}
 
@@ -72,12 +72,12 @@ public class BrandService {
 		return brandRepository.findAll(pageable);
 	}
 	
-	public Page<Brand> findbyBrandPageable(String text,Pageable pageable) {
-		Page<Brand> brandList = brandRepository.findByMarcaPageable(text,pageable);
+	public Page<Brand> findbyBrandPageable(String name,Pageable pageable) {
+		Page<Brand> list = brandRepository.findByMarcaPageable(name,pageable);
 		
-		if (brandList.isEmpty()) 
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
 
-		return brandList;
+		return list;
 	}
 }

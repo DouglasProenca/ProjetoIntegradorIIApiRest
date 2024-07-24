@@ -32,13 +32,13 @@ public class ProductService {
 				.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
 	}
 
-	public List<Product> findbyProduct(String text) {
-		List<Product> productList = productRepository.findByNome(text);
+	public List<Product> findbyProduct(String name) {
+		List<Product> list = productRepository.findByNome(name);
 		
-		if (productList.isEmpty()) 
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return productList;
+		return list;
 	}
 
 	public void delete(Integer id) {
@@ -46,7 +46,7 @@ public class ProductService {
 		productRepository.deleteById(id);
 	}
 
-	public Product insert(Product obj) {
+	public Product save(Product obj) {
 		return productRepository.save(obj);
 	}
 
@@ -64,7 +64,7 @@ public class ProductService {
 		return productRepository.save(newProduct);
 	}
 	
-	public byte[] createExcel() throws IOException {
+	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
 		return excel.exportExcel((ArrayList<?>) findAll(), "Produtos", titulos).toByteArray();
 	}
@@ -73,12 +73,12 @@ public class ProductService {
 		return productRepository.findAll(pageable);
 	}
 	
-	public Page<Product> findbyProductPageable(String text,Pageable pageable) {
-		Page<Product> productList = productRepository.findByNomePageable(text,pageable);
+	public Page<Product> findbyProductPageable(String name,Pageable pageable) {
+		Page<Product> list = productRepository.findByNomePageable(name,pageable);
 		
-		if (productList.isEmpty()) 
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return productList;
+		return list;
 	}
 }

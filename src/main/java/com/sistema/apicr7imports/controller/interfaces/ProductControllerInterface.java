@@ -84,7 +84,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Product> insert(@RequestBody Product product);
+	public ResponseEntity<Product> save(@RequestBody Product product);
 	
 	@ApiOperation(value = "Atualiza um produto")
 	@ApiResponses(value = {

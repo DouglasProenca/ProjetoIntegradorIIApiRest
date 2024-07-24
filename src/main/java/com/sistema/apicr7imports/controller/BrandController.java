@@ -44,8 +44,8 @@ public class BrandController implements BrandControllerInterface {
 	
 	@GetMapping(value = "/pagelist/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<Brand>> findByBrandPage(@RequestParam(value = "brand") String brand
-			                                              ,@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                              ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+			                                          ,@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                          ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
 		return ResponseEntity.ok().body(service.findbyBrandPageable(brand,PageRequest.of(page, limit)));
 	}
 
@@ -61,8 +61,8 @@ public class BrandController implements BrandControllerInterface {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Brand> insert(@RequestBody Brand brand) {
-		Brand brandCreate = service.insert(brand);
+	public ResponseEntity<Brand> save(@RequestBody Brand brand) {
+		Brand brandCreate = service.save(brand);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(brandCreate);
 	}
@@ -72,7 +72,7 @@ public class BrandController implements BrandControllerInterface {
 		return ResponseEntity.ok().body(service.update(brand));
 	}
 	
-	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());

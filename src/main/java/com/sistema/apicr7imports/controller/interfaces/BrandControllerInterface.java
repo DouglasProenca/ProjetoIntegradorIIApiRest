@@ -86,7 +86,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Brand> insert(@RequestBody Brand brand);
+	public ResponseEntity<Brand> save(@RequestBody Brand brand);
 	
 	@ApiOperation(value = "Atualiza uma Marca")
 	@ApiResponses(value = {
