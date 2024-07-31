@@ -53,7 +53,7 @@ class CountryServiceTest {
 		Country result = service.findbyId(1);
 		
 		assertNotNull(result);
-		assertNotNull(result.getId());
+		assertNotNull(result.getIdCountry());
 		assertNotNull(result.getLinks());
 		assertTrue(result.toString().contains(""));
 		assertEquals("Name Port Test1", result.getNamePort());

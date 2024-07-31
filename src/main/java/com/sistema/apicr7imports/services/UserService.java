@@ -13,42 +13,44 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 public class UserService {
 
 	@Autowired
-	private UserRepository repo;
+	UserRepository repository;
 
 	public List<User> findAll() {
-		return repo.findAll();
+		return repository.findAll();
 	}
 
-	public User findbyId(String id) {
-		User user = repo.findById(Long.valueOf(id)).orElse(null);
-		if (user == null) {
+	public User findbyId(Integer id) {
+		User user = repository.findById(id).orElse(null);
+		
+		if (user == null) 
 			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
+		
 		return user;
 	}
 	
 	public User findbyUser(String text) {
-		User user = repo.findByUsername(text);
-		if (user == null) {
+		User user = repository.findByUsername(text);
+		
+		if (user == null) 
 			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
+		
 		return user;
 	}
 
-	public void delete(String id) {
+	public void delete(Integer id) {
 		findbyId(id);
-		repo.deleteById(Long.valueOf(id));
+		repository.deleteById(id);
 	}
 	
 	public User insert(User obj) {
-		repo.insert(obj);
+		repository.insert(obj);
 		return obj;
 	}
 
 	public User update(User obj) {
-		User newObj = findbyId(String.valueOf(obj.getId()));
+		User newObj = findbyId(obj.getId());
 		updateData(newObj,obj);
-		return repo.save(obj);
+		return repository.save(obj);
 	}
 
 	private void updateData(User newObj, User obj) {

@@ -39,7 +39,7 @@ public class UserController {
 	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable String id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
@@ -54,8 +54,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody User obj, @PathVariable String id) {
-		obj.setId(Long.valueOf(id));
+	public ResponseEntity<Void> update(@RequestBody User obj, @PathVariable Integer id) {
+		obj.setId(id);
 		obj.setPassword(BCrypt.withDefaults().hashToString(8, obj.getPassword().toCharArray()));
 		obj.setMailPassword(CodeString.codeString(obj.getMailPassword()));
 		obj = service.update(obj);

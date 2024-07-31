@@ -14,15 +14,15 @@ import com.sistema.apicr7imports.services.ViaCEPService;
 
 
 @RestController
-@RequestMapping(value = "/private/cep")
+@RequestMapping(value = "/private/cep/v1")
 public class CEPController implements CEPControllerInterface {
 
 	@Autowired
-	ViaCEPService viaCEPService;
+	ViaCEPService service;
 	
 	@GetMapping(value = "/{cep}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CEPResponse> findById(@PathVariable String cep) {
-		return ResponseEntity.ok().body(viaCEPService.getCEPResponse(cep));
+		return ResponseEntity.ok().body(service.getCEPResponse(cep));
 	}
 	
 }

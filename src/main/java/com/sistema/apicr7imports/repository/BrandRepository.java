@@ -20,9 +20,4 @@ public interface BrandRepository extends JpaRepository<Brand, Integer>{
 	@Query("SELECT b FROM Brand b WHERE b.marca like %:marca%")
 	public Page<Brand> findByMarcaPageable(@Param("marca") String marca,Pageable pageable);
 
-
-	/*@Modifying(clearAutomatically = true)
-	@Transactional
-	@Query(value = "INSERT INTO rc_marca VALUES (:#{#b.marca}, :#{#b.country}, :#{#b.data}, :#{#b.user})", nativeQuery = true)
-	public void insert(@Param("b") Brand b);*/
 }

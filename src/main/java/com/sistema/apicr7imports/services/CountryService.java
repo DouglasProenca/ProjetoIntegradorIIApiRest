@@ -25,21 +25,21 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 public class CountryService {
 
 	@Autowired
-	private CountryRepository countryRepository;
+	CountryRepository countryRepository;
 	
 	@Autowired
-	private PagedResourcesAssembler<Country> assembler;
+	PagedResourcesAssembler<Country> assembler;
 
 	public List<Country> findAll() {
 		List<Country> list = countryRepository.findAll();
-		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getId())).withSelfRel()));
+		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getIdCountry())).withSelfRel()));
 		return list;
 	}
 	
 	public PagedModel<EntityModel<Country>> findAllPage(Pageable pageable) {
 		Page<Country> list = countryRepository.findAll(pageable);
 		
-		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getId())).withSelfRel()));
+		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getIdCountry())).withSelfRel()));
 		
 		Link link = linkTo(methodOn(CountryController.class).findAllPage(pageable.getPageNumber(),pageable.getPageSize(),"asc")).withSelfRel();
 		

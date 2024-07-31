@@ -12,9 +12,9 @@ import com.sistema.apicr7imports.repository.CPFRepository;
 public class CPFService {
 
 	@Autowired
-	CPFRepository cpfRepository;
+	CPFRepository repository;
 
 	public CpfResponse verifyCPF(String cpf) throws SQLException {
-		return new CpfResponse(cpfRepository.isCPF(cpf));
+		return new CpfResponse(repository.isCPF(cpf));
 	}
 }

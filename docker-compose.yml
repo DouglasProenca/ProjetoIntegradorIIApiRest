@@ -54,8 +54,6 @@ services:
       - "9999:8080"
     environment:
       DOZZLE_AUTH_PROVIDER: simple
-    networks:
-      - my-network  # Adicionando o serviço à rede my-network
 
 networks:
   my-network:
