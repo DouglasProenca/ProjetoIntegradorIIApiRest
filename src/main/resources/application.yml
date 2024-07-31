@@ -32,18 +32,6 @@ spring:
     servlet:
       path: /apicr7imports
 
-  mail:
-    host: smtp.gmail.com
-    port: 587 		
-    username: sist.dv.dg21@gmail.com
-    password: yzaf nuef qafi conv
-    properties:
-            mail: 
-              smtp:
-                auth: true
-                starttls: 
-                  enable: true	
-
 ## Token valido por 1h  
 security:
          jwt:

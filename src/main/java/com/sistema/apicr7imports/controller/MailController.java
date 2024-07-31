@@ -1,6 +1,8 @@
 package com.sistema.apicr7imports.controller;
 
 
+import java.io.UnsupportedEncodingException;
+
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class MailController {
 	
 	@ApiOperation(value = "Envia um e-mail")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> insert(@RequestBody MailRequest mailRequest) throws MessagingException {
+	public ResponseEntity<Void> insert(@RequestBody MailRequest mailRequest) throws MessagingException, UnsupportedEncodingException, NullPointerException {
 		mailService.sendEmail(mailRequest);
 		return ResponseEntity.created(null).build();
 	}
