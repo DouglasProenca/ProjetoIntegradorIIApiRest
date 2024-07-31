@@ -20,6 +20,13 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "rc_user")
 public class User implements UserDetails, Serializable {
@@ -28,37 +35,33 @@ public class User implements UserDetails, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	Integer id;
 	
 	@Column(name = "[user]", unique = true)
-	private String userName;
+	String userName;
 	
-	@Column(name = "mail")
-	private String mail;
+	String mail;
 	
-	@Column(name = "password")
-	private String password;
+	String password;
 	
 	@Column(name = "account_non_expired")
-	private Boolean accountNonExpired;
+	Boolean accountNonExpired;
 	
 	@Column(name = "account_non_locked")
-	private Boolean accountNonLocked;
+	Boolean accountNonLocked;
 	
 	@Column(name = "credentials_non_expired")
-	private Boolean credentialsNonExpired;
+	Boolean credentialsNonExpired;
 	
-	@Column(name = "enabled")
-	private Boolean enabled;
+	Boolean enabled;
 	
 	@Column(name = "mailpassword")
-	private String mailPassword;
+	String mailPassword;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "rc_user_permission", joinColumns = { @JoinColumn (name = "id_user") },
 			inverseJoinColumns = { @JoinColumn (name = "id_permission")})
-	private List<Permission> permissions;
+	List<Permission> permissions;
 	
 	public List<String> getRoles() {
 		List<String> roles = new ArrayList<>();
@@ -67,73 +70,9 @@ public class User implements UserDetails, Serializable {
 		}
 		return roles;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public void setMail(String fullName) {
-		this.mail = fullName;
-	}
-
-	public Boolean getAccountNonExpired() {
-		return accountNonExpired;
-	}
-
-	public void setAccountNonExpired(Boolean accountNonExpired) {
-		this.accountNonExpired = accountNonExpired;
-	}
-
-	public Boolean getAccountNonLocked() {
-		return accountNonLocked;
-	}
-
-	public void setAccountNonLocked(Boolean accountNonLocked) {
-		this.accountNonLocked = accountNonLocked;
-	}
-
-	public Boolean getCredentialsNonExpired() {
-		return credentialsNonExpired;
-	}
-
-	public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-		this.credentialsNonExpired = credentialsNonExpired;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public List<Permission> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+		return this.userName;
 	}
 
 	@Override
@@ -169,14 +108,6 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
-	}
-
-	public String getMailPassword() {
-		return mailPassword;
-	}
-
-	public void setMailPassword(String mailPassword) {
-		this.mailPassword = mailPassword;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.sistema.apicr7imports.domain;
 
-import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,92 +13,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.sistema.apicr7imports.domain.Dto.UserDTO;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import io.swagger.annotations.ApiModelProperty;
-
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "rc_marca")
-public class Brand implements Serializable {
+public class Brand {
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	Integer id;
 	
-	@ApiModelProperty(value = "Nome da marca")
 	@Column(name = "marca")
-	private String marca;
+	String marca;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pais")
-	private Country country;
+	Country country;
 	
 	@Column(name = "[date]")
-	private Date data;
+	Date data;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
-	private UserDTO user;
-	
-	public Brand() {
-		
-	}
-	
-	
-	/**
-	 * @param id
-	 */
-	public Brand(Integer id) {
-		super();
-		this.id = id;
-	}
-
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
+	User user;
 
 	@Override
 	public String toString() {
-		return id + ";" + marca + ";" + country.getNamePort() + ";" + data + ";" + user.getUserName();
+		return id + ";" + marca + ";" + country.getNamePort() + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUsername();
 	}
 	
 }
