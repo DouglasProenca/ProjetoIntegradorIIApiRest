@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<Category>> findAll();
+	public ResponseEntity<List<CategoryDTO>> findAll();
 	
 	@ApiOperation(value = "Todos os tipos de roupas cadastrados por categoria de forma paginada")
 	@ApiResponses(value = {
@@ -34,7 +35,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Category>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+	public ResponseEntity<Page<CategoryDTO>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
 			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
 			                                         @ApiParam(value = "limite.",required=false,example = "10")
 			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
@@ -46,7 +47,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Category> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	public ResponseEntity<CategoryDTO> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
 	
 	@ApiOperation(value = "Todos os tipos de roupas cadastradas por categoria de forma paginada")
 	@ApiResponses(value = {
@@ -54,7 +55,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Category>> findByCategoryPage(@ApiParam(value = "Nome da categoria.", required = true,example = "teste") 
+	public ResponseEntity<Page<CategoryDTO>> findByCategoryPage(@ApiParam(value = "Nome da categoria.", required = true,example = "teste") 
 														   @RequestParam(value = "category") String category,
 			                                               @ApiParam(value = "Página.",required= false,example = "1")
 			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
@@ -68,7 +69,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<Category>> findByCategoria(@ApiParam(value = "Nome da Categoria.", required = true,example = "teste") @RequestParam(value= "categoria") String categoria);
+	public ResponseEntity<List<CategoryDTO>> findByCategoria(@ApiParam(value = "Nome da Categoria.", required = true,example = "teste") @RequestParam(value= "categoria") String categoria);
 	
 	@ApiOperation(value = "Gera Excel das categorias de roupas")
 	@ApiResponses(value = {

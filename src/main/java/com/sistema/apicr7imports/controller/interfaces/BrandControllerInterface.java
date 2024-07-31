@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.sistema.apicr7imports.domain.Brand;
-import com.sistema.apicr7imports.domain.VO.BrandVO;
+import com.sistema.apicr7imports.domain.Dto.BrandDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +28,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<BrandVO>> findAll();
+	public ResponseEntity<List<BrandDTO>> findAll();
 	
 	@ApiOperation(value = "Todas as marcas cadastradas de forma paginada")
 	@ApiResponses(value = {
@@ -36,7 +36,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Brand>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+	public ResponseEntity<Page<BrandDTO>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
 			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
 			                                         @ApiParam(value = "limite.",required=false,example = "10")
 			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
@@ -56,7 +56,8 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 404, message = "Marca não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
+	public ResponseEntity<BrandDTO> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") 
+	                                         @PathVariable Integer id);
 
 	@ApiOperation(value = "Todos os produtos cadastrados por nome de forma paginada")
 	@ApiResponses(value = {
@@ -64,12 +65,12 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Brand>> findByBrandPage(@ApiParam(value = "Nome da marca.", required = true,example = "teste") 
-														   @RequestParam(value = "brand") String brand,
-			                                               @ApiParam(value = "Página.",required= false,example = "1")
-			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                               @ApiParam(value = "limite.",required=false,example = "10")
-			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@ApiParam(value = "Nome da marca.", required = true,example = "teste") 
+														  @RequestParam(value = "brand") String brand,
+			                                              @ApiParam(value = "Página.",required= false,example = "1")
+			                                              @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                              @ApiParam(value = "limite.",required=false,example = "10")
+			                                              @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
 	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
 	@ApiResponses(value = {
@@ -78,7 +79,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 404, message = "Marca não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<BrandVO>> findByBrand(@ApiParam(value = "Nome da Marca.", required = true,example = "teste") @RequestParam(value = "marca") String brand);
+	public ResponseEntity<List<BrandDTO>> findByBrand(@ApiParam(value = "Nome da Marca.", required = true,example = "teste") @RequestParam(value = "marca") String brand);
 	
 	@ApiOperation(value = "Insere uma marca")
 	@ApiResponses(value = {

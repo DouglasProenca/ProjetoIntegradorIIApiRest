@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Brand;
-import com.sistema.apicr7imports.domain.VO.BrandVO;
+import com.sistema.apicr7imports.domain.Dto.BrandDTO;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.BrandRepository;
@@ -21,46 +21,47 @@ import com.sistema.apicr7imports.repository.BrandRepository;
 public class BrandService {
 
 	@Autowired
-	BrandRepository brandRepository;
+	BrandRepository repository;
 	
 	@Autowired
 	Excel excel;
 
-	public List<BrandVO> findAll() {
-		return DozerMapper.parseListObject(brandRepository.findAll(), BrandVO.class);
+	public List<BrandDTO> findAll() {
+		return DozerMapper.parseListObject(repository.findAll(), BrandDTO.class);
 	}
 
-	public Brand findbyId(Integer id) {
-		return brandRepository.findById(id)
-				.orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
+	public BrandDTO findbyId(Integer id) {
+		Brand brand = repository.findById(id)
+				   .orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
+		return DozerMapper.parseObject(brand, BrandDTO.class);
 	}
 
-	public List<BrandVO> findbyBrand(String name) {
-		List<Brand> list = brandRepository.findByMarca(name);
+	public List<BrandDTO> findbyBrand(String name) {
+		List<Brand> list = repository.findByMarca(name);
 		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
 		
-		return DozerMapper.parseListObject(list, BrandVO.class);
+		return DozerMapper.parseListObject(list, BrandDTO.class);
 	}
 
 	public void delete(Integer id) {
 		findbyId(id);
-		brandRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	public Brand save(Brand brand) {
-		return brandRepository.save(brand);
+		return repository.save(brand);
 	}
 
 	public Brand update(Brand brand) {
-		Brand newBrand = findbyId(brand.getId());
+		Brand newBrand = DozerMapper.parseObject(findbyId(brand.getId()),Brand.class);
 		newBrand.setMarca(brand.getMarca());
 		newBrand.setCountry(brand.getCountry());
 		newBrand.setData(brand.getData());
 		newBrand.setUser(brand.getUser());
-		
-		return brandRepository.save(newBrand);
+
+		return repository.save(newBrand);
 	}
 	
 	public byte[] getExcel() throws IOException {
@@ -68,16 +69,16 @@ public class BrandService {
 		return excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray();
 	}
 	
-	public Page<Brand> findAllPage(Pageable pageable) {
-		return brandRepository.findAll(pageable);
+	public Page<BrandDTO> findAllPage(Pageable pageable) {
+		return repository.findAll(pageable).map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
 	}
 	
-	public Page<Brand> findbyBrandPageable(String name,Pageable pageable) {
-		Page<Brand> list = brandRepository.findByMarcaPageable(name,pageable);
+	public Page<BrandDTO> findbyBrandPageable(String name,Pageable pageable) {
+		Page<Brand> list = repository.findByMarcaPageable(name,pageable);
 		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Marca não encontrada!");
 
-		return list;
+		return list.map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
 	}
 }

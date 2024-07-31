@@ -11,47 +11,50 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Product;
+import com.sistema.apicr7imports.domain.Dto.ProductDTO;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.ProductRepository;
 
 @Service
 public class ProductService {
 
 	@Autowired
-	ProductRepository productRepository;
+	ProductRepository repository;
 	
 	@Autowired
 	Excel excel;
 	
-	public List<Product> findAll() {
-		return productRepository.findAll();
+	public List<ProductDTO> findAll() {
+		return DozerMapper.parseListObject(repository.findAll(), ProductDTO.class);
 	}
 	
-	public Product findbyId(Integer id) {
-		return productRepository.findById(id)
+	public ProductDTO findbyId(Integer id) {
+		Product product = repository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
+		return DozerMapper.parseObject(product, ProductDTO.class);
 	}
 
-	public List<Product> findbyProduct(String name) {
-		List<Product> list = productRepository.findByNome(name);
+	public List<ProductDTO> findbyProduct(String name) {
+		List<Product> list = repository.findByNome(name);
 		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return list;
+		return DozerMapper.parseListObject(list, ProductDTO.class);
 	}
 
 	public void delete(Integer id) {
 		findbyId(id);
-		productRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	public Product save(Product obj) {
-		return productRepository.save(obj);
+		return repository.save(obj);
 	}
 
 	public Product update(Product product) {
-		Product newProduct = findbyId(product.getId());
+		Product newProduct = DozerMapper.parseObject(findbyId(product.getId()), Product.class);
 		newProduct.setNome(product.getNome());
 		newProduct.setQuantidade(product.getQuantidade());
 		newProduct.setBrand(product.getBrand());
@@ -61,7 +64,7 @@ public class ProductService {
 		newProduct.setData(product.getData());
 		newProduct.setUser(product.getUser());
 		
-		return productRepository.save(newProduct);
+		return repository.save(newProduct);
 	}
 	
 	public byte[] getExcel() throws IOException {
@@ -69,16 +72,16 @@ public class ProductService {
 		return excel.exportExcel((ArrayList<?>) findAll(), "Produtos", titulos).toByteArray();
 	}
 	
-	public Page<Product> findAllPage(Pageable pageable) {
-		return productRepository.findAll(pageable);
+	public Page<ProductDTO> findAllPage(Pageable pageable) {
+		return repository.findAll(pageable).map(product -> DozerMapper.parseObject(product, ProductDTO.class));
 	}
 	
-	public Page<Product> findbyProductPageable(String name,Pageable pageable) {
-		Page<Product> list = productRepository.findByNomePageable(name,pageable);
+	public Page<ProductDTO> findbyProductPageable(String name,Pageable pageable) {
+		Page<Product> list = repository.findByNomePageable(name,pageable);
 		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
 
-		return list;
+		return list.map(product -> DozerMapper.parseObject(product, ProductDTO.class));
 	}
 }

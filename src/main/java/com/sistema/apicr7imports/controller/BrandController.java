@@ -16,7 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.BrandControllerInterface;
 import com.sistema.apicr7imports.domain.Brand;
-import com.sistema.apicr7imports.domain.VO.BrandVO;
+import com.sistema.apicr7imports.domain.Dto.BrandDTO;
 import com.sistema.apicr7imports.services.BrandService;
 
 @RestController
@@ -27,30 +27,30 @@ public class BrandController implements BrandControllerInterface {
 	private BrandService service;
 	
 	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Brand>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                        ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+	public ResponseEntity<Page<BrandDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                         ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
 		return ResponseEntity.ok().body(service.findAllPage(PageRequest.of(page, limit)));
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BrandVO>> findAll() {
+	public ResponseEntity<List<BrandDTO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Brand> findById(@PathVariable Integer id) {
+	public ResponseEntity<BrandDTO> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@GetMapping(value = "/pagelist/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Brand>> findByBrandPage(@RequestParam(value = "brand") String brand
-			                                          ,@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                          ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@RequestParam(value = "brand") String brand
+			                                             ,@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                             ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
 		return ResponseEntity.ok().body(service.findbyBrandPageable(brand,PageRequest.of(page, limit)));
 	}
 
 	@GetMapping(value = "/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BrandVO>> findByBrand(@RequestParam(value = "marca") String brand) {
+	public ResponseEntity<List<BrandDTO>> findByBrand(@RequestParam(value = "marca") String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(brand));
 	}
 

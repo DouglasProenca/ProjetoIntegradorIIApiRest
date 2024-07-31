@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.mocks.MockCategory;
 import com.sistema.apicr7imports.repository.CategoryRepository;
 
@@ -46,7 +47,7 @@ class CategoryServiceTest {
 
 		when(categoryRepository.findAll()).thenReturn(list);
 
-		List<Category> cateogry = service.findAll();
+		List<Category> cateogry = DozerMapper.parseListObject(service.findAll(), Category.class);
 
 		assertNotNull(cateogry);
 		assertEquals(14, cateogry.size());
@@ -81,7 +82,7 @@ class CategoryServiceTest {
 
 		when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
 
-		Category result = service.findbyId(1);
+		Category result =  DozerMapper.parseObject(service.findbyId(1), Category.class);
 
 		assertNotNull(result);
 		assertNotNull(result.getId());
@@ -96,7 +97,7 @@ class CategoryServiceTest {
 
 		when(categoryRepository.findAll()).thenReturn(list);
 
-		List<Category> cateogry = service.findAll();
+		List<Category> cateogry = DozerMapper.parseListObject(service.findAll(), Category.class);
 
 		assertNotNull(cateogry);
 		assertEquals(14, cateogry.size());

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sistema.apicr7imports.domain.Product;
+import com.sistema.apicr7imports.domain.Dto.ProductDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<Product>> findAll();
+	public ResponseEntity<List<ProductDTO>> findAll();
 	
 	@ApiOperation(value = "Todos os produtos cadastrados de forma paginada")
 	@ApiResponses(value = {
@@ -34,7 +35,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Product>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
+	public ResponseEntity<Page<ProductDTO>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
 			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
 			                                         @ApiParam(value = "limite.",required=false,example = "10")
 			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
@@ -54,7 +55,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 404, message = "Produto não encontrado."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Product> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
+	public ResponseEntity<ProductDTO> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
 
 	@ApiOperation(value = "Todos os produtos cadastrados por nome de forma paginada")
 	@ApiResponses(value = {
@@ -62,7 +63,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<Product>> findByProductPage(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") 
+	public ResponseEntity<Page<ProductDTO>> findByProductPage(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") 
 														   @RequestParam(value = "prouduct") String product,
 			                                               @ApiParam(value = "Página.",required= false,example = "1")
 			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
@@ -76,7 +77,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 404, message = "Produto não encontrado."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<Product>> findByProduct(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") @RequestParam(value = "prouduct") String product);
+	public ResponseEntity<List<ProductDTO>> findByProduct(@ApiParam(value = "Nome do Produto.", required = true,example = "teste") @RequestParam(value = "prouduct") String product);
 	
 	@ApiOperation(value = "Insere um produto")
 	@ApiResponses(value = {

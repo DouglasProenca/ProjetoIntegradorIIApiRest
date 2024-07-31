@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.ProductControllerInterface;
 import com.sistema.apicr7imports.domain.Product;
+import com.sistema.apicr7imports.domain.Dto.ProductDTO;
 import com.sistema.apicr7imports.services.ProductService;
 
 @RestController
@@ -31,59 +32,59 @@ import com.sistema.apicr7imports.services.ProductService;
 public class ProductController implements ProductControllerInterface {
 
 	@Autowired
-	ProductService productService;
+	ProductService service;
 	
 	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Product>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                        ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
-		return ResponseEntity.ok().body(productService.findAllPage(PageRequest.of(page, limit)));
+	public ResponseEntity<Page<ProductDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                           ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+		return ResponseEntity.ok().body(service.findAllPage(PageRequest.of(page, limit)));
 	}
 	
-	@GetMapping(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Product>> findAll() {
-		return ResponseEntity.ok().body(productService.findAll());
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ProductDTO>> findAll() {
+		return ResponseEntity.ok().body(service.findAll());
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Product> findById(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(productService.findbyId(id));
+	public ResponseEntity<ProductDTO> findById(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@GetMapping(value = "/pagelist/searchproduct", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Product>> findByProductPage(@RequestParam(value = "product") String product
+	public ResponseEntity<Page<ProductDTO>> findByProductPage(@RequestParam(value = "product") String product
 			                                              ,@RequestParam(value = "page",defaultValue = "0") Integer page
 			                                              ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
-		return ResponseEntity.ok().body(productService.findbyProductPageable(product,PageRequest.of(page, limit)));
+		return ResponseEntity.ok().body(service.findbyProductPageable(product,PageRequest.of(page, limit)));
 	}
 	
 	@GetMapping(value = "/searchproduct", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Product>> findByProduct(@RequestParam(value = "product") String product) {
-		return ResponseEntity.ok().body(productService.findbyProduct(product));
+	public ResponseEntity<List<ProductDTO>> findByProduct(@RequestParam(value = "product") String product) {
+		return ResponseEntity.ok().body(service.findbyProduct(product));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		productService.delete(id);
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping(consumes= MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> save(@RequestBody Product product) {
-		Product productCreate = productService.save(product);
+		Product productCreate = service.save(product);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(productCreate);
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> update(@RequestBody Product product) {
-		return ResponseEntity.ok().body(productService.update(product));
+		return ResponseEntity.ok().body(service.update(product));
 	}
 	
-	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("produtos.xlsx").build());
-		return ResponseEntity.ok().headers(headers).body(productService.getExcel());
+		return ResponseEntity.ok().headers(headers).body(service.getExcel());
 	}
 
 }

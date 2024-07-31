@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.CategoryControllerInterface;
 import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
 import com.sistema.apicr7imports.services.CategoryService;
 
 @RestController
@@ -26,17 +27,17 @@ public class CategoryController implements CategoryControllerInterface{
 	private CategoryService service;
 	
 	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Category>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                        ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+	public ResponseEntity<Page<CategoryDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                            ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
 		return ResponseEntity.ok().body(service.findAllPage(PageRequest.of(page, limit)));
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Category>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("categorias.xlsx").build());
@@ -44,19 +45,19 @@ public class CategoryController implements CategoryControllerInterface{
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Category> findById(@PathVariable Integer id) {
+	public ResponseEntity<CategoryDTO> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
 	@GetMapping(value = "/pagelist/searchcategory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<Category>> findByCategoryPage(@RequestParam(value = "category") String category
-			                                                ,@RequestParam(value = "page",defaultValue = "0") Integer page
-			                                                ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+	public ResponseEntity<Page<CategoryDTO>> findByCategoryPage(@RequestParam(value = "category") String category
+			                                                   ,@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                                   ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
 		return ResponseEntity.ok().body(service.findbyBrandPageable(category,PageRequest.of(page, limit)));
 	}
 	
 	@GetMapping(value = "/searchcategory",produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Category>> findByCategoria(@RequestParam(value= "categoria") String categoria) {
+	public ResponseEntity<List<CategoryDTO>> findByCategoria(@RequestParam(value = "categoria") String categoria) {
 		return ResponseEntity.ok().body(service.findbyCategory(categoria));
 	}
 	

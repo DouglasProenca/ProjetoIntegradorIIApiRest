@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.CategoryRepository;
 
 
@@ -19,26 +21,28 @@ import com.sistema.apicr7imports.repository.CategoryRepository;
 public class CategoryService {
 
 	@Autowired 
-	private CategoryRepository repository;
+	CategoryRepository repository;
 	
 	@Autowired
 	Excel excel;
 
-	public List<Category> findAll() {
-		return repository.findAll();
+	public List<CategoryDTO> findAll() {
+		return DozerMapper.parseListObject(repository.findAll(), CategoryDTO.class);
 	}
 
-	public Category findbyId(Integer id) {
-		return repository.findById(id)
+	public CategoryDTO findbyId(Integer id) {
+		Category category = repository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
+		return DozerMapper.parseObject(category, CategoryDTO.class);
 	}
 
-	public List<Category> findbyCategory(String name) {
+	public List<CategoryDTO> findbyCategory(String name) {
 		List<Category> list = repository.findByCategoria(name);
+		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Categoria não encontrada!");
 		
-		return list;
+		return DozerMapper.parseListObject(list, CategoryDTO.class);
 	}
 
 	public void delete(Integer id) {
@@ -51,7 +55,7 @@ public class CategoryService {
 	}
 
 	public Category update(Category category) {
-		Category newObj = findbyId(category.getId());
+		Category newObj = DozerMapper.parseObject(findbyId(category.getId()), Category.class);
 		
 		newObj.setCategoria(category.getCategoria());
 		newObj.setData(category.getData());
@@ -65,16 +69,16 @@ public class CategoryService {
 		return excel.exportExcel((ArrayList<?>) findAll(), "Categorias", titulos).toByteArray();
 	}
 	
-	public Page<Category> findAllPage(Pageable pageable) {
-		return repository.findAll(pageable);
+	public Page<CategoryDTO> findAllPage(Pageable pageable) {
+		return repository.findAll(pageable).map(category -> DozerMapper.parseObject(category, CategoryDTO.class));
 	}
 	
-	public Page<Category> findbyBrandPageable(String name,Pageable pageable) {
+	public Page<CategoryDTO> findbyBrandPageable(String name,Pageable pageable) {
 		Page<Category> list = repository.findByCategoriaPageable(name,pageable);
 		
 		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Categoria não encontrada!");
 
-		return list;
+		return list.map(category -> DozerMapper.parseObject(category, CategoryDTO.class));
 	}
 }
