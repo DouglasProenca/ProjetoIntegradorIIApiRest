@@ -2,18 +2,16 @@ package com.sistema.apicr7imports.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -28,64 +26,50 @@ public class JasperService {
 	@Autowired
 	DataSource dataSource;
 
-	public ResponseEntity<byte[]> GerarManagentmentReport() throws SQLException, JRException {
+	public byte[] createManagentmentReport() throws SQLException, JRException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = dataSource.getConnection();
+		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("/jasper/").toString());
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Managent_Report_Geral.jasper");
 		
-		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("/jasper/").toString());
-		
-		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
+		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		
 		JasperExportManager.exportReportToPdfStream(print, byteArrayOutputStream);
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("managentment.pdf").build());
-
-		return ResponseEntity.created(null).headers(headers).body(byteArrayOutputStream.toByteArray());
+		return byteArrayOutputStream.toByteArray();
 	}
 
-	public ResponseEntity<byte[]>  gerarAnalyticalReport(String initial_date, String final_date) throws JRException, SQLException, ParseException {
+	public byte[] createAnalyticalReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = dataSource.getConnection();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		parametros.put("data1", Date.from(initial_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		parametros.put("data2", Date.from(final_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Analytical_Report_Geral.jasper");
 
-		parametros.put("data1", simpleDateFormat.parse(initial_date));
-		parametros.put("data2", simpleDateFormat.parse(final_date));
-
-		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
+		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		
 		JasperExportManager.exportReportToPdfStream(print, byteArrayOutputStream);
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("analitycal.pdf").build());
-		
-		return ResponseEntity.created(null).headers(headers).body(byteArrayOutputStream.toByteArray());
+		return byteArrayOutputStream.toByteArray();
 	}
 
-	public ResponseEntity<byte[]> gerarSyntheticReport(String initial_date, String final_date) throws JRException, SQLException, ParseException {
+	public byte[] createSyntheticReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		Connection conn = dataSource.getConnection();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		parametros.put("data1", Date.from(initial_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		parametros.put("data2", Date.from(final_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
 		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Synthetic_Report_Geral.jasper");
 
-		parametros.put("data1", simpleDateFormat.parse(initial_date));
-		parametros.put("data2", simpleDateFormat.parse(final_date));
-
-		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, conn);
+		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		
 		JasperExportManager.exportReportToPdfStream(print, byteArrayOutputStream);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("Synthetic.pdf").build());
-
-		return ResponseEntity.created(null).headers(headers).body(byteArrayOutputStream.toByteArray());
+		return byteArrayOutputStream.toByteArray();
 	}
 }

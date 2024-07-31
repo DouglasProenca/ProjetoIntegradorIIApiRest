@@ -2,9 +2,11 @@ package com.sistema.apicr7imports.controller.interfaces;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.annotations.Api;
@@ -32,9 +34,10 @@ public interface JasperControllerInterface {
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<byte[]> analitycalPDF(@ApiParam(value = "Data Inicial do Período.", required = true,example = "2020-01-01")
-												@NotNull String initial_date,
+												@NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
 												@ApiParam(value = "Data final do Período.", required = true,example = "2024-01-01")
-			                                    @NotNull String final_date) throws JRException, SQLException, ParseException;
+			                                    @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) 
+			                                    		throws JRException, SQLException, ParseException;
 	
 	@ApiOperation(value = "Relatório Sintético")
 	@ApiResponses(value = {
@@ -43,9 +46,9 @@ public interface JasperControllerInterface {
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<byte[]> syntheticPDF(@ApiParam(value = "Data Inicial do Período.", required = true,example = "2020-01-01")
-			                                   @NotNull String initial_date,
+			                                   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
 			                                   @ApiParam(value = "Data final do Período.", required = true,example = "2024-01-01")
-											   @NotNull String final_date) throws JRException, SQLException, ParseException;
+											   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
 	
 
 }
