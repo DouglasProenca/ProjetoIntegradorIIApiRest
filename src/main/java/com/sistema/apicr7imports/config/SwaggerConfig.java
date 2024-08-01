@@ -11,6 +11,10 @@ import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
 
+import com.sistema.apicr7imports.domain.Brand;
+import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.domain.Product;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -35,7 +39,9 @@ public class SwaggerConfig {
 	Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.sistema.apicr7imports")).paths(PathSelectors.any())
-				.build().useDefaultResponseMessages(false).apiInfo(apiInfo());
+				.build().useDefaultResponseMessages(false).apiInfo(apiInfo()).ignoredParameterTypes(Category.class)
+				.ignoredParameterTypes(Brand.class)
+				.ignoredParameterTypes(Product.class);
 	}
 
 	private ApiInfo apiInfo() {

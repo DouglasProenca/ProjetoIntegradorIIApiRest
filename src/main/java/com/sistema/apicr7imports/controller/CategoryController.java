@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.CategoryControllerInterface;
-import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
 import com.sistema.apicr7imports.services.CategoryService;
 
 @RestController
@@ -62,15 +63,15 @@ public class CategoryController implements CategoryControllerInterface{
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Category> save(@RequestBody Category category) {
-		Category categoryCreate = service.save(category);
+	public ResponseEntity<CategoryDTO> save(@RequestBody CreateCategoryRequest categoryRequest) {
+		CategoryDTO categoryCreate = service.save(categoryRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(categoryCreate);
 	}
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Category> update(@RequestBody Category category) {
-		return ResponseEntity.ok().body(service.update(category));
+	public ResponseEntity<CategoryDTO> update(@RequestBody EditCategoryRequest categoryRequest) {
+		return ResponseEntity.ok().body(service.update(categoryRequest));
 	}
 	
 	@DeleteMapping(value = "/{id}")

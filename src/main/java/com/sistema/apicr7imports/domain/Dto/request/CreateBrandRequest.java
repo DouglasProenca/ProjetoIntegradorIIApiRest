@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.domain.Dto.request;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,12 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MailRequest {
+public class CreateBrandRequest {
 
-	String destinatario;
-	String assunto;
-	String texto;
-	String anexoTitulo;
-	String anexoFile;
+	String marca;
+	Integer country;
+	LocalDate data;
 	
 }

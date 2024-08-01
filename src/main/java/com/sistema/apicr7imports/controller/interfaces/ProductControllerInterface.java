@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sistema.apicr7imports.domain.Product;
 import com.sistema.apicr7imports.domain.Dto.ProductDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateProductRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditProductRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,7 +86,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Product> save(@RequestBody Product product);
+	public ResponseEntity<ProductDTO> save(@RequestBody CreateProductRequest product);
 	
 	@ApiOperation(value = "Atualiza um produto")
 	@ApiResponses(value = {
@@ -94,7 +95,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(code = 404, message = "Produto não encontrado."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Product> update(@RequestBody Product product);
+	public ResponseEntity<ProductDTO> update(@RequestBody EditProductRequest product);
 	
 	@ApiOperation(value = "Deleta um produto")
 	@ApiResponses(value = {

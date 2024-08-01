@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,7 +86,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Category> save(@RequestBody Category category);
+	public ResponseEntity<CategoryDTO> save(@RequestBody CreateCategoryRequest categoryRequest);
 	
 	@ApiOperation(value = "Atualiza uma Categoria")
 	@ApiResponses(value = {
@@ -94,7 +95,7 @@ public interface CategoryControllerInterface {
 		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Category> update(@RequestBody Category category);
+	public ResponseEntity<CategoryDTO> update(@RequestBody EditCategoryRequest category);
 	
 	@ApiOperation(value = "Deleta uma Categoria")
 	@ApiResponses(value = {

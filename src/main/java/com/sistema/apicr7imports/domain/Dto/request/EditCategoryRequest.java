@@ -1,5 +1,8 @@
 package com.sistema.apicr7imports.domain.Dto.request;
 
+import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,12 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MailRequest {
+@AllArgsConstructor
+public class EditCategoryRequest {
 
-	String destinatario;
-	String assunto;
-	String texto;
-	String anexoTitulo;
-	String anexoFile;
-	
+	Integer id;
+	String categoria;
+	LocalDate data;
 }

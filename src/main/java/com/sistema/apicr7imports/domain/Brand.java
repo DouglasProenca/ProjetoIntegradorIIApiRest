@@ -42,6 +42,13 @@ public class Brand {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
 	User user;
+	
+	/**
+	 * @param id
+	 */
+	public Brand(Integer id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {

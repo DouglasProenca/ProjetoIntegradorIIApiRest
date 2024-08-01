@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.BrandControllerInterface;
-import com.sistema.apicr7imports.domain.Brand;
 import com.sistema.apicr7imports.domain.Dto.BrandDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateBrandRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditBrandRequest;
 import com.sistema.apicr7imports.services.BrandService;
 
 @RestController
@@ -61,15 +62,15 @@ public class BrandController implements BrandControllerInterface {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Brand> save(@RequestBody Brand brand) {
-		Brand brandCreate = service.save(brand);
+	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest) {
+		BrandDTO brandCreate = service.save(brandRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(brandCreate);
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Brand> update(@RequestBody Brand brand) {
-		return ResponseEntity.ok().body(service.update(brand));
+	public ResponseEntity<BrandDTO> update(@RequestBody EditBrandRequest brandRequest) {
+		return ResponseEntity.ok().body(service.update(brandRequest));
 	}
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

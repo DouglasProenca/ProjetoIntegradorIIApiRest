@@ -1,17 +1,23 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
 import com.sistema.apicr7imports.domain.Category;
+import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.CategoryRepository;
@@ -50,18 +56,20 @@ public class CategoryService {
 		repository.deleteById(id);
 	}
 
-	public Category save(Category category) {
-		return repository.save(category);
+	public CategoryDTO save(CreateCategoryRequest categoryRequest) {
+		Category category = new Category();
+		category.setCategoria(categoryRequest.getCategoria());
+		category.setData(Date.from(categoryRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        category.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		return DozerMapper.parseObject(repository.save(category),CategoryDTO.class);
 	}
 
-	public Category update(Category category) {
-		Category newObj = DozerMapper.parseObject(findbyId(category.getId()), Category.class);
-		
-		newObj.setCategoria(category.getCategoria());
-		newObj.setData(category.getData());
-		newObj.setUser(category.getUser());
-		
-		return repository.save(category);
+	public CategoryDTO update(EditCategoryRequest categoryRequest) {
+		Category newObj = DozerMapper.parseObject(findbyId(categoryRequest.getId()),Category.class);
+		newObj.setCategoria(categoryRequest.getCategoria());
+		newObj.setData(Date.from(categoryRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newObj.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		return DozerMapper.parseObject(repository.save(newObj),CategoryDTO.class);
 	}
 	
 	public byte[] getExcel() throws IOException {

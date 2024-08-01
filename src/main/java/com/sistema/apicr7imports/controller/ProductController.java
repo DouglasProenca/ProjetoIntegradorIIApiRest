@@ -23,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.ProductControllerInterface;
-import com.sistema.apicr7imports.domain.Product;
 import com.sistema.apicr7imports.domain.Dto.ProductDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateProductRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditProductRequest;
 import com.sistema.apicr7imports.services.ProductService;
 
 @RestController
@@ -69,15 +70,15 @@ public class ProductController implements ProductControllerInterface {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Product> save(@RequestBody Product product) {
-		Product productCreate = service.save(product);
+	public ResponseEntity<ProductDTO> save(@RequestBody  CreateProductRequest productRequest) {
+		ProductDTO productCreate = service.save(productRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(productCreate);
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Product> update(@RequestBody Product product) {
-		return ResponseEntity.ok().body(service.update(product));
+	public ResponseEntity<ProductDTO> update(@RequestBody EditProductRequest productRequest) {
+		return ResponseEntity.ok().body(service.update(productRequest));
 	}
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-import com.sistema.apicr7imports.domain.Brand;
 import com.sistema.apicr7imports.domain.Dto.BrandDTO;
+import com.sistema.apicr7imports.domain.Dto.request.CreateBrandRequest;
+import com.sistema.apicr7imports.domain.Dto.request.EditBrandRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,7 +87,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Brand> save(@RequestBody Brand brand);
+	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest);
 	
 	@ApiOperation(value = "Atualiza uma Marca")
 	@ApiResponses(value = {
@@ -96,7 +96,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(code = 404, message = "Marca não encontrada."),
 		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Brand> update(@RequestBody Brand brand);
+	public ResponseEntity<BrandDTO> update(@RequestBody EditBrandRequest brand);
 	
 	@ApiOperation(value = "Deleta uma marca")
 	@ApiResponses(value = {
