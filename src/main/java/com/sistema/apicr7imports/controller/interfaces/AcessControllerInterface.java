@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.sistema.apicr7imports.domain.Dto.request.AcessRequest;
 import com.sistema.apicr7imports.domain.Dto.response.AcessResponse;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "Autenticação Da Aplicação")
+@Tag(name = "Autenticação Da Aplicação")
 public interface AcessControllerInterface {
 
-	@ApiOperation(value = "Autenticar usuário e retornar um token de acesso")
+	@Operation(description = "Autenticar usuário e retornar um token de acesso")
 	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
-			@ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
-			@ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+			@ApiResponse(responseCode = "200", description = "OK - Retorna o nome e Usuário e Token de acesso."),
+			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
+			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
-	public ResponseEntity<AcessResponse> login(@ApiParam(value = "Usuário de Cadastro", required = true) @FormParam("username") String username,
-			                                   @ApiParam(value = "Senha de Cadastro", required = true) @FormParam("password") String password);
+	public ResponseEntity<AcessResponse> login(@Parameter(description  = "Usuário de Cadastro", required = true) @FormParam("username") String username,
+			                                   @Parameter(description = "Senha de Cadastro", required = true) @FormParam("password") String password);
 	
-	@ApiOperation(value = "Autenticar usuário e retornar um token de acesso por request Body")
+	@Operation(description = "Autenticar usuário e retornar um token de acesso por request Body")
 	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "OK - Retorna o nome e Usuário e Token de acesso."),
-			@ApiResponse(code = 403, message = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
-			@ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+			@ApiResponse(responseCode = "200", description = "OK - Retorna o nome e Usuário e Token de acesso."),
+			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
+			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
 	public ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest);
 	

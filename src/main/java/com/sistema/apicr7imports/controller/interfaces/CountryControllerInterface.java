@@ -10,28 +10,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sistema.apicr7imports.domain.Country;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "Paises")
+@Tag(name = "Paises")
 public interface CountryControllerInterface {
 	
-	@ApiOperation(value = "Todos os paises cadastrados")
+	@Operation(description = "Todos os paises cadastrados")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os paises cadastrados."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Todos os paises cadastrados."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<List<Country>> findAll();
 
-	@ApiOperation(value = "Todos os paises cadastrados de forma paginada")
+	@Operation(description = "Todos os paises cadastrados de forma paginada")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os paises cadastrados."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Todos os paises cadastrados."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<PagedModel<EntityModel<Country>>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
                                                                        ,@RequestParam(value = "limit",defaultValue = "10") Integer limit
@@ -39,13 +39,13 @@ public interface CountryControllerInterface {
 
 
 
-	@ApiOperation(value = "Pais cadastrado por id")
+	@Operation(description = "Pais cadastrado por id")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Pais cadastrado por id."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Pais não encontrado."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Pais cadastrado por id."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Pais não encontrado."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Country> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	public ResponseEntity<Country> findById(@Parameter(description = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
 
 }

@@ -13,97 +13,97 @@ import com.sistema.apicr7imports.domain.Dto.BrandDTO;
 import com.sistema.apicr7imports.domain.Dto.request.CreateBrandRequest;
 import com.sistema.apicr7imports.domain.Dto.request.EditBrandRequest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "Tipos de Marcas")
+@Tag(name = "Tipos de Marcas")
 public interface BrandControllerInterface {
 	
-	@ApiOperation(value = "Trazer todos os tipos de marcas cadastradas")
+	@Operation(description = "Trazer todos os tipos de marcas cadastradas")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os tipos de marcas cadastradas."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Todos os tipos de marcas cadastradas."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<List<BrandDTO>> findAll();
 	
-	@ApiOperation(value = "Todas as marcas cadastradas de forma paginada")
+	@Operation(description = "Todas as marcas cadastradas de forma paginada")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos as marcas cadastradas."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		    @ApiResponse(responseCode = "200", description = "Todos as marcas cadastradas."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<BrandDTO>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
-			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                         @ApiParam(value = "limite.",required=false,example = "10")
-			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<BrandDTO>> findAllPage(@Parameter(description = "Página.",required= false,example = "1")
+			                                          @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                          @Parameter(description = "limite.",required=false,example = "10")
+			                                          @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
-	@ApiOperation(value = "Gera Excel das Marcas")
+	@Operation(description = "Gera Excel das Marcas")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Excel de marcas de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Excel de marcas de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<byte[]> getExcel () throws IOException;
 	
-	@ApiOperation(value = "Trazer marca cadastrada por id")
+	@Operation(description = "Trazer marca cadastrada por id")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Marca cadastrada por id."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Marca não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Marca cadastrada por id."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<BrandDTO> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") 
+	public ResponseEntity<BrandDTO> findById(@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") 
 	                                         @PathVariable Integer id);
 
-	@ApiOperation(value = "Todos os produtos cadastrados por nome de forma paginada")
+	@Operation(description = "Todos os produtos cadastrados por nome de forma paginada")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os produtos cadastrados por nome."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		    @ApiResponse(responseCode = "200", description = "Todos os produtos cadastrados por nome."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@ApiParam(value = "Nome da marca.", required = true,example = "teste") 
+	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@Parameter(description = "Nome da marca.", required = true,example = "teste") 
 														  @RequestParam(value = "brand") String brand,
-			                                              @ApiParam(value = "Página.",required= false,example = "1")
+														  @Parameter(description = "Página.",required= false,example = "1")
 			                                              @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                              @ApiParam(value = "limite.",required=false,example = "10")
+			                                              @Parameter(description = "limite.",required=false,example = "10")
 			                                              @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
-	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
+	@Operation(description = "Trazer tipos de marcas cadastradas por nome")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Marcas de roupas."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Marca não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Marcas de roupas."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<BrandDTO>> findByBrand(@ApiParam(value = "Nome da Marca.", required = true,example = "teste") @RequestParam(value = "marca") String brand);
+	public ResponseEntity<List<BrandDTO>> findByBrand(@Parameter(description = "Nome da Marca.", required = true,example = "teste") @RequestParam(value = "marca") String brand);
 	
-	@ApiOperation(value = "Insere uma marca")
+	@Operation(description = "Insere uma marca")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Inserção de Marca."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "201", description = "Inserção de Marca."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest);
 	
-	@ApiOperation(value = "Atualiza uma Marca")
+	@Operation(description = "Atualiza uma Marca")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "Atualização de Categoria de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Marca não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "204", description = "Atualização de Categoria de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<BrandDTO> update(@RequestBody EditBrandRequest brand);
 	
-	@ApiOperation(value = "Deleta uma marca")
+	@Operation(description = "Deleta uma marca")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "Deleção de marca de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Marca não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "204", description = "Deleção de marca de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
+	public ResponseEntity<Void> delete(@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);
 }

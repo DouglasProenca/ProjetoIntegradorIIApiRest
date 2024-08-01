@@ -9,45 +9,45 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.sf.jasperreports.engine.JRException;
 
-@Api(tags = "Relatórios Da Aplicação") 
+@Tag(name = "Relatórios Da Aplicação") 
 public interface JasperControllerInterface {
 
-	@ApiOperation(value = "Relatório Gerencial")
+	@Operation(description = "Relatório Gerencial")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Relatório criado."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "201", description = "Relatório criado."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException;
 	
-	@ApiOperation(value = "Relatório Analítico")
+	@Operation(description = "Relatório Analítico")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Relatório criado."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "201", description = "Relatório criado."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> analitycalPDF(@ApiParam(value = "Data Inicial do Período.", required = true,example = "2020-01-01")
+	public ResponseEntity<byte[]> analitycalPDF(@Parameter(description = "Data Inicial do Período.", required = true,example = "2020-01-01")
 												@NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-												@ApiParam(value = "Data final do Período.", required = true,example = "2024-01-01")
+												@Parameter(description = "Data final do Período.", required = true,example = "2024-01-01")
 			                                    @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) 
 			                                    		throws JRException, SQLException, ParseException;
 	
-	@ApiOperation(value = "Relatório Sintético")
+	@Operation(description = "Relatório Sintético")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Relatório criado."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "201", description = "Relatório criado."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> syntheticPDF(@ApiParam(value = "Data Inicial do Período.", required = true,example = "2020-01-01")
+	public ResponseEntity<byte[]> syntheticPDF(@Parameter(description = "Data Inicial do Período.", required = true,example = "2020-01-01")
 			                                   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-			                                   @ApiParam(value = "Data final do Período.", required = true,example = "2024-01-01")
+			                                   @Parameter(description = "Data final do Período.", required = true,example = "2024-01-01")
 											   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
 	
 

@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistema.apicr7imports.domain.Dto.request.MailRequest;
 import com.sistema.apicr7imports.services.MailService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Api(tags = "E-Mail")
+@Tag(name = "E-Mail")
 @RequestMapping(value = "/private/mail")
 public class MailController {
 
 	@Autowired
 	MailService mailService;
 	
-	@ApiOperation(value = "Envia um e-mail")
+	@Operation(description = "Envia um e-mail")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> insert(@RequestBody MailRequest mailRequest) throws MessagingException, UnsupportedEncodingException, NullPointerException {
 		mailService.sendEmail(mailRequest);

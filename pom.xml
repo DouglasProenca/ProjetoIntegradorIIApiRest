@@ -29,8 +29,7 @@
 		<commons-io.version>2.11.0</commons-io.version>
 		<poi-ooxml.version>5.2.2</poi-ooxml.version>
 		<jjwt.version>0.9.1</jjwt.version>
-		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
-		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
 		<spring-plugin-core.version>1.2.0.RELEASE</spring-plugin-core.version>
 		<spring.cloud.version>3.1.8</spring.cloud.version>
 	</properties>
@@ -65,6 +64,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+        <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.hateoas</groupId>
@@ -123,17 +127,11 @@
 			<artifactId>flyway-sqlserver</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox-swagger2.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox-swagger-ui.version}</version>
-		</dependency>
+       <dependency>
+          <groupId>org.springdoc</groupId>
+          <artifactId>springdoc-openapi-ui</artifactId>
+          <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.github.dozermapper</groupId>

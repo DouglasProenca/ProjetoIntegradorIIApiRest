@@ -13,97 +13,97 @@ import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
 import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
 import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "Tipos de Roupas") 
+@Tag(name = "Tipos de Roupas") 
 public interface CategoryControllerInterface {
 
-	@ApiOperation(value = "Trazer todos os tipos de roupas cadastrados")
+	@Operation(description = "Trazer todos os tipos de roupas cadastrados")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os tipos de roupas cadastradas."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Todos os tipos de roupas cadastradas."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<List<CategoryDTO>> findAll();
 	
-	@ApiOperation(value = "Todos os tipos de roupas cadastrados por categoria de forma paginada")
+	@Operation(description = "Todos os tipos de roupas cadastrados por categoria de forma paginada")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os tipos de roupas cadastradas por categoria."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		    @ApiResponse(responseCode = "200", description = "Todos os tipos de roupas cadastradas por categoria."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<CategoryDTO>> findAllPage(@ApiParam(value = "Página.",required= false,example = "1")
-			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                         @ApiParam(value = "limite.",required=false,example = "10")
-			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<CategoryDTO>> findAllPage(@Parameter(description = "Página.",required= false,example = "1")
+			                                             @RequestParam(value = "page",defaultValue = "0") Integer page,
+			                                             @Parameter(description = "limite.",required=false,example = "10")
+			                                             @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
-	@ApiOperation(value = "Trazer tipos de roupas cadastrados por id")
+	@Operation(description = "Trazer tipos de roupas cadastrados por id")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Categoria cadastrada por id."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Categoria cadastrada por id."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Categoria não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<CategoryDTO> findById(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	public ResponseEntity<CategoryDTO> findById(@Parameter(description = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
 	
-	@ApiOperation(value = "Todos os tipos de roupas cadastradas por categoria de forma paginada")
+	@Operation(description = "Todos os tipos de roupas cadastradas por categoria de forma paginada")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Todos os tipos de roupas cadastradas por categoria."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro de Servidor interno")
+		    @ApiResponse(responseCode = "200", description = "Todos os tipos de roupas cadastradas por categoria."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<CategoryDTO>> findByCategoryPage(@ApiParam(value = "Nome da categoria.", required = true,example = "teste") 
+	public ResponseEntity<Page<CategoryDTO>> findByCategoryPage(@Parameter(description = "Nome da categoria.", required = true,example = "teste") 
 														   @RequestParam(value = "category") String category,
-			                                               @ApiParam(value = "Página.",required= false,example = "1")
+														   @Parameter(description = "Página.",required= false,example = "1")
 			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                               @ApiParam(value = "limite.",required=false,example = "10")
+			                                               @Parameter(description = "limite.",required=false,example = "10")
 			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
 	
-	@ApiOperation(value = "Trazer tipos de roupas cadastrado por Categoria")
+	@Operation(description = "Trazer tipos de roupas cadastrado por Categoria")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Categorias de roupas."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Categorias de roupas."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Categoria não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<CategoryDTO>> findByCategoria(@ApiParam(value = "Nome da Categoria.", required = true,example = "teste") @RequestParam(value= "categoria") String categoria);
+	public ResponseEntity<List<CategoryDTO>> findByCategoria(@Parameter(description = "Nome da Categoria.", required = true,example = "teste") @RequestParam(value= "categoria") String categoria);
 	
-	@ApiOperation(value = "Gera Excel das categorias de roupas")
+	@Operation(description = "Gera Excel das categorias de roupas")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Excel de Categoria de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "200", description = "Excel de Categoria de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<byte[]> getExcel () throws IOException;
 	
-	@ApiOperation(value = "Insere uma Categoria")
+	@Operation(description = "Insere uma Categoria")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Inserção de Categoria de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "201", description = "Inserção de Categoria de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<CategoryDTO> save(@RequestBody CreateCategoryRequest categoryRequest);
 	
-	@ApiOperation(value = "Atualiza uma Categoria")
+	@Operation(description = "Atualiza uma Categoria")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "Atualização de Categoria de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "204", description = "Atualização de Categoria de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Categoria não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<CategoryDTO> update(@RequestBody EditCategoryRequest category);
 	
-	@ApiOperation(value = "Deleta uma Categoria")
+	@Operation(description = "Deleta uma Categoria")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "Deleção de Categoria de roupa."),
-		    @ApiResponse(code = 403, message = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(code = 404, message = "Categoria não encontrada."),
-		    @ApiResponse(code = 500, message = "Erro geral da Aplicação.")
+		    @ApiResponse(responseCode = "204", description = "Deleção de Categoria de roupa."),
+		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+		    @ApiResponse(responseCode = "404", description = "Categoria não encontrada."),
+		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	public ResponseEntity<Void> delete(@Parameter(description = "ID de Cadastro no Banco.", required = true, example = "1") @PathVariable Integer id);
 
 }
