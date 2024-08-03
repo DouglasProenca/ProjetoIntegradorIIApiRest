@@ -10,9 +10,11 @@ import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
 public class SwaggerConfig {
@@ -35,7 +37,12 @@ public class SwaggerConfig {
 	                    .contact(new Contact()
 	                        .name("Douglas Proença")
 	                        .email("douglasp.r.desouza@gmail.com")
-	                        .url("https://www.linkedin.com/in/douglas-proen%C3%A7a/")));
+	                        .url("https://www.linkedin.com/in/douglas-proen%C3%A7a/")))
+				     .components(new Components()
+				    		 .addSecuritySchemes("Token de autorização", new SecurityScheme()
+				    				                                      .type(SecurityScheme.Type.HTTP)
+				    				                                      .scheme("Bearer")
+				    				                                      .bearerFormat("JWT")));
 				          
 	}
 }
