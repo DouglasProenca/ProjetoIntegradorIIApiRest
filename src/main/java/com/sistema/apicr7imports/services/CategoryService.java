@@ -1,9 +1,7 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
 import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
 import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.CategoryRepository;
@@ -53,13 +52,17 @@ public class CategoryService {
 
 	public void delete(Integer id) {
 		findbyId(id);
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (Exception e) {
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+		}
 	}
 
 	public CategoryDTO save(CreateCategoryRequest categoryRequest) {
 		Category category = new Category();
 		category.setCategoria(categoryRequest.getCategoria());
-		category.setData(Date.from(categoryRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		category.setData(categoryRequest.getData());
         category.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(category),CategoryDTO.class);
 	}
@@ -67,7 +70,7 @@ public class CategoryService {
 	public CategoryDTO update(EditCategoryRequest categoryRequest) {
 		Category newObj = DozerMapper.parseObject(findbyId(categoryRequest.getId()),Category.class);
 		newObj.setCategoria(categoryRequest.getCategoria());
-		newObj.setData(Date.from(categoryRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newObj.setData(categoryRequest.getData());
 		newObj.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newObj),CategoryDTO.class);
 	}

@@ -1,9 +1,7 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import com.sistema.apicr7imports.domain.User;
 import com.sistema.apicr7imports.domain.Dto.ProductDTO;
 import com.sistema.apicr7imports.domain.Dto.request.CreateProductRequest;
 import com.sistema.apicr7imports.domain.Dto.request.EditProductRequest;
+import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.ProductRepository;
@@ -29,6 +28,12 @@ public class ProductService {
 
 	@Autowired
 	ProductRepository repository;
+	
+	@Autowired
+	BrandService brandService;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	@Autowired
 	Excel excel;
@@ -53,19 +58,23 @@ public class ProductService {
 	}
 
 	public void delete(Integer id) {
-		findbyId(id);
-		repository.deleteById(id);
+		findbyId(id); 
+		try {
+			repository.deleteById(id);
+		}catch (Exception e) {
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+		}
 	}
 
 	public ProductDTO save(CreateProductRequest productRequest) {
 		Product product = new Product();
 		product.setNome(productRequest.getNome());
 		product.setQuantidade(productRequest.getQuantidade());
-		product.setValor(product.getValor());
+		product.setValor(productRequest.getValor());
 		product.setAtivo(productRequest.getAtivo());
-		product.setBrand(new Brand(productRequest.getBrand()));
-		product.setCategory(new Category(productRequest.getCategory()));
-		product.setData(Date.from(productRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		product.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
+		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
+		product.setData(productRequest.getData());
 		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
@@ -74,11 +83,11 @@ public class ProductService {
 		Product newProduct = DozerMapper.parseObject(findbyId(productRequest.getId()), Product.class);
 		newProduct.setNome(productRequest.getNome());
 		newProduct.setQuantidade(productRequest.getQuantidade());
-		newProduct.setBrand(new Brand(productRequest.getBrand()));
-		newProduct.setCategory(new Category(productRequest.getCategory()));
+		newProduct.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
+		newProduct.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
 		newProduct.setAtivo(productRequest.getAtivo());
 		newProduct.setValor(productRequest.getValor());
-		newProduct.setData(Date.from(productRequest.getData().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newProduct.setData(productRequest.getData());
 		newProduct.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newProduct),ProductDTO.class);
 	}

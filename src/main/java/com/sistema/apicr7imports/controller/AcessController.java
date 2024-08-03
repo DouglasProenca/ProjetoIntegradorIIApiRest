@@ -28,7 +28,7 @@ public class AcessController implements AcessControllerInterface {
 	  return ResponseEntity.ok().body(service.getAcess(username, password));
 	}
 	
-	@PostMapping(value = "/login/byrequestBody", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/login/byrequestBody", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest) {
 	   return ResponseEntity.ok().body(service.getAcess(acessRequest.getUsername(), acessRequest.getPassword()));
 	}

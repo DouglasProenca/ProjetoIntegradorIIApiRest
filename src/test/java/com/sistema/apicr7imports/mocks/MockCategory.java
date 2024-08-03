@@ -1,12 +1,11 @@
 package com.sistema.apicr7imports.mocks;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.domain.Dto.UserDTO;
 
 public class MockCategory {
 
@@ -23,6 +22,6 @@ public class MockCategory {
 	    }
 	    
 	    public Category mockEntity(Integer number) {
-	        return new Category(number,"Category name Test" + number, new Date(), new User());
+	        return new Category(number,"Category name Test" + number, LocalDate.now(), new User());
 	    }
 }

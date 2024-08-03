@@ -1,7 +1,7 @@
 package com.sistema.apicr7imports.domain;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ public class Brand {
 	Country country;
 	
 	@Column(name = "[date]")
-	Date data;
+	LocalDate data;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")

@@ -1,8 +1,7 @@
 package com.sistema.apicr7imports.domain;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +20,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "rc_categoria")
 public class Category {
@@ -34,8 +33,8 @@ public class Category {
 	String categoria;
 	
 	@Column(name = "[data]")
-	Date data;
-
+	LocalDate data;
+	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
 	User user;

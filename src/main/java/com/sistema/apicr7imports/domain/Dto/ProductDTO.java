@@ -1,6 +1,6 @@
 package com.sistema.apicr7imports.domain.Dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class ProductDTO {
 	Double valor;
 	Integer quantidade;
 	Boolean ativo;
-	Date data;
+	LocalDate data;
 	UserDTO user;
 	CategoryDTO category;
 	
