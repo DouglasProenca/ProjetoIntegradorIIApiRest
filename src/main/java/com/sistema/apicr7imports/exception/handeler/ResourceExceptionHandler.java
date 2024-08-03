@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
@@ -38,6 +39,14 @@ public class ResourceExceptionHandler {
 		HttpStatus status = HttpStatus.FORBIDDEN;
 		ExceptionResponse err = new ExceptionResponse(System.currentTimeMillis(), status.value(), "Erro de Acesso",
 				ex.getMessage(), request.getRequestURI());
-		return new ResponseEntity<>(err, status);
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(ForeignKeyException.class)
+	public final ResponseEntity<ExceptionResponse> foreignKeyExceptionException(ForeignKeyException ex, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.CONFLICT;
+		ExceptionResponse err = new ExceptionResponse(System.currentTimeMillis(), status.value(), "Erro de Chave Estrangeira",
+				ex.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
 	}
 }
