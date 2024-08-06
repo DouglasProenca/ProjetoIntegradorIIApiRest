@@ -6,8 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.domain.Dto.response.AcessResponse;
+import com.sistema.apicr7imports.data.dto.response.AcessResponse;
+import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
 

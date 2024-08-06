@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.dto.CategoryDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.data.dto.request.EditCategoryRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

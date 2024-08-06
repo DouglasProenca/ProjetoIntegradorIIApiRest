@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.sistema.apicr7imports.domain.Country;
+import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.mocks.MockCountry;
 import com.sistema.apicr7imports.repository.CountryRepository;
 

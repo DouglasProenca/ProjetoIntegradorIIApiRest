@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain.Dto.response;
+package com.sistema.apicr7imports.data.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

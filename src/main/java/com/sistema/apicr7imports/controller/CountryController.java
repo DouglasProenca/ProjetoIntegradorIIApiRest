@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.interfaces.CountryControllerInterface;
-import com.sistema.apicr7imports.domain.Country;
+import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.services.CountryService;
 
 @RestController

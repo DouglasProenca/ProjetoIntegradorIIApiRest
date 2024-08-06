@@ -11,11 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
-import com.sistema.apicr7imports.domain.Brand;
-import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.domain.Dto.BrandDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateBrandRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditBrandRequest;
+import com.sistema.apicr7imports.data.dto.BrandDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateBrandRequest;
+import com.sistema.apicr7imports.data.dto.request.EditBrandRequest;
+import com.sistema.apicr7imports.data.model.Brand;
+import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;

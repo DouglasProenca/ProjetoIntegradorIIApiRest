@@ -11,11 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
-import com.sistema.apicr7imports.domain.Category;
-import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.dto.CategoryDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.data.dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.model.Category;
+import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;

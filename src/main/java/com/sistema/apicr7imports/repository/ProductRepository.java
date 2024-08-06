@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sistema.apicr7imports.domain.Product;
+import com.sistema.apicr7imports.data.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {

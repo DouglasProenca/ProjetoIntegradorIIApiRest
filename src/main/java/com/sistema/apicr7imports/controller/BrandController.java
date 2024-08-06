@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.BrandControllerInterface;
-import com.sistema.apicr7imports.domain.Dto.BrandDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateBrandRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditBrandRequest;
+import com.sistema.apicr7imports.data.dto.BrandDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateBrandRequest;
+import com.sistema.apicr7imports.data.dto.request.EditBrandRequest;
 import com.sistema.apicr7imports.services.BrandService;
 
 @RestController

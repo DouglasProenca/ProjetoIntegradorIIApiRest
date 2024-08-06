@@ -16,8 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.sistema.apicr7imports.domain.Category;
-import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
+import com.sistema.apicr7imports.data.dto.CategoryDTO;
+import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.mocks.MockCategory;
 import com.sistema.apicr7imports.repository.CategoryRepository;

@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain;
+package com.sistema.apicr7imports.data.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

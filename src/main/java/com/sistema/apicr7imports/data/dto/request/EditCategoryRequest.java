@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain.Dto.request;
+package com.sistema.apicr7imports.data.dto.request;
 
 import java.time.LocalDate;
 
@@ -9,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateCategoryRequest {
+public class EditCategoryRequest {
 
+	Integer id;
 	String categoria;
 	LocalDate data;
 	

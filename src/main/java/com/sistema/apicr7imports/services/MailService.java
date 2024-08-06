@@ -17,8 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.CodeString;
-import com.sistema.apicr7imports.domain.User;
-import com.sistema.apicr7imports.domain.Dto.request.MailRequest;
+import com.sistema.apicr7imports.data.dto.request.MailRequest;
+import com.sistema.apicr7imports.data.model.User;
 
 @Service
 public class MailService {

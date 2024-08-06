@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.interfaces.AcessControllerInterface;
-import com.sistema.apicr7imports.domain.Dto.request.AcessRequest;
-import com.sistema.apicr7imports.domain.Dto.response.AcessResponse;
+import com.sistema.apicr7imports.data.dto.request.AcessRequest;
+import com.sistema.apicr7imports.data.dto.response.AcessResponse;
 import com.sistema.apicr7imports.services.AcessService;
 
 @RestController

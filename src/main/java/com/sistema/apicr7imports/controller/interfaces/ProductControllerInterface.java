@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sistema.apicr7imports.domain.Dto.ProductDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateProductRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditProductRequest;
+import com.sistema.apicr7imports.data.dto.ProductDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateProductRequest;
+import com.sistema.apicr7imports.data.dto.request.EditProductRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

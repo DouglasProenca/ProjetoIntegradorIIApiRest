@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.component.CodeString;
-import com.sistema.apicr7imports.domain.User;
+import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.services.UserService;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;

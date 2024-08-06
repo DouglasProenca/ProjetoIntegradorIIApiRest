@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.domain.User;
+import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.repository.UserRepository;
 
 

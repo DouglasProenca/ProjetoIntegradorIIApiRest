@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain;
+package com.sistema.apicr7imports.data.model;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,42 +13,48 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_categoria")
-public class Category {
-	
+@Table(name = "rc_produto")
+public class Product {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
+
+	String nome;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "marca")
+	Brand brand;
+
+	Double valor;
+
+	Integer quantidade;
 	
-	String categoria;
-	
-	@Column(name = "[data]")
+	Boolean ativo;
+	 
+	@Column(name = "[date]")
 	LocalDate data;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
 	User user;
 
-	
-	/**
-	 * @param id
-	 */
-	public Category(Integer id) {
-		this.id = id;
-	}
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "[categoria]")
+	Category category;
 
 	@Override
 	public String toString() {
-		return id + ";" + categoria + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUsername();
+		return id + ";" + nome + ";" + brand.getMarca() + ";" + valor + ";" + quantidade + ";" + category.getCategoria() + ";" + new SimpleDateFormat("dd/mm/yyyy").format(data) + ";"
+				+ user.getUsername();
 	}
+
 }

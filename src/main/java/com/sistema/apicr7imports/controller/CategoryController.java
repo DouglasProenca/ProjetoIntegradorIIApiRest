@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.interfaces.CategoryControllerInterface;
-import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
-import com.sistema.apicr7imports.domain.Dto.request.CreateCategoryRequest;
-import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.dto.CategoryDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateCategoryRequest;
+import com.sistema.apicr7imports.data.dto.request.EditCategoryRequest;
 import com.sistema.apicr7imports.services.CategoryService;
 
 @RestController

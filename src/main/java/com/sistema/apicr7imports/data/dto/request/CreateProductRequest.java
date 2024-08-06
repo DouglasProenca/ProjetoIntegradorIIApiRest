@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain.Dto;
+package com.sistema.apicr7imports.data.dto.request;
 
 import java.time.LocalDate;
 
@@ -9,16 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductDTO {
+public class CreateProductRequest {
 
-	Integer id;
 	String nome;
-	BrandDTO brand;
+	Integer brand;
 	Double valor;
 	Integer quantidade;
 	Boolean ativo;
 	LocalDate data;
-	UserDTO user;
-	CategoryDTO category;
+	Integer category;
 	
 }

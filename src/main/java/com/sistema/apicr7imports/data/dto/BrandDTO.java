@@ -1,8 +1,8 @@
-package com.sistema.apicr7imports.domain.Dto;
+package com.sistema.apicr7imports.data.dto;
 
 import java.time.LocalDate;
 
-import com.sistema.apicr7imports.domain.Country;
+import com.sistema.apicr7imports.data.model.Country;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

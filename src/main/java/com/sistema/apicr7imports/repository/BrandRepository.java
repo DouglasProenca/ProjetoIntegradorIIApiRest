@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sistema.apicr7imports.domain.Brand;
+import com.sistema.apicr7imports.data.model.Brand;
+
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Integer>{

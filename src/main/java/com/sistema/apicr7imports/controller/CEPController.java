@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.interfaces.CEPControllerInterface;
-import com.sistema.apicr7imports.domain.Dto.response.CEPResponse;
+import com.sistema.apicr7imports.data.dto.response.CEPResponse;
 import com.sistema.apicr7imports.services.ViaCEPService;
 
 
