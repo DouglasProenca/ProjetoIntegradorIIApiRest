@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sistema.apicr7imports.domain.Category;
 import com.sistema.apicr7imports.domain.Dto.CategoryDTO;
-import com.sistema.apicr7imports.domain.Dto.request.EditCategoryRequest;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.mocks.MockCategory;
 import com.sistema.apicr7imports.repository.CategoryRepository;
@@ -84,7 +83,7 @@ class CategoryServiceTest {
 
 		when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
 
-		Category result =  DozerMapper.parseObject(service.findbyId(1), Category.class);
+		CategoryDTO result =  service.findbyId(1);
 
 		assertNotNull(result);
 		assertNotNull(result.getId());
