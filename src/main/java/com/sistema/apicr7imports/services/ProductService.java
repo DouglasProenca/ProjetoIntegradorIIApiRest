@@ -94,7 +94,7 @@ public class ProductService {
 	
 	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) findAll(), "Produtos", titulos).toByteArray();
+		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Produtos", titulos).toByteArray();
 	}
 	
 	public Page<ProductDTO> findAllPage(Pageable pageable) {

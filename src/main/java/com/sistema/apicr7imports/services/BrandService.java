@@ -82,7 +82,7 @@ public class BrandService {
 	
 	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) findAll(), "Marcas", titulos).toByteArray();
+		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Marcas", titulos).toByteArray();
 	}
 	
 	public Page<BrandDTO> findAllPage(Pageable pageable) {

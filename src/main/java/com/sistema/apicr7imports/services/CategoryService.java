@@ -77,7 +77,7 @@ public class CategoryService {
 	
 	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};	
-		return excel.exportExcel((ArrayList<?>) findAll(), "Categorias", titulos).toByteArray();
+		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Categorias", titulos).toByteArray();
 	}
 	
 	public Page<CategoryDTO> findAllPage(Pageable pageable) {
