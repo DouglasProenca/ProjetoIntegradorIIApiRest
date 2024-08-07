@@ -8,7 +8,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,15 +22,7 @@ import com.sistema.apicr7imports.data.model.User;
 @Service
 public class MailService {
 	
-	public void sendEmail(MailRequest mailRequest) throws MessagingException, UnsupportedEncodingException, NullPointerException {
-		if(mailRequest.getAnexoTitulo() == null) {
-			sendSimpleMessage(mailRequest);
-		} else {
-			sendMessageWithAttachment(mailRequest);
-		}
-	}
-	
-	 public JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
+	public JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -49,28 +40,18 @@ public class MailService {
 	     return mailSender;
 	 }
 	
-
-	private void sendSimpleMessage(MailRequest mailRequest) throws UnsupportedEncodingException, NullPointerException {
-		JavaMailSender emailSender = getJavaMailSender();
-		
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailRequest.getDestinatario());
-        message.setSubject(mailRequest.getAssunto());
-        message.setText(mailRequest.getTexto());
-        
-        emailSender.send(message);
-    }
-	
-	private void sendMessageWithAttachment(MailRequest mailRequest) throws MessagingException, UnsupportedEncodingException, NullPointerException {
+	 public void sendEmail(MailRequest mailRequest) throws MessagingException, UnsupportedEncodingException, NullPointerException {
         MimeMessage message = getJavaMailSender().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         
-        byte[] fileContent = Base64.getDecoder().decode(mailRequest.getAnexoFile());
-
+        if(mailRequest.getAnexoFile() != null) {
+        	byte[] fileContent = Base64.getDecoder().decode(mailRequest.getAnexoFile());
+        	helper.addAttachment(mailRequest.getAnexoTitulo(), new ByteArrayResource(fileContent));
+        }
+        
         helper.setTo(mailRequest.getDestinatario());
         helper.setSubject(mailRequest.getAssunto());
         helper.setText(mailRequest.getTexto());
-        helper.addAttachment(mailRequest.getAnexoTitulo(), new ByteArrayResource(fileContent));
 
         getJavaMailSender().send(message);
     }
