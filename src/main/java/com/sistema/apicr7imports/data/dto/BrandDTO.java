@@ -2,21 +2,19 @@ package com.sistema.apicr7imports.data.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.sistema.apicr7imports.data.model.Country;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@JsonPropertyOrder({ "id", "marca", "data", "country", "user" })
 public class BrandDTO {
 
-	@NonNull
 	Integer id;
 	String marca;
 	Country country;
