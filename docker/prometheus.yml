@@ -1,0 +1,10 @@
+global:
+    scrap-interval: 5s
+	
+scrap-configs:
+  - job-name: "Api-job"
+    metrics-path: "actuator/prometheus"		
+	static-confgis: 
+	  - targets: ["localhost:8088"]
+	  labels: 
+		application: "api-cr7"
