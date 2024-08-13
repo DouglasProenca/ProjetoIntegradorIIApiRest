@@ -1,10 +1,12 @@
 spring:
+
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
     username: sa
     password: Banana!90
     
+
   flyway:
     baselineOnMigrate: true
     
@@ -31,6 +33,19 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
     servlet:
       path: /apicr7imports
+
+## Actuator
+management:
+   endpoints:
+     web:
+       exposure:
+         include: 'health,prometheus'
+   endpoint:
+      health:
+        enabled: true
+        show-details: always
+      prometheus:
+        enabled: true	
 
 ## Token valido por 1h  
 security:
