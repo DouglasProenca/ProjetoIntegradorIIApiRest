@@ -22,7 +22,7 @@ import com.sistema.apicr7imports.data.model.User;
 @Service
 public class MailService {
 	
-	public JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
+	private JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -44,7 +44,7 @@ public class MailService {
         MimeMessage message = getJavaMailSender().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         
-        if(mailRequest.getAnexoFile() != null) {
+        if(!(mailRequest.getAnexoFile() == null || mailRequest.getAnexoFile().equals(""))) {
         	byte[] fileContent = Base64.getDecoder().decode(mailRequest.getAnexoFile());
         	helper.addAttachment(mailRequest.getAnexoTitulo(), new ByteArrayResource(fileContent));
         }
