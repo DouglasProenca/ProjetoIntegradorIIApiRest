@@ -29,9 +29,10 @@ jobs:
       working-directory: /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest
       run: mvn clean package -DskipTests
 
-    - name: Docker Compose Build
-      working-directory: /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest
-      run: docker compose build
+    - name: Build Docker Image
+      run: |
+        # Build Docker image directly
+        docker build -t api-cr7-imports:${{ github.run_id }} -f /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest/Dockerfile .
 
     - name: Push to Docker Hub Container Registry
       run: |
