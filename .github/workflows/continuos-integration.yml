@@ -36,7 +36,7 @@ jobs:
     - name: Push to Docker Hub Container Registry
       run: |
         # Tag the image with 1.0
-        docker tag ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:latest ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0
+        docker tag ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0 ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0
 
         # Push the 1.0 tag to Docker Hub
         docker push ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0
