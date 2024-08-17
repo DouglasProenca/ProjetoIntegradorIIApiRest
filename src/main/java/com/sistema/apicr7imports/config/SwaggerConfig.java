@@ -1,7 +1,6 @@
 package com.sistema.apicr7imports.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -11,16 +10,13 @@ import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
 
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
 	@Bean
@@ -32,16 +28,21 @@ public class SwaggerConfig {
 	}
 
 	@Bean
-	Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.sistema.apicr7imports")).paths(PathSelectors.any())
-				.build().useDefaultResponseMessages(false).apiInfo(apiInfo());
-	}
-
-	private ApiInfo apiInfo() {
-		return new ApiInfo(
-				"API Rest CR7 Imports", "", "v1", "", new Contact("Douglas Proença",
-						"https://www.linkedin.com/in/douglas-proen%C3%A7a/", "douglasp.r.desouza@gmail.com"),
-				"License of API", "License of URL", Collections.emptyList());
+	OpenAPI apiInfo() {
+		return new OpenAPI()
+				     .info(new Info()
+	                    .title("API Rest CR7 Imports")
+	                    .version("1.0")
+	                    .description("API para consultas CR7Imports")
+	                    .contact(new Contact()
+	                        .name("Douglas Proença")
+	                        .email("douglasp.r.desouza@gmail.com")
+	                        .url("https://www.linkedin.com/in/douglas-proen%C3%A7a/")))
+				     .components(new Components()
+				    		 .addSecuritySchemes("Token de autorização", new SecurityScheme()
+				    				                                      .type(SecurityScheme.Type.HTTP)
+				    				                                      .scheme("Bearer")
+				    				                                      .bearerFormat("JWT")));
+				          
 	}
 }

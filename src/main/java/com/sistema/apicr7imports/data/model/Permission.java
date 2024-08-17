@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.domain;
+package com.sistema.apicr7imports.data.model;
 
 import java.io.Serializable;
 
@@ -11,6 +11,11 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "rc_permission")
 public class Permission implements GrantedAuthority, Serializable {
@@ -20,31 +25,16 @@ public class Permission implements GrantedAuthority, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long id;
+	Integer id;
 	
 	@Column(name = "description")
-	private String description;
+	String description;
 
 	@Override
 	public String getAuthority() {
 		return this.description;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Override
 	public int hashCode() {

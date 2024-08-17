@@ -15,8 +15,8 @@ public class CPFRepository {
 	@PersistenceContext
 	EntityManager entityManager;
 	
-	public boolean isCPF(String cpf) throws SQLException {
-		Query query = entityManager.createNativeQuery("SELECT IIF([dbo].[fn_isCPF] ( ?1 ) = 1,'true','false') AS is_cpf");
+	public Boolean isCPF(String cpf) throws SQLException {
+		Query query = entityManager.createNativeQuery("SELECT [dbo].[fn_isCPF] ( ?1 ) AS is_cpf");
 		query.setParameter(1, cpf);
 
 		return Boolean.valueOf(query.getResultList().get(0).toString());

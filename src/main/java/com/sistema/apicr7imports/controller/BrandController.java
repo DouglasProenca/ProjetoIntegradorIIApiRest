@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,68 +14,69 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.domain.Brand;
-import com.sistema.apicr7imports.domain.VO.BrandVO;
+import com.sistema.apicr7imports.controller.interfaces.BrandControllerInterface;
+import com.sistema.apicr7imports.data.dto.BrandDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateBrandRequest;
+import com.sistema.apicr7imports.data.dto.request.EditBrandRequest;
 import com.sistema.apicr7imports.services.BrandService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 @RestController
-@Api(tags = "Tipos de Marcas")
 @RequestMapping(value = "/private/brand")
-public class BrandController {
+public class BrandController implements BrandControllerInterface {
 
 	@Autowired
-	private BrandService service;
+	BrandService service;
+	
+	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<BrandDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                         ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+		return ResponseEntity.ok().body(service.findAllPage(PageRequest.of(page, limit)));
+	}
 
-	@ApiOperation(value = "Trazer todos os tipos de marcas cadastradas")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BrandVO>> findAll() {
+	public ResponseEntity<List<BrandDTO>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 
-	@ApiOperation(value = "Trazer tipo de marca cadastrada por id")
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Brand> findById(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
+	public ResponseEntity<BrandDTO> findById(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
+	
+	@GetMapping(value = "/pagelist/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@RequestParam(value = "brand") String brand
+			                                             ,@RequestParam(value = "page",defaultValue = "0") Integer page
+			                                             ,@RequestParam(value = "limit",defaultValue = "10") Integer limit) {
+		return ResponseEntity.ok().body(service.findbyBrandPageable(brand,PageRequest.of(page, limit)));
+	}
 
-	@ApiOperation(value = "Trazer tipos de marcas cadastradas por nome")
 	@GetMapping(value = "/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BrandVO>> findByCategoria(@RequestParam(value = "marca") String brand) {
+	public ResponseEntity<List<BrandDTO>> findByBrand(@RequestParam(value = "marca") String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(brand));
 	}
 
-	@ApiOperation(value = "Deleta uma marca")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@ApiParam(value = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "Insere uma marca")
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> insert(@RequestBody Brand brand) {
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(service.insert(brand).getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest) {
+		BrandDTO brandCreate = service.save(brandRequest);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri();
+		return ResponseEntity.created(uri).body(brandCreate);
 	}
 
-	@ApiOperation(value = "Atualiza uma Marca")
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> update(@RequestBody Brand brand) {
-		service.update(brand);
-		return ResponseEntity.noContent().build();
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BrandDTO> update(@RequestBody EditBrandRequest brandRequest) {
+		return ResponseEntity.ok().body(service.update(brandRequest));
 	}
 	
-	@ApiOperation(value = "Gera Excel das Marcas")
-	@GetMapping(value = "/excel", produces= MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<byte[]> downloadExcel () throws IOException{		
-		
+	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> getExcel () throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());
-
-		return ResponseEntity.ok().headers(headers).body(service.createExcel());
+		return ResponseEntity.ok().headers(headers).body(service.getExcel());
 	}
 }

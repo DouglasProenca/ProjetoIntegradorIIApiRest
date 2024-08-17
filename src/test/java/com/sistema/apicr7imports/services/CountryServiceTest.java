@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.sistema.apicr7imports.domain.Country;
+import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.mocks.MockCountry;
 import com.sistema.apicr7imports.repository.CountryRepository;
 
@@ -48,12 +48,12 @@ class CountryServiceTest {
 	void testFindbyId() {
 		Country country = input.mockEntity(1);
 		
-		when(countryRepository.findById(1L)).thenReturn(Optional.of(country));
+		when(countryRepository.findById(1)).thenReturn(Optional.of(country));
 		
-		Country result = service.findbyId(1L);
+		Country result = service.findbyId(1);
 		
 		assertNotNull(result);
-		assertNotNull(result.getId());
+		assertNotNull(result.getIdCountry());
 		assertNotNull(result.getLinks());
 		assertTrue(result.toString().contains(""));
 		assertEquals("Name Port Test1", result.getNamePort());

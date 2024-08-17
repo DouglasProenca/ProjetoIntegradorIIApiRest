@@ -1,10 +1,23 @@
 ## docker-compose up 
-version: '3'
+# Para criar imagem
+#docker build -t douglasprdesouza305/web-service-cr7-imports:1.0.0 .
+#docker push douglasprdesouza305/web-service-cr7-imports:1.0.0
+name: cr7imports
+
+volumes:
+   prometheus-data:
+   grafana-data:
+
+networks:
+    aw-network:
+     driver: bridge		
+
 services:
-  Api:
-    image: openjdk:8
-    restart: always
+
+  cr7ImportsAPI:
     container_name: cr7ImportsAPI
+    image: douglasprdesouza305/api-cr7-imports:1.0
+    restart: always
     environment:
       - TZ=America/Sao_Paulo
       - SPRING_BOOT_ENVIRONMENT=Production
@@ -15,34 +28,21 @@ services:
     ports:
       - "8088:8080"
     volumes:
-      - ./target/api-cr7-imports-0.0.1-SNAPSHOT.jar:/usr/src/app/api-cr7-imports-0.0.1-SNAPSHOT.jar
-    working_dir: /usr/src/app
-    command: ["java", "-jar", "api-cr7-imports-0.0.1-SNAPSHOT.jar"]
-    networks:
-      - my-network  # Adicionando o serviço à rede my-network
+        - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+        - ~/.m2:/root/.m2
 
-  web_service:
-    image: openjdk:8
-    restart: always
+  webServiceCR7:
     container_name: webServiceCR7
+    image: douglasprdesouza305/web-service-cr7-imports:1.0.0
+    restart: always
     environment:
       - TZ=America/Sao_Paulo
       - SPRING_BOOT_ENVIRONMENT=Production
-      - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=Banana!90
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - API_URL=http://localhost:8088	  
     ports:
       - "8089:8080"
-    depends_on:
-      - Api	  
     volumes:
-      - ./target/webServiceCR7-0.0.1-SNAPSHOT.jar:/usr/src/app/webServiceCR7-0.0.1-SNAPSHOT.jar
-    working_dir: /usr/src/app
-    command: ["java", "-jar", "webServiceCR7-0.0.1-SNAPSHOT.jar"]
-    networks:
-      - my-network  # Adicionando o serviço à rede my-network
+      - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+      - ~/.m2:/root/.m2
 
   dozzle:
     container_name: dozzle
@@ -54,9 +54,22 @@ services:
       - "9999:8080"
     environment:
       DOZZLE_AUTH_PROVIDER: simple
-    networks:
-      - my-network  # Adicionando o serviço à rede my-network
+ 
+  prometheus:
+     container_name: prometheus
+     image: prom/prometheus:latest	  
+     volumes: 
+       - ./docker/prometheus.yml:/data/prometheus.yml
+       - prometheus-data:/prometheus
+     networks: 
+       - aw-network
+     ports: 
+       - "9090:9090"  
 
-networks:
-  my-network:
-    driver: bridge
+  grafana:
+     container_name: grafana
+     image: grafana/grafana:latest
+     ports:
+       - "3000:3000"
+     networks: 
+       - aw-network

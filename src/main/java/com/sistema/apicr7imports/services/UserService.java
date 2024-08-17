@@ -3,56 +3,78 @@ package com.sistema.apicr7imports.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.domain.User;
+
 import com.sistema.apicr7imports.repository.UserRepository;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
+import com.sistema.apicr7imports.component.CodeString;
+import com.sistema.apicr7imports.data.dto.request.CreateUserRequest;
+import com.sistema.apicr7imports.data.model.User;
+import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.mapper.DozerMapper;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserRepository repo;
+	UserRepository repository;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public List<User> findAll() {
-		return repo.findAll();
+		return repository.findAll();
 	}
 
-	public User findbyId(String id) {
-		User user = repo.findById(Long.valueOf(id)).orElse(null);
-		if (user == null) {
+	public User findbyId(Integer id) {
+		User user = repository.findById(id).orElse(null);
+		
+		if (user == null) 
 			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
+		
 		return user;
 	}
 	
 	public User findbyUser(String text) {
-		User user = repo.findByUsername(text);
-		if (user == null) {
+		User user = repository.findByUsername(text);
+		
+		if (user == null) 
 			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
+		
 		return user;
 	}
 
-	public void delete(String id) {
+	public void delete(Integer id) {
 		findbyId(id);
-		repo.deleteById(Long.valueOf(id));
+		try {
+			repository.deleteById(id);
+		} catch (Exception e) {
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+		}
 	}
 	
-	public User insert(User obj) {
-		repo.insert(obj);
-		return obj;
+	public User insert(CreateUserRequest createUserRequest) {
+		User user = DozerMapper.parseObject(createUserRequest, User.class);
+		user.setPassword(BCrypt.withDefaults().hashToString(8, createUserRequest.getPassword().toCharArray()));
+		user.setMailPassword(CodeString.codeString(createUserRequest.getMailPassword()));
+		user.setAccountNonLocked(true);
+		user.setAccountNonExpired(true);
+		return repository.save(user);
 	}
 
 	public User update(User obj) {
-		User newObj = findbyId(String.valueOf(obj.getId()));
+		User newObj = findbyId(obj.getUserId());
 		updateData(newObj,obj);
-		return repo.save(obj);
+		return repository.save(obj);
 	}
 
 	private void updateData(User newObj, User obj) {
 		newObj.setUserName(obj.getUsername());
-		newObj.setMail(obj.getMail());
+		newObj.setUserMail(obj.getUserMail());
 	}
 }

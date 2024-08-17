@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.controller.CountryController;
-import com.sistema.apicr7imports.domain.Country;
+import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.repository.CountryRepository;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
@@ -25,21 +25,21 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 public class CountryService {
 
 	@Autowired
-	private CountryRepository countryRepository;
+	CountryRepository countryRepository;
 	
 	@Autowired
-	private PagedResourcesAssembler<Country> assembler;
+	PagedResourcesAssembler<Country> assembler;
 
 	public List<Country> findAll() {
 		List<Country> list = countryRepository.findAll();
-		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getId())).withSelfRel()));
+		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getIdCountry())).withSelfRel()));
 		return list;
 	}
 	
 	public PagedModel<EntityModel<Country>> findAllPage(Pageable pageable) {
 		Page<Country> list = countryRepository.findAll(pageable);
 		
-		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getId())).withSelfRel()));
+		list.stream().forEach(l -> l.add(linkTo(methodOn(CountryController.class).findById(l.getIdCountry())).withSelfRel()));
 		
 		Link link = linkTo(methodOn(CountryController.class).findAllPage(pageable.getPageNumber(),pageable.getPageSize(),"asc")).withSelfRel();
 		
@@ -47,7 +47,7 @@ public class CountryService {
 	}
 	
 
-	public Country findbyId(long id) {
+	public Country findbyId(Integer id) {
 		Country country = countryRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pais não encontrado"));
 		country.add(linkTo(methodOn(CountryController.class).findById(id)).withSelfRel());
 		return country;

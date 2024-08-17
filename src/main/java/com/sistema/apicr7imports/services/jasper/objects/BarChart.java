@@ -21,9 +21,9 @@ public class BarChart implements JRChartCustomizer {
 		JRPropertiesMap pm = jasperChart.getPropertiesMap();
 
 		if (pm != null) {
-			if (pm.getProperty("gridLinesVisible") != null) {
+			if (pm.getProperty("gridLinesVisible") != null)
 				gridLinesVisible = Boolean.parseBoolean(pm.getProperty("gridLinesVisible"));
-			}
+			
 		}
 
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();

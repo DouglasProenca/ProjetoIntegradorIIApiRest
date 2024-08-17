@@ -5,68 +5,108 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.component.Excel;
-import com.sistema.apicr7imports.domain.Product;
+import com.sistema.apicr7imports.data.dto.ProductDTO;
+import com.sistema.apicr7imports.data.dto.request.CreateProductRequest;
+import com.sistema.apicr7imports.data.dto.request.EditProductRequest;
+import com.sistema.apicr7imports.data.model.Brand;
+import com.sistema.apicr7imports.data.model.Category;
+import com.sistema.apicr7imports.data.model.Product;
+import com.sistema.apicr7imports.data.model.User;
+import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
+import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.ProductRepository;
 
 @Service
 public class ProductService {
 
 	@Autowired
-	ProductRepository productRepository;
+	ProductRepository repository;
+	
+	@Autowired
+	BrandService brandService;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	@Autowired
 	Excel excel;
 	
-	public List<Product> findAll() {
-		return productRepository.findAll();
+	public List<ProductDTO> findAll() {
+		return DozerMapper.parseListObject(repository.findAll(), ProductDTO.class);
 	}
 	
-	public Product findbyId(Long id) {
-		return productRepository.findById(Long.valueOf(id))
+	public ProductDTO findbyId(Integer id) {
+		Product product = repository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
+		return DozerMapper.parseObject(product, ProductDTO.class);
 	}
 
-	public List<Product> findbyBrand(String text) {
-		List<Product> brandList = productRepository.findByNome(text);
+	public List<ProductDTO> findbyProduct(String name) {
+		List<Product> list = repository.findByNome(name);
 		
-		if (brandList.isEmpty()) 
+		if (list.isEmpty()) 
 			throw new ObjectNotFoundException("Produto não encontrado!");
-		
-		return brandList;
+
+		return DozerMapper.parseListObject(list, ProductDTO.class);
 	}
 
-	public void delete(Long id) {
-		this.findbyId(id);
-		productRepository.deleteById(id);
+	public void delete(Integer id) {
+		findbyId(id); 
+		try {
+			repository.deleteById(id);
+		}catch (Exception e) {
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+		}
 	}
 
-	public Product insert(Product obj) {
-		productRepository.save(obj);
-		return obj;
+	public ProductDTO save(CreateProductRequest productRequest) {
+		Product product = new Product();
+		product.setNome(productRequest.getNome());
+		product.setQuantidade(productRequest.getQuantidade());
+		product.setValor(productRequest.getValor());
+		product.setAtivo(productRequest.getAtivo());
+		product.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
+		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
+		product.setData(productRequest.getData());
+		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
 
-	public Product update(Product obj) {
-		Product newObj = findbyId(Long.valueOf(obj.getId()));
-		updateData(newObj, obj);
-		return productRepository.save(newObj);
-	}
-
-	private void updateData(Product newProduct, Product product) {
-		newProduct.setNome(product.getNome());
-		newProduct.setQuantidade(product.getQuantidade());
-		newProduct.setBrand(product.getBrand());
-		newProduct.setCategory(product.getCategory());
-		newProduct.setValor(product.getValor());
-		newProduct.setData(product.getData());
-		newProduct.setUser(product.getUser());
+	public ProductDTO update(EditProductRequest productRequest) {
+		Product newProduct = DozerMapper.parseObject(findbyId(productRequest.getId()), Product.class);
+		newProduct.setNome(productRequest.getNome());
+		newProduct.setQuantidade(productRequest.getQuantidade());
+		newProduct.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
+		newProduct.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
+		newProduct.setAtivo(productRequest.getAtivo());
+		newProduct.setValor(productRequest.getValor());
+		newProduct.setData(productRequest.getData());
+		newProduct.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		return DozerMapper.parseObject(repository.save(newProduct),ProductDTO.class);
 	}
 	
-	public byte[] createExcel() throws IOException {
+	public byte[] getExcel() throws IOException {
 		String[] titulos = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) findAll(), "Produtos", titulos).toByteArray();
+		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Produtos", titulos).toByteArray();
+	}
+	
+	public Page<ProductDTO> findAllPage(Pageable pageable) {
+		return repository.findAll(pageable).map(product -> DozerMapper.parseObject(product, ProductDTO.class));
+	}
+	
+	public Page<ProductDTO> findbyProductPageable(String name,Pageable pageable) {
+		Page<Product> list = repository.findByNomePageable(name,pageable);
+		
+		if (list.isEmpty()) 
+			throw new ObjectNotFoundException("Produto não encontrado!");
+
+		return list.map(product -> DozerMapper.parseObject(product, ProductDTO.class));
 	}
 }

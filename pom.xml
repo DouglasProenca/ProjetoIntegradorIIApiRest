@@ -7,23 +7,41 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.10</version>
+		<version>2.7.18</version>
 	</parent>
 
 	<groupId>com.sistema</groupId>
 	<artifactId>api-cr7-imports</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
+	<description>API para consultas CR7Imports</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<dozer.version>6.4.0</dozer.version>
+		<dozer-core.version>6.4.1</dozer-core.version>
 		<springdoc.version>1.0.0</springdoc.version>
+		<mssql-jdbc.version>8.2.0.jre8</mssql-jdbc.version>
+		<javaee-web-api.version>7.0</javaee-web-api.version>
+		<jasperreports.version>6.20.5</jasperreports.version>
+		<bcrypt.version>0.10.2</bcrypt.version>
+		<commons-io.version>2.11.0</commons-io.version>
+		<poi-ooxml.version>5.2.2</poi-ooxml.version>
+		<jjwt.version>0.9.1</jjwt.version>
+		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+		<spring-plugin-core.version>1.2.0.RELEASE</spring-plugin-core.version>
+		<spring.cloud.version>3.1.8</spring.cloud.version>
 	</properties>
 
 	<dependencies>
+		<!-- INICIO dependencias Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>${spring.cloud.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -48,6 +66,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.hateoas</groupId>
 			<artifactId>spring-hateoas</artifactId>
 		</dependency>
@@ -66,32 +89,44 @@
 		<dependency>
 			<groupId>org.springframework.plugin</groupId>
 			<artifactId>spring-plugin-core</artifactId>
-			<version>1.2.0.RELEASE</version>
+			<version>${spring-plugin-core.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
+		<!-- FIM dependencias Spring Boot -->
 
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
-			<version>8.2.0.jre8</version><!--$NO-MVN-MAN-VER$-->
+			<version>${mssql-jdbc.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<dependency>
 			<groupId>at.favre.lib</groupId>
 			<artifactId>bcrypt</artifactId>
-			<version>0.10.2</version>
+			<version>${bcrypt.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
-			<version>7.0</version>
+			<version>${javaee-web-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.20.5</version>
+			<version>${jasperreports.version}</version>
 		</dependency>
 
 		<dependency>
@@ -105,39 +140,33 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.dozermapper</groupId>
 			<artifactId>dozer-core</artifactId>
-			<version>6.4.1</version>
+			<version>${dozer-core.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.11.0</version>
+			<version>${commons-io.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>5.2.2</version>
+			<version>${poi-ooxml.version}</version>
 		</dependency>
 
 		<dependency>
@@ -146,9 +175,21 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+		<finalName>cr7-api-imports</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
