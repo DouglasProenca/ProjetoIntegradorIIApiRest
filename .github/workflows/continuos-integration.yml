@@ -44,4 +44,4 @@ jobs:
         # Optionally, you can also push the image as 'latest'
         docker tag ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0 ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:${{ github.run_id }}
         docker push ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:${{ github.run_id }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:1.0
+
