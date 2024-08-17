@@ -32,7 +32,7 @@ jobs:
     - name: Build Docker Image
       run: |
         # Build Docker image directly
-        docker build -t api-cr7-imports:${{ github.run_id }} -f /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest/Dockerfile .
+        docker build -t api-cr7-imports:1.0 -f /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest/Dockerfile .
 
     - name: Push to Docker Hub Container Registry
       run: |
