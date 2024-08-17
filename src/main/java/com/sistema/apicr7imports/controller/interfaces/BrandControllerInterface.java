@@ -36,10 +36,10 @@ public interface BrandControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<BrandDTO>> findAllPage(@Parameter(description = "Página.",required= false,example = "1")
-			                                          @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                          @Parameter(description = "limite.",required=false,example = "10")
-			                                          @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<BrandDTO>> findAllPage(@Parameter(description = "Página.", required = false ,example = "1")
+			                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                          @Parameter(description = "limite.", required = false, example = "10")
+			                                          @RequestParam(value = "limit", defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Gera Excel das Marcas")
 	@ApiResponses(value = {
@@ -65,12 +65,12 @@ public interface BrandControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@Parameter(description = "Nome da marca.", required = true,example = "teste") 
+	public ResponseEntity<Page<BrandDTO>> findByBrandPage(@Parameter(description = "Nome da marca.", required = true, example = "teste") 
 														  @RequestParam(value = "brand") String brand,
-														  @Parameter(description = "Página.",required= false,example = "1")
-			                                              @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                              @Parameter(description = "limite.",required=false,example = "10")
-			                                              @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+														  @Parameter(description = "Página.", required = false, example = "1")
+			                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                              @Parameter(description = "limite.", required = false, example = "10")
+			                                              @RequestParam(value = "limit", defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de marcas cadastradas por nome")
 	@ApiResponses(value = {
@@ -79,7 +79,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<BrandDTO>> findByBrand(@Parameter(description = "Nome da Marca.", required = true,example = "teste") @RequestParam(value = "marca") String brand);
+	public ResponseEntity<List<BrandDTO>> findByBrand(@Parameter(description = "Nome da Marca.", required = true, example = "teste") @RequestParam(value = "marca") String brand);
 	
 	@Operation(description = "Insere uma marca")
 	@ApiResponses(value = {
@@ -103,6 +103,7 @@ public interface BrandControllerInterface {
 		    @ApiResponse(responseCode = "204", description = "Deleção de marca de roupa."),
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
+		    @ApiResponse(responseCode = "409", description = "Conflito - Relação com outros registros."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<Void> delete(@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);

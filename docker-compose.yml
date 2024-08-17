@@ -1,4 +1,7 @@
 ## docker-compose up 
+# Para criar imagem
+#docker build -t douglasprdesouza305/web-service-cr7-imports:1.0.0 .
+#docker push douglasprdesouza305/web-service-cr7-imports:1.0.0
 name: cr7imports
 
 volumes:
@@ -13,7 +16,7 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: openjdk:8
+    image: douglasprdesouza305/api-cr7-imports:1.0
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -25,13 +28,12 @@ services:
     ports:
       - "8088:8080"
     volumes:
-      - ./target/cr7-api-imports.jar:/usr/src/app/cr7-api-imports.jar
-    working_dir: /usr/src/app
-    command: ["java", "-jar", "cr7-api-imports.jar"]
+        - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+        - ~/.m2:/root/.m2
 
   webServiceCR7:
     container_name: webServiceCR7
-    image: openjdk:8
+    image: douglasprdesouza305/web-service-cr7-imports:1.0.0
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -39,9 +41,8 @@ services:
     ports:
       - "8089:8080"
     volumes:
-      - ./target/web-service-cr7imports.jar:/usr/src/app/web-service-cr7imports.jar
-    working_dir: /usr/src/app
-    command: ["java", "-jar", "web-service-cr7imports.jar"]
+      - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+      - ~/.m2:/root/.m2
 
   dozzle:
     container_name: dozzle

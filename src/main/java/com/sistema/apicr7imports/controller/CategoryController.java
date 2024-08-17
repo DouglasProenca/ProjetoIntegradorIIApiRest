@@ -25,7 +25,7 @@ import com.sistema.apicr7imports.services.CategoryService;
 public class CategoryController implements CategoryControllerInterface{
 	
 	@Autowired
-	private CategoryService service;
+	CategoryService service;
 	
 	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<CategoryDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
@@ -65,7 +65,7 @@ public class CategoryController implements CategoryControllerInterface{
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> save(@RequestBody CreateCategoryRequest categoryRequest) {
 		CategoryDTO categoryCreate = service.save(categoryRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getCategoryId()).toUri();
 		return ResponseEntity.created(uri).body(categoryCreate);
 	}
 	

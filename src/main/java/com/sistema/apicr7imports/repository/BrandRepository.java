@@ -15,10 +15,10 @@ import com.sistema.apicr7imports.data.model.Brand;
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Integer>{
 
-	@Query("SELECT b FROM Brand b WHERE b.marca like %:marca%")
+	@Query("SELECT b FROM Brand b WHERE b.brandName like %:marca%")
 	public List<Brand> findByMarca(@Param("marca") String marca);
 	
-	@Query("SELECT b FROM Brand b WHERE b.marca like %:marca%")
+	@Query("SELECT b FROM Brand b WHERE b.brandName like %:marca%")
 	public Page<Brand> findByMarcaPageable(@Param("marca") String marca,Pageable pageable);
 
 }

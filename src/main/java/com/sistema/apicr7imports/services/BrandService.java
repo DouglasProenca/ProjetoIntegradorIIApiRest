@@ -64,18 +64,18 @@ public class BrandService {
 
 	public BrandDTO save(CreateBrandRequest brandRequest) {
 		Brand brand = new Brand();
-		brand.setMarca(brandRequest.getMarca());
+		brand.setBrandName(brandRequest.getMarca());
 		brand.setCountry(countryService.findbyId(brandRequest.getCountry()));
-		brand.setData(brandRequest.getData());
+		brand.setDate(brandRequest.getData());
 		brand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(brand),BrandDTO.class);
 	}
 
 	public BrandDTO update(EditBrandRequest brandRequest) {
 		Brand newBrand = DozerMapper.parseObject(findbyId(brandRequest.getId()),Brand.class);
-		newBrand.setMarca(brandRequest.getMarca());
+		newBrand.setBrandName(brandRequest.getMarca());
 		newBrand.setCountry(countryService.findbyId(brandRequest.getCountry()));
-		newBrand.setData(brandRequest.getData());
+		newBrand.setDate(brandRequest.getData());
 		newBrand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newBrand),BrandDTO.class);
 	}

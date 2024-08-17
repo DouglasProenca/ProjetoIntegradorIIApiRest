@@ -45,7 +45,7 @@ public class SecurityConfig {
                     .authorizeHttpRequests(
                             authorizeHttpRequests -> authorizeHttpRequests
                                     .antMatchers("/acesso/login", "/api-docs/**", "/swagger-ui/**").permitAll()
-                                    .antMatchers("/apicr7imports/private/**").authenticated().antMatchers("/apicr7imports/users").denyAll()
+                                    .antMatchers("/apicr7imports/private/**").authenticated().antMatchers("/apicr7imports/users/blocked").denyAll()
                     )
                     .cors(withDefaults())
                     .apply(new JwtConfigurer(tokenProvider))

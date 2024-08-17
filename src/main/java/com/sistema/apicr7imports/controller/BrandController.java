@@ -25,7 +25,7 @@ import com.sistema.apicr7imports.services.BrandService;
 public class BrandController implements BrandControllerInterface {
 
 	@Autowired
-	private BrandService service;
+	BrandService service;
 	
 	@GetMapping(value = "/pagelist", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<BrandDTO>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
@@ -64,7 +64,7 @@ public class BrandController implements BrandControllerInterface {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest) {
 		BrandDTO brandCreate = service.save(brandRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri();
 		return ResponseEntity.created(uri).body(brandCreate);
 	}
 

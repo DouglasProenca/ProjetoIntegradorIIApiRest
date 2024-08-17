@@ -24,7 +24,7 @@ import net.sf.jasperreports.engine.JRException;
 public class JasperController implements JasperControllerInterface {
 
 	@Autowired
-	private JasperService service;
+	JasperService service;
 
 	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException {

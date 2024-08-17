@@ -17,10 +17,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface CPFControllerInterface {
 
 	@Operation(description = "Verficar se o CPF é válido")
-	@ApiResponses(value = {
-		    @ApiResponse(responseCode = "200", description = "Valida o CPF."),
-		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
-		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
-		})
-	public ResponseEntity<CpfResponse> verifyCPF(@Parameter(description = "CPF", required = true) @PathVariable String cpf) throws SQLException;
+    @ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Valida o CPF."),
+			@ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
+			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.") 
+	    })
+	public ResponseEntity<CpfResponse> verifyCPF(
+			@Parameter(description = "CPF", required = true) @PathVariable String cpf) throws SQLException;
 }

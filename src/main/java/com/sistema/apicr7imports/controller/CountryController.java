@@ -24,7 +24,7 @@ import com.sistema.apicr7imports.services.CountryService;
 public class CountryController implements CountryControllerInterface {
 
 	@Autowired
-	private CountryService service;
+	CountryService service;
 	
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Country>> findAll() {

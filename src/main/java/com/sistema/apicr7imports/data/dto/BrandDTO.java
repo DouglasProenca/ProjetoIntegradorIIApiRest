@@ -12,13 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonPropertyOrder({ "id", "marca", "data", "country", "user" })
+@JsonPropertyOrder({ "brandId", "brandName", "date", "country", "user" })
 public class BrandDTO {
 
-	Integer id;
-	String marca;
+	Integer brandId;
+	String brandName;
 	Country country;
-	LocalDate data;
+	LocalDate date;
 	UserDTO user;
 	
 }

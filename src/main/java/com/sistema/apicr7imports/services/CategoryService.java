@@ -61,16 +61,16 @@ public class CategoryService {
 
 	public CategoryDTO save(CreateCategoryRequest categoryRequest) {
 		Category category = new Category();
-		category.setCategoria(categoryRequest.getCategoria());
-		category.setData(categoryRequest.getData());
+		category.setCategoryName(categoryRequest.getCategoria());
+		category.setDate(categoryRequest.getData());
         category.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(category),CategoryDTO.class);
 	}
 
 	public CategoryDTO update(EditCategoryRequest categoryRequest) {
 		Category newObj = DozerMapper.parseObject(findbyId(categoryRequest.getId()),Category.class);
-		newObj.setCategoria(categoryRequest.getCategoria());
-		newObj.setData(categoryRequest.getData());
+		newObj.setCategoryName(categoryRequest.getCategoria());
+		newObj.setDate(categoryRequest.getData());
 		newObj.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newObj),CategoryDTO.class);
 	}

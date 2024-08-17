@@ -28,12 +28,14 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	@Column(name = "id")
+	Integer categoryId;
 	
-	String categoria;
+	@Column(name = "categoria")
+	String categoryName;
 	
 	@Column(name = "[data]")
-	LocalDate data;
+	LocalDate date;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
@@ -41,14 +43,14 @@ public class Category {
 
 	
 	/**
-	 * @param id
+	 * @param categoryId
 	 */
-	public Category(Integer id) {
-		this.id = id;
+	public Category(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@Override
 	public String toString() {
-		return id + ";" + categoria + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUsername();
+		return categoryId + ";" + categoryName + ";" + new SimpleDateFormat("dd/MM/yyyy").format(date) + ";" + user.getUsername();
 	}
 }

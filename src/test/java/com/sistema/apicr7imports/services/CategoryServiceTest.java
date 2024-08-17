@@ -56,24 +56,24 @@ class CategoryServiceTest {
 		Category categoryOne = cateogry.get(1);
 
 		assertNotNull(categoryOne);
-		assertNotNull(categoryOne.getId());
+		assertNotNull(categoryOne.getCategoryId());
 
-		assertEquals("Category name Test1", categoryOne.getCategoria());
+		assertEquals("Category name Test1", categoryOne.getCategoryName());
 
 
 		Category categoryFour = cateogry.get(4);
 
 		assertNotNull(categoryFour);
-		assertNotNull(categoryFour.getId());
+		assertNotNull(categoryFour.getCategoryId());
 
-		assertEquals("Category name Test4", categoryFour.getCategoria());
+		assertEquals("Category name Test4", categoryFour.getCategoryName());
 		
 		Category categorySeven = cateogry.get(7);
 
 		assertNotNull(categorySeven);
-		assertNotNull(categorySeven.getId());
+		assertNotNull(categorySeven.getCategoryId());
 
-		assertEquals("Category name Test7", categorySeven.getCategoria());
+		assertEquals("Category name Test7", categorySeven.getCategoryName());
 
 	}
 
@@ -86,9 +86,9 @@ class CategoryServiceTest {
 		CategoryDTO result =  service.findbyId(1);
 
 		assertNotNull(result);
-		assertNotNull(result.getId());
+		assertNotNull(result.getCategoryId());
 		assertTrue(result.toString().contains(""));
-		assertEquals("Category name Test1", result.getCategoria());
+		assertEquals("Category name Test1", result.getCategoryName());
 
 	}
 
@@ -106,23 +106,23 @@ class CategoryServiceTest {
 		Category categoryOne = cateogry.get(1);
 
 		assertNotNull(categoryOne);
-		assertNotNull(categoryOne.getId());
+		assertNotNull(categoryOne.getCategoryId());
 
-		assertTrue(categoryOne.getCategoria().contains("Category name Test1"));
+		assertTrue(categoryOne.getCategoryName().contains("Category name Test1"));
 
 		Category categoryFour = cateogry.get(4);
 
 		assertNotNull(categoryFour);
-		assertNotNull(categoryFour.getId());
+		assertNotNull(categoryFour.getCategoryId());
 
-		assertTrue(categoryFour.getCategoria().contains("Category name Test4"));
+		assertTrue(categoryFour.getCategoryName().contains("Category name Test4"));
 		
 		Category categorySeven = cateogry.get(7);
 
 		assertNotNull(categorySeven);
-		assertNotNull(categorySeven.getId());
+		assertNotNull(categorySeven.getCategoryId());
 
-		assertTrue(categorySeven.getCategoria().contains("Category name Test7"));
+		assertTrue(categorySeven.getCategoryName().contains("Category name Test7"));
 	
 	}
 
@@ -155,7 +155,7 @@ class CategoryServiceTest {
 
 		when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
 
-		service.delete(category.getId());
+		service.delete(category.getCategoryId());
 
 	}
 

@@ -36,10 +36,10 @@ public interface ProductControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<ProductDTO>> findAllPage(@Parameter(description = "Página.",required= false,example = "1")
-			                                         @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                         @Parameter(description = "limite.",required=false,example = "10")
-			                                         @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<ProductDTO>> findAllPage(@Parameter(description = "Página.", required = false, example = "1")
+			                                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                            @Parameter(description = "limite.", required = false, example = "10")
+			                                            @RequestParam(value = "limit", defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Gera Excel dos produtos")
 	@ApiResponses(value = {
@@ -64,12 +64,12 @@ public interface ProductControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
-	public ResponseEntity<Page<ProductDTO>> findByProductPage(@Parameter(description = "Nome do Produto.", required = true,example = "teste") 
-														   @RequestParam(value = "prouduct") String product,
-														   @Parameter(description = "Página.",required= false,example = "1")
-			                                               @RequestParam(value = "page",defaultValue = "0") Integer page,
-			                                               @Parameter(description = "limite.",required=false,example = "10")
-			                                               @RequestParam(value = "limit",defaultValue = "10") Integer limit);
+	public ResponseEntity<Page<ProductDTO>> findByProductPage(@Parameter(description = "Nome do Produto.", required = true, example = "teste") 
+														      @RequestParam(value = "prouduct") String product,
+														      @Parameter(description = "Página.", required = false, example = "1")
+			                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                                  @Parameter(description = "limite.", required = false, example = "10")
+			                                                  @RequestParam(value = "limit", defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de produtos cadastrados por nome")
 	@ApiResponses(value = {
@@ -78,7 +78,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(responseCode = "404", description = "Produto não encontrado."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<List<ProductDTO>> findByProduct(@Parameter(description = "Nome do Produto.", required = true,example = "teste") @RequestParam(value = "prouduct") String product);
+	public ResponseEntity<List<ProductDTO>> findByProduct(@Parameter(description = "Nome do Produto.", required = true, example = "teste") @RequestParam(value = "prouduct") String product);
 	
 	@Operation(description = "Insere um produto")
 	@ApiResponses(value = {
@@ -102,6 +102,7 @@ public interface ProductControllerInterface {
 		    @ApiResponse(responseCode = "204", description = "Deleção de porduto."),
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "404", description = "produto não encontrado."),
+		    @ApiResponse(responseCode = "409", description = "Conflito - Relação com outros registros."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
 	public ResponseEntity<Void> delete(@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id);

@@ -33,9 +33,9 @@ public interface CountryControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<PagedModel<EntityModel<Country>>> findAllPage(@RequestParam(value = "page",defaultValue = "0") Integer page
-                                                                       ,@RequestParam(value = "limit",defaultValue = "10") Integer limit
-                                                                       ,@RequestParam(value = "direction",defaultValue = "asc") String direction);
+	public ResponseEntity<PagedModel<EntityModel<Country>>> findAllPage(@RequestParam(value = "page", defaultValue = "0") Integer page
+                                                                       ,@RequestParam(value = "limit", defaultValue = "10") Integer limit
+                                                                       ,@RequestParam(value = "direction", defaultValue = "asc") String direction);
 
 
 
@@ -46,6 +46,6 @@ public interface CountryControllerInterface {
 		    @ApiResponse(responseCode = "404", description = "Pais não encontrado."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<Country> findById(@Parameter(description = "ID de Cadastro no Banco.", required = true,example = "1") @PathVariable Integer id);
+	public ResponseEntity<Country> findById(@Parameter(description = "ID de Cadastro no Banco.", required = true, example = "1") @PathVariable Integer id);
 
 }

@@ -27,17 +27,17 @@ public class Brand {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	Integer brandId;
 	
 	@Column(name = "marca")
-	String marca;
+	String brandName;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pais")
 	Country country;
 	
 	@Column(name = "[date]")
-	LocalDate data;
+	LocalDate date;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
@@ -46,13 +46,13 @@ public class Brand {
 	/**
 	 * @param id
 	 */
-	public Brand(Integer id) {
-		this.id = id;
+	public Brand(Integer brandId) {
+		this.brandId = brandId;
 	}
 
 	@Override
 	public String toString() {
-		return id + ";" + marca + ";" + country.getNamePort() + ";" + new SimpleDateFormat("dd/MM/yyyy").format(data) + ";" + user.getUsername();
+		return brandId + ";" + brandName + ";" + country.getNamePort() + ";" + new SimpleDateFormat("dd/MM/yyyy").format(date) + ";" + user.getUsername();
 	}
 	
 }

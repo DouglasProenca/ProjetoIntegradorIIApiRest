@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryDTO {
 
-	Integer id;
-	String categoria;
-	LocalDate data;
+	Integer categoryId;
+	String categoryName;
+	LocalDate date;
 	UserDTO user;
 	
 }

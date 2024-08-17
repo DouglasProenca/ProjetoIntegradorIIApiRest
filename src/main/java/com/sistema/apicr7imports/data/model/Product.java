@@ -53,7 +53,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return id + ";" + nome + ";" + brand.getMarca() + ";" + valor + ";" + quantidade + ";" + category.getCategoria() + ";" + new SimpleDateFormat("dd/mm/yyyy").format(data) + ";"
+		return id + ";" + nome + ";" + brand.getBrandName() + ";" + valor + ";" + quantidade + ";" + category.getCategoryName() + ";" + new SimpleDateFormat("dd/mm/yyyy").format(data) + ";"
 				+ user.getUsername();
 	}
 

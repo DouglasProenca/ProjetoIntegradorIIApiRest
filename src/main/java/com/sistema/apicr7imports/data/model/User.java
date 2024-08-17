@@ -1,6 +1,7 @@
 package com.sistema.apicr7imports.data.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,14 +36,20 @@ public class User implements UserDetails, Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	@Column(name = "id")
+	Integer userId;
 	
 	@Column(name = "[user]", unique = true)
 	String userName;
 	
-	String mail;
-	
 	String password;
+	
+	@Column(name = "mail")
+	String userMail;
+	
+	
+	@Column(name = "mailpassword")
+	String mailPassword;
 	
 	@Column(name = "account_non_expired")
 	Boolean accountNonExpired;
@@ -55,8 +62,8 @@ public class User implements UserDetails, Serializable {
 	
 	Boolean enabled;
 	
-	@Column(name = "mailpassword")
-	String mailPassword;
+	@Column(name = "[data]")
+	LocalDate date;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "rc_user_permission", joinColumns = { @JoinColumn (name = "id_user") },
@@ -112,7 +119,7 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, id, mail, mailPassword,
+		return Objects.hash(accountNonExpired, accountNonLocked, credentialsNonExpired, enabled, userId, userMail, mailPassword,
 				password, permissions, userName);
 	}
 
@@ -128,8 +135,8 @@ public class User implements UserDetails, Serializable {
 		return Objects.equals(accountNonExpired, other.accountNonExpired)
 				&& Objects.equals(accountNonLocked, other.accountNonLocked)
 				&& Objects.equals(credentialsNonExpired, other.credentialsNonExpired)
-				&& Objects.equals(enabled, other.enabled) && Objects.equals(id, other.id)
-				&& Objects.equals(mail, other.mail) && Objects.equals(mailPassword, other.mailPassword)
+				&& Objects.equals(enabled, other.enabled) && Objects.equals(userId, other.userId)
+				&& Objects.equals(userMail, other.userMail) && Objects.equals(mailPassword, other.mailPassword)
 				&& Objects.equals(password, other.password) && Objects.equals(permissions, other.permissions)
 				&& Objects.equals(userName, other.userName);
 	}

@@ -33,9 +33,9 @@ public interface JasperControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> analitycalPDF(@Parameter(description = "Data Inicial do Período.", required = true,example = "2020-01-01")
+	public ResponseEntity<byte[]> analitycalPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
 												@NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-												@Parameter(description = "Data final do Período.", required = true,example = "2024-01-01")
+												@Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
 			                                    @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) 
 			                                    		throws JRException, SQLException, ParseException;
 	
@@ -45,9 +45,9 @@ public interface JasperControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> syntheticPDF(@Parameter(description = "Data Inicial do Período.", required = true,example = "2020-01-01")
+	public ResponseEntity<byte[]> syntheticPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
 			                                   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-			                                   @Parameter(description = "Data final do Período.", required = true,example = "2024-01-01")
+			                                   @Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
 											   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
 	
 

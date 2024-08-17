@@ -14,10 +14,10 @@ import com.sistema.apicr7imports.data.model.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-	@Query("SELECT c FROM Category c WHERE c.categoria like %:categoria%")
+	@Query("SELECT c FROM Category c WHERE c.categoryName like %:categoria%")
 	public List<Category> findByCategoria(@Param("categoria") String categoria);
 
-	@Query("SELECT c FROM Category c WHERE c.categoria like %:categoria%")
+	@Query("SELECT c FROM Category c WHERE c.categoryName like %:categoria%")
 	public Page<Category> findByCategoriaPageable(@Param("categoria") String categoria, Pageable pageable);
 
 }
