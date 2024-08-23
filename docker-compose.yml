@@ -16,9 +16,8 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:10464065229
+    image: douglasprdesouza305/api-cr7-imports:10517576536
     restart: always
-    platform: linux/amd64
     environment:
       - TZ=America/Sao_Paulo
       - SPRING_BOOT_ENVIRONMENT=Production
@@ -32,9 +31,10 @@ services:
         - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
         - ~/.m2:/root/.m2
     deploy:
+       replicas: 1
        resources:
-            limits:
-              memory: 2g	
+             limits:
+                memory: 900M
 
   webServiceCR7:
     container_name: webServiceCR7
