@@ -1,8 +1,10 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.component.Excel;
+import com.sistema.apicr7imports.util.ExcelEngine;
 import com.sistema.apicr7imports.data.dto.CategoryDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateCategoryRequest;
-import com.sistema.apicr7imports.data.dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.dto.request.CategoryRequest;
 import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
@@ -29,7 +30,7 @@ public class CategoryService {
 	CategoryRepository repository;
 	
 	@Autowired
-	Excel excel;
+	ExcelEngine excel;
 
 	public List<CategoryDTO> findAll() {
 		return DozerMapper.parseListObject(repository.findAll(), CategoryDTO.class);
@@ -42,12 +43,8 @@ public class CategoryService {
 	}
 
 	public List<CategoryDTO> findbyCategory(String name) {
-		List<Category> list = repository.findByCategoria(name);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Categoria não encontrada!");
-		
-		return DozerMapper.parseListObject(list, CategoryDTO.class);
+		Optional<List<Category>> list = repository.findByCategoria(name);
+		return DozerMapper.parseListObject(list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!")), CategoryDTO.class);
 	}
 
 	public void delete(Integer id) {
@@ -55,29 +52,29 @@ public class CategoryService {
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
-			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido!");
 		}
 	}
 
-	public CategoryDTO save(CreateCategoryRequest categoryRequest) {
+	public CategoryDTO save(CategoryRequest categoryRequest) {
 		Category category = new Category();
 		category.setCategoryName(categoryRequest.getCategoria());
-		category.setDate(categoryRequest.getData());
+		category.setDate(LocalDate.now());
         category.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(category),CategoryDTO.class);
 	}
 
-	public CategoryDTO update(EditCategoryRequest categoryRequest) {
-		Category newObj = DozerMapper.parseObject(findbyId(categoryRequest.getId()),Category.class);
+	public CategoryDTO update(Integer id, CategoryRequest categoryRequest) {
+		Category newObj = DozerMapper.parseObject(findbyId(id), Category.class);
 		newObj.setCategoryName(categoryRequest.getCategoria());
-		newObj.setDate(categoryRequest.getData());
+		newObj.setDate(LocalDate.now());
 		newObj.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-		return DozerMapper.parseObject(repository.save(newObj),CategoryDTO.class);
+		return DozerMapper.parseObject(repository.save(newObj), CategoryDTO.class);
 	}
 	
 	public byte[] getExcel() throws IOException {
-		String[] titulos = new String[]{"ID","Categoria","Data","Usuário"};	
-		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Categorias", titulos).toByteArray();
+		String[] titles = new String[]{"ID","Categoria","Data","Usuário"};	
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Categorias", titles).toByteArray();
 	}
 	
 	public Page<CategoryDTO> findAllPage(Pageable pageable) {
@@ -85,11 +82,8 @@ public class CategoryService {
 	}
 	
 	public Page<CategoryDTO> findbyBrandPageable(String name,Pageable pageable) {
-		Page<Category> list = repository.findByCategoriaPageable(name,pageable);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Categoria não encontrada!");
-
-		return list.map(category -> DozerMapper.parseObject(category, CategoryDTO.class));
+		Optional<Page<Category>> list = repository.findByCategoriaPageable(name,pageable);
+		return list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"))
+		           .map(category -> DozerMapper.parseObject(category, CategoryDTO.class));
 	}
 }

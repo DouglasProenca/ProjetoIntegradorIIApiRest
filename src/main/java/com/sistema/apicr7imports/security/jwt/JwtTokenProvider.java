@@ -27,13 +27,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenProvider {
 	
 	@Value("${security.jwt.token.secret_key}")
-	private String secretKey;
+	String secretKey;
 	
 	@Value("${security.jwt.token.expire_length}")
-	private String validityInMilliseconds;
+	String validityInMilliseconds;
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	UserDetailsService userDetailsService;
 	
 	@PostConstruct
 	protected void init() {

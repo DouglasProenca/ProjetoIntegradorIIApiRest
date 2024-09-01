@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.apicr7imports.controller.interfaces.JasperControllerInterface;
-import com.sistema.apicr7imports.services.JasperService;
+import com.sistema.apicr7imports.controller.IReportController;
+import com.sistema.apicr7imports.services.ReportService;
 
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @RequestMapping(value = "/private/jasper")
-public class JasperController implements JasperControllerInterface {
+public class ReportController implements IReportController {
 
 	@Autowired
-	JasperService service;
+	ReportService service;
 
 	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("managentment.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.createManagentmentReport());
+		return ResponseEntity.created(null).headers(headers).body(service.generateManagentmentReport());
 	}
 
 	@GetMapping(value = "/analyticalReport", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -38,7 +38,7 @@ public class JasperController implements JasperControllerInterface {
 			                                    @RequestParam(value = "datefin") LocalDate final_date) throws JRException, SQLException, ParseException {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("analitycal.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.createAnalyticalReport(initial_date,final_date));
+		return ResponseEntity.created(null).headers(headers).body(service.generateAnalyticalReport(initial_date,final_date));
 	}
 	
 	@GetMapping(value = "/syntheticReport", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -46,6 +46,6 @@ public class JasperController implements JasperControllerInterface {
 			                                   @RequestParam(value = "datefin") LocalDate final_date) throws JRException, SQLException, ParseException {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("Synthetic.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.createSyntheticReport(initial_date,final_date));
+		return ResponseEntity.created(null).headers(headers).body(service.generateSyntheticReport(initial_date,final_date));
 	}
 }

@@ -1,8 +1,10 @@
 package com.sistema.apicr7imports.services;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.component.Excel;
+import com.sistema.apicr7imports.util.ExcelEngine;
 import com.sistema.apicr7imports.data.dto.BrandDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateBrandRequest;
-import com.sistema.apicr7imports.data.dto.request.EditBrandRequest;
+import com.sistema.apicr7imports.data.dto.request.BrandRequest;
 import com.sistema.apicr7imports.data.model.Brand;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
@@ -32,7 +33,7 @@ public class BrandService {
 	CountryService countryService;
 	
 	@Autowired
-	Excel excel;
+	ExcelEngine excel;
 
 	public List<BrandDTO> findAll() {
 		return DozerMapper.parseListObject(repository.findAll(), BrandDTO.class);
@@ -45,12 +46,8 @@ public class BrandService {
 	}
 
 	public List<BrandDTO> findbyBrand(String name) {
-		List<Brand> list = repository.findByMarca(name);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Marca não encontrada!");
-		
-		return DozerMapper.parseListObject(list, BrandDTO.class);
+		Optional<List<Brand>> list = repository.findByMarca(name);
+		return DozerMapper.parseListObject(list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!")), BrandDTO.class);
 	}
 
 	public void delete(Integer id) {
@@ -58,31 +55,31 @@ public class BrandService {
 		try {
 		   repository.deleteById(id);
 		} catch (Exception e) {
-			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido");
+			throw new ForeignKeyException("O Registro possui relação com outros registros e não pode ser excluido!");
 		}
 	}
 
-	public BrandDTO save(CreateBrandRequest brandRequest) {
+	public BrandDTO save(BrandRequest brandRequest) {
 		Brand brand = new Brand();
 		brand.setBrandName(brandRequest.getMarca());
 		brand.setCountry(countryService.findbyId(brandRequest.getCountry()));
-		brand.setDate(brandRequest.getData());
+		brand.setDate(LocalDate.now());
 		brand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-		return DozerMapper.parseObject(repository.save(brand),BrandDTO.class);
+		return DozerMapper.parseObject(repository.save(brand), BrandDTO.class);
 	}
 
-	public BrandDTO update(EditBrandRequest brandRequest) {
-		Brand newBrand = DozerMapper.parseObject(findbyId(brandRequest.getId()),Brand.class);
+	public BrandDTO update(Integer id, BrandRequest brandRequest) {
+		Brand newBrand = DozerMapper.parseObject(findbyId(id), Brand.class);
 		newBrand.setBrandName(brandRequest.getMarca());
 		newBrand.setCountry(countryService.findbyId(brandRequest.getCountry()));
-		newBrand.setDate(brandRequest.getData());
+		newBrand.setDate(LocalDate.now());
 		newBrand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-		return DozerMapper.parseObject(repository.save(newBrand),BrandDTO.class);
+		return DozerMapper.parseObject(repository.save(newBrand), BrandDTO.class);
 	}
 	
 	public byte[] getExcel() throws IOException {
-		String[] titulos = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Marcas", titulos).toByteArray();
+		String[] titles = new String[]{"ID","Marca","Pais","Data","Usuário"};
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Marcas", titles).toByteArray();
 	}
 	
 	public Page<BrandDTO> findAllPage(Pageable pageable) {
@@ -90,11 +87,8 @@ public class BrandService {
 	}
 	
 	public Page<BrandDTO> findbyBrandPageable(String name,Pageable pageable) {
-		Page<Brand> list = repository.findByMarcaPageable(name,pageable);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Marca não encontrada!");
-
-		return list.map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
+		Optional<Page<Brand>> list = repository.findByMarcaPageable(name,pageable);
+		return list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"))
+				   .map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
 	}
 }

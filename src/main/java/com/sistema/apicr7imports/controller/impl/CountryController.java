@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.apicr7imports.controller.interfaces.CountryControllerInterface;
+import com.sistema.apicr7imports.controller.ICountryController;
 import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.services.CountryService;
 
 @RestController
 @RequestMapping(value = "/private/country")
-public class CountryController implements CountryControllerInterface {
+public class CountryController implements ICountryController {
 
 	@Autowired
 	CountryService service;

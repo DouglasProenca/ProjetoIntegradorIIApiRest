@@ -9,9 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EditProductRequest {
+public class ProductRequest {
 
-	Integer id;
 	String nome;
 	Integer brand;
 	Double valor;

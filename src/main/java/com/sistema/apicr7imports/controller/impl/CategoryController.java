@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,15 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.controller.interfaces.CategoryControllerInterface;
+import com.sistema.apicr7imports.controller.ICategoryController;
 import com.sistema.apicr7imports.data.dto.CategoryDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateCategoryRequest;
-import com.sistema.apicr7imports.data.dto.request.EditCategoryRequest;
+import com.sistema.apicr7imports.data.dto.request.CategoryRequest;
 import com.sistema.apicr7imports.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/private/category")
-public class CategoryController implements CategoryControllerInterface{
+public class CategoryController implements ICategoryController {
 	
 	@Autowired
 	CategoryService service;
@@ -63,15 +62,15 @@ public class CategoryController implements CategoryControllerInterface{
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CategoryDTO> save(@RequestBody CreateCategoryRequest categoryRequest) {
+	public ResponseEntity<CategoryDTO> save(@RequestBody CategoryRequest categoryRequest) {
 		CategoryDTO categoryCreate = service.save(categoryRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getCategoryId()).toUri();
 		return ResponseEntity.created(uri).body(categoryCreate);
 	}
 	
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CategoryDTO> update(@RequestBody EditCategoryRequest categoryRequest) {
-		return ResponseEntity.ok().body(service.update(categoryRequest));
+	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) {
+		return ResponseEntity.ok().body(service.update(id,categoryRequest));
 	}
 	
 	@DeleteMapping(value = "/{id}")

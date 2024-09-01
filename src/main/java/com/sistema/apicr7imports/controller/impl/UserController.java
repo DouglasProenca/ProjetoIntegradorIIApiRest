@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.component.CodeString;
+import com.sistema.apicr7imports.util.CodeString;
+import com.sistema.apicr7imports.controller.IUserController;
 import com.sistema.apicr7imports.data.dto.request.CreateUserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.services.UserService;
@@ -26,7 +27,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @RestController
 @RequestMapping(value = "/private/users")
-public class UserController {
+public class UserController implements IUserController {
 
 	@Autowired
 	UserService service;

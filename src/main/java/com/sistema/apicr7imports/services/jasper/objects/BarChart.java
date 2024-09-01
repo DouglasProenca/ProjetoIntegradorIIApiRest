@@ -14,7 +14,7 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class BarChart implements JRChartCustomizer {
 
-	private boolean gridLinesVisible = true;
+	Boolean gridLinesVisible;
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {

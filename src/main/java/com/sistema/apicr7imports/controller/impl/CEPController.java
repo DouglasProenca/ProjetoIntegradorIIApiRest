@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.apicr7imports.controller.interfaces.CEPControllerInterface;
+import com.sistema.apicr7imports.controller.ICEPController;
 import com.sistema.apicr7imports.data.dto.response.CEPResponse;
 import com.sistema.apicr7imports.services.ViaCEPService;
 
 
 @RestController
 @RequestMapping(value = "/private/cep/v1")
-public class CEPController implements CEPControllerInterface {
+public class CEPController implements ICEPController {
 
 	@Autowired
 	ViaCEPService service;

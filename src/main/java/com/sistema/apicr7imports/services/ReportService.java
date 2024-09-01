@@ -21,16 +21,16 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
 @Service
-public class JasperService {
+public class ReportService {
 	
 	@Autowired
 	DataSource dataSource;
 
-	public byte[] createManagentmentReport() throws SQLException, JRException {
+	public byte[] generateManagentmentReport() throws SQLException, JRException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("SUBREPORT_DIR", JasperService.class.getResource("/jasper/").toString());
+		parametros.put("SUBREPORT_DIR", ReportService.class.getResource("/jasper/").toString());
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Managent_Report_Geral.jasper");
+		InputStream jasperFile = ReportService.class.getResourceAsStream("/jasper/Rel_Managent_Report_Geral.jasper");
 		
 		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 
@@ -41,12 +41,12 @@ public class JasperService {
 		return byteArrayOutputStream.toByteArray();
 	}
 
-	public byte[] createAnalyticalReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
+	public byte[] generateAnalyticalReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("data1", Date.from(initial_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		parametros.put("data2", Date.from(final_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Analytical_Report_Geral.jasper");
+		InputStream jasperFile = ReportService.class.getResourceAsStream("/jasper/Rel_Analytical_Report_Geral.jasper");
 
 		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 
@@ -57,12 +57,12 @@ public class JasperService {
 		return byteArrayOutputStream.toByteArray();
 	}
 
-	public byte[] createSyntheticReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
+	public byte[] generateSyntheticReport(LocalDate initial_date, LocalDate final_date) throws JRException, SQLException, ParseException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("data1", Date.from(initial_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		parametros.put("data2", Date.from(final_date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-		InputStream jasperFile = JasperService.class.getResourceAsStream("/jasper/Rel_Synthetic_Report_Geral.jasper");
+		InputStream jasperFile = ReportService.class.getResourceAsStream("/jasper/Rel_Synthetic_Report_Geral.jasper");
 
 		JasperPrint print = JasperFillManager.fillReport(jasperFile, parametros, dataSource.getConnection());
 

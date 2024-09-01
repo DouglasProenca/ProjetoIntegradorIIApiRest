@@ -1,8 +1,13 @@
 package com.sistema.apicr7imports.services;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.component.Excel;
+import com.sistema.apicr7imports.util.ExcelEngine;
 import com.sistema.apicr7imports.data.dto.ProductDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateProductRequest;
-import com.sistema.apicr7imports.data.dto.request.EditProductRequest;
+import com.sistema.apicr7imports.data.dto.request.ProductRequest;
 import com.sistema.apicr7imports.data.model.Brand;
 import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.data.model.Product;
@@ -36,7 +40,7 @@ public class ProductService {
 	CategoryService categoryService;
 	
 	@Autowired
-	Excel excel;
+	ExcelEngine excel;
 	
 	public List<ProductDTO> findAll() {
 		return DozerMapper.parseListObject(repository.findAll(), ProductDTO.class);
@@ -49,12 +53,8 @@ public class ProductService {
 	}
 
 	public List<ProductDTO> findbyProduct(String name) {
-		List<Product> list = repository.findByNome(name);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Produto não encontrado!");
-
-		return DozerMapper.parseListObject(list, ProductDTO.class);
+		Optional<List<Product>> list = repository.findByNome(name);
+		return DozerMapper.parseListObject(list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!")), ProductDTO.class);
 	}
 
 	public void delete(Integer id) {
@@ -66,7 +66,7 @@ public class ProductService {
 		}
 	}
 
-	public ProductDTO save(CreateProductRequest productRequest) {
+	public ProductDTO save(ProductRequest productRequest) {
 		Product product = new Product();
 		product.setNome(productRequest.getNome());
 		product.setQuantidade(productRequest.getQuantidade());
@@ -79,8 +79,8 @@ public class ProductService {
 		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
 
-	public ProductDTO update(EditProductRequest productRequest) {
-		Product newProduct = DozerMapper.parseObject(findbyId(productRequest.getId()), Product.class);
+	public ProductDTO update(Integer id, ProductRequest productRequest) {
+		Product newProduct = DozerMapper.parseObject(findbyId(id), Product.class);
 		newProduct.setNome(productRequest.getNome());
 		newProduct.setQuantidade(productRequest.getQuantidade());
 		newProduct.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
@@ -93,8 +93,18 @@ public class ProductService {
 	}
 	
 	public byte[] getExcel() throws IOException {
-		String[] titulos = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
-		return excel.exportExcel((ArrayList<?>) repository.findAll(), "Produtos", titulos).toByteArray();
+		String[] titles = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
+		return excel.generateExcel((ArrayList<?>) findAll(), "Produtos", titles).toByteArray();
+	}
+	
+	public byte[] getImage(Integer id) throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		Product product = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
+		
+		if(!(product.getImagem() == null))
+		ImageIO.write(ImageIO.read(new ByteArrayInputStream(product.getImagem())), "jpeg", byteArrayOutputStream);
+	    
+		return byteArrayOutputStream.toByteArray();
 	}
 	
 	public Page<ProductDTO> findAllPage(Pageable pageable) {
@@ -102,11 +112,9 @@ public class ProductService {
 	}
 	
 	public Page<ProductDTO> findbyProductPageable(String name,Pageable pageable) {
-		Page<Product> list = repository.findByNomePageable(name,pageable);
-		
-		if (list.isEmpty()) 
-			throw new ObjectNotFoundException("Produto não encontrado!");
-
-		return list.map(product -> DozerMapper.parseObject(product, ProductDTO.class));
+		Optional<Page<Product>> list = repository.findByNomePageable(name,pageable);
+		return list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"))
+		           .map(product -> DozerMapper.parseObject(product, ProductDTO.class));
 	}
+	
 }

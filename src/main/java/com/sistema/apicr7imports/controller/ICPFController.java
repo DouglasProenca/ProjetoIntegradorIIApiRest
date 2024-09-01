@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller.interfaces;
+package com.sistema.apicr7imports.controller;
 
 import java.sql.SQLException;
 
@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "CPF")
-public interface CPFControllerInterface {
+public interface ICPFController {
 
 	@Operation(description = "Verficar se o CPF é válido")
     @ApiResponses(value = {
@@ -22,6 +22,5 @@ public interface CPFControllerInterface {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.") 
 	    })
-	public ResponseEntity<CpfResponse> verifyCPF(
-			@Parameter(description = "CPF", required = true) @PathVariable String cpf) throws SQLException;
+	ResponseEntity<CpfResponse> verifyCPF(@Parameter(description = "CPF", required = true) @PathVariable String cpf) throws SQLException;
 }

@@ -11,7 +11,7 @@ import com.sistema.apicr7imports.repository.UserRepository;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-import com.sistema.apicr7imports.component.CodeString;
+import com.sistema.apicr7imports.util.CodeString;
 import com.sistema.apicr7imports.data.dto.request.CreateUserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
@@ -31,22 +31,12 @@ public class UserService {
 		return repository.findAll();
 	}
 
-	public User findbyId(Integer id) {
-		User user = repository.findById(id).orElse(null);
-		
-		if (user == null) 
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		
-		return user;
+	public User findbyId(Integer id) {		
+		return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
 	}
 	
-	public User findbyUser(String text) {
-		User user = repository.findByUsername(text);
-		
-		if (user == null) 
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		
-		return user;
+	public User findbyUser(String text) {		
+		return repository.findByUsername(text).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado"));
 	}
 
 	public void delete(Integer id) {
@@ -69,12 +59,8 @@ public class UserService {
 
 	public User update(User obj) {
 		User newObj = findbyId(obj.getUserId());
-		updateData(newObj,obj);
-		return repository.save(obj);
-	}
-
-	private void updateData(User newObj, User obj) {
 		newObj.setUserName(obj.getUsername());
 		newObj.setUserMail(obj.getUserMail());
+		return repository.save(obj);
 	}
 }

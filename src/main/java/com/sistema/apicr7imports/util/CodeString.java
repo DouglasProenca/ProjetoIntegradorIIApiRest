@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.component;
+package com.sistema.apicr7imports.util;
 
 import java.io.UnsupportedEncodingException;
 

@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller.interfaces;
+package com.sistema.apicr7imports.controller;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import net.sf.jasperreports.engine.JRException;
 
 @Tag(name = "Relatórios Da Aplicação") 
-public interface JasperControllerInterface {
+public interface IReportController {
 
 	@Operation(description = "Relatório Gerencial")
 	@ApiResponses(value = {
@@ -25,7 +25,7 @@ public interface JasperControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException;
+    ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException;
 	
 	@Operation(description = "Relatório Analítico")
 	@ApiResponses(value = {
@@ -33,11 +33,10 @@ public interface JasperControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> analitycalPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
-												@NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-												@Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
-			                                    @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) 
-			                                    		throws JRException, SQLException, ParseException;
+	ResponseEntity<byte[]> analitycalPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
+										 @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
+										 @Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
+			                             @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
 	
 	@Operation(description = "Relatório Sintético")
 	@ApiResponses(value = {
@@ -45,10 +44,9 @@ public interface JasperControllerInterface {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	public ResponseEntity<byte[]> syntheticPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
-			                                   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
-			                                   @Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
-											   @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
+	ResponseEntity<byte[]> syntheticPDF(@Parameter(description = "Data Inicial do Período.", required = true, example = "2020-01-01")
+			                            @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initial_date,
+			                            @Parameter(description = "Data final do Período.", required = true, example = "2024-01-01")
+									    @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate final_date) throws JRException, SQLException, ParseException;
 	
-
 }

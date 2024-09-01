@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller.interfaces;
+package com.sistema.apicr7imports.controller;
 
 import javax.ws.rs.FormParam;
 
@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Autenticação Da Aplicação")
-public interface AcessControllerInterface {
+public interface IAcessController {
 
 	@Operation(description = "Autenticar usuário e retornar um token de acesso")
 	@ApiResponses(value = { 
@@ -23,8 +23,8 @@ public interface AcessControllerInterface {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
-	public ResponseEntity<AcessResponse> login(@Parameter(description = "Usuário de Cadastro", required = true) @FormParam("username") String username,
-			                                   @Parameter(description = "Senha de Cadastro", required = true) @FormParam("password") String password);
+	ResponseEntity<AcessResponse> login(@Parameter(description = "Usuário de Cadastro", required = true) @FormParam("username") String username,
+			                            @Parameter(description = "Senha de Cadastro", required = true) @FormParam("password") String password);
 	
 	@Operation(description = "Autenticar usuário e retornar um token de acesso por request Body")
 	@ApiResponses(value = { 
@@ -32,6 +32,6 @@ public interface AcessControllerInterface {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
-	public ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest);
+	ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest);
 	
 }

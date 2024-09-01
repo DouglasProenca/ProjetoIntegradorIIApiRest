@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.repository;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,8 +19,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Transactional
 	@Query(value = "INSERT INTO rc_user "
 			+ "VALUES (:#{#c.user}, :#{#c.password}, :#{#c.mail}, :#{#c.mailPassword} , :#{#c.data})", nativeQuery = true)
-	public void insert(@Param("c") User c);
+	Void insert(@Param("c") User c);
 
 	@Query("SELECT u FROM User u WHERE u.userName =:userName")
-	public User findByUsername(@Param("userName") String userName);
+	Optional<User> findByUsername(@Param("userName") String userName);
 }

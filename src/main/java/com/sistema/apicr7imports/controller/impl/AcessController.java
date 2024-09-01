@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import javax.ws.rs.FormParam;
 
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.apicr7imports.controller.interfaces.AcessControllerInterface;
+import com.sistema.apicr7imports.controller.IAcessController;
 import com.sistema.apicr7imports.data.dto.request.AcessRequest;
 import com.sistema.apicr7imports.data.dto.response.AcessResponse;
 import com.sistema.apicr7imports.services.AcessService;
 
 @RestController
 @RequestMapping(value = "/acesso")
-public class AcessController implements AcessControllerInterface {
+public class AcessController implements IAcessController {
 
 	@Autowired
 	AcessService service;

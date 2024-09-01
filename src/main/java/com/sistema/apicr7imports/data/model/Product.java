@@ -50,6 +50,8 @@ public class Product {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[categoria]")
 	Category category;
+	
+	byte[] imagem;
 
 	@Override
 	public String toString() {

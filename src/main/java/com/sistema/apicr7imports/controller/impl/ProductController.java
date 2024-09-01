@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,24 +13,23 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.controller.interfaces.ProductControllerInterface;
+import com.sistema.apicr7imports.controller.IProductController;
 import com.sistema.apicr7imports.data.dto.ProductDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateProductRequest;
-import com.sistema.apicr7imports.data.dto.request.EditProductRequest;
+import com.sistema.apicr7imports.data.dto.request.ProductRequest;
 import com.sistema.apicr7imports.services.ProductService;
 
 @RestController
 @RequestMapping("/private/product")
-public class ProductController implements ProductControllerInterface {
+public class ProductController implements IProductController {
 
 	@Autowired
 	ProductService service;
@@ -70,15 +69,15 @@ public class ProductController implements ProductControllerInterface {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ProductDTO> save(@RequestBody  CreateProductRequest productRequest) {
+	public ResponseEntity<ProductDTO> save(@RequestBody  ProductRequest productRequest) {
 		ProductDTO productCreate = service.save(productRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
 		return ResponseEntity.created(uri).body(productCreate);
 	}
 
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ProductDTO> update(@RequestBody EditProductRequest productRequest) {
-		return ResponseEntity.ok().body(service.update(productRequest));
+	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @RequestBody ProductRequest productRequest) {
+		return ResponseEntity.ok().body(service.update(id,productRequest));
 	}
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -88,4 +87,10 @@ public class ProductController implements ProductControllerInterface {
 		return ResponseEntity.ok().headers(headers).body(service.getExcel());
 	}
 
+	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> getImage (@PathVariable Integer id) throws IOException{		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.attachment().filename("image.jpeg").build());
+		return ResponseEntity.ok().headers(headers).body(service.getImage(id));
+	}
 }

@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,15 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.controller.interfaces.BrandControllerInterface;
+import com.sistema.apicr7imports.controller.IBrandController;
 import com.sistema.apicr7imports.data.dto.BrandDTO;
-import com.sistema.apicr7imports.data.dto.request.CreateBrandRequest;
-import com.sistema.apicr7imports.data.dto.request.EditBrandRequest;
+import com.sistema.apicr7imports.data.dto.request.BrandRequest;
 import com.sistema.apicr7imports.services.BrandService;
 
 @RestController
 @RequestMapping(value = "/private/brand")
-public class BrandController implements BrandControllerInterface {
+public class BrandController implements IBrandController {
 
 	@Autowired
 	BrandService service;
@@ -62,15 +61,15 @@ public class BrandController implements BrandControllerInterface {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BrandDTO> save(@RequestBody CreateBrandRequest brandRequest) {
+	public ResponseEntity<BrandDTO> save(@RequestBody BrandRequest brandRequest) {
 		BrandDTO brandCreate = service.save(brandRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri();
 		return ResponseEntity.created(uri).body(brandCreate);
 	}
 
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BrandDTO> update(@RequestBody EditBrandRequest brandRequest) {
-		return ResponseEntity.ok().body(service.update(brandRequest));
+	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BrandDTO> update(@PathVariable Integer id, @RequestBody BrandRequest brandRequest) {
+		return ResponseEntity.ok().body(service.update(id,brandRequest));
 	}
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

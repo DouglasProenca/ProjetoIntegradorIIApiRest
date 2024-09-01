@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.controller;
+package com.sistema.apicr7imports.controller.impl;
 
 import java.sql.SQLException;
 
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.apicr7imports.controller.interfaces.CPFControllerInterface;
+import com.sistema.apicr7imports.controller.ICPFController;
 import com.sistema.apicr7imports.data.dto.response.CpfResponse;
 import com.sistema.apicr7imports.services.CPFService;
 
 @RestController
 @RequestMapping(value = "/private/cpf/v1")
-public class CPFController implements CPFControllerInterface {
+public class CPFController implements ICPFController {
 
 	@Autowired
 	CPFService service;

@@ -41,14 +41,6 @@ public class Category {
 	@JoinColumn(name = "[user]")
 	User user;
 
-	
-	/**
-	 * @param categoryId
-	 */
-	public Category(Integer categoryId) {
-		this.categoryId = categoryId;
-	}
-
 	@Override
 	public String toString() {
 		return categoryId + ";" + categoryName + ";" + new SimpleDateFormat("dd/MM/yyyy").format(date) + ";" + user.getUsername();

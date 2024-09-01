@@ -11,9 +11,9 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class PizzaChart implements JRChartCustomizer {
 
-	private boolean linkVisible = false;
-	private boolean legendVisible = false;
-	private Color shadowPaint = new Color(255, 255, 255);
+	Boolean linkVisible = false;
+	Boolean legendVisible = false;
+	Color shadowPaint = new Color(255, 255, 255);
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {

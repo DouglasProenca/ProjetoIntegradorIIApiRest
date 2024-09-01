@@ -1,7 +1,7 @@
 package com.sistema.apicr7imports.data.model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,17 +42,10 @@ public class Brand {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "[user]")
 	User user;
-	
-	/**
-	 * @param id
-	 */
-	public Brand(Integer brandId) {
-		this.brandId = brandId;
-	}
 
 	@Override
 	public String toString() {
-		return brandId + ";" + brandName + ";" + country.getNamePort() + ";" + new SimpleDateFormat("dd/MM/yyyy").format(date) + ";" + user.getUsername();
+		return brandId + ";" + brandName + ";" + country.getNamePort() + ";" +date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + user.getUsername();
 	}
 	
 }
