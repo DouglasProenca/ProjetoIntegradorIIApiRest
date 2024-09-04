@@ -88,7 +88,7 @@ public class ProductController implements IProductController {
 	}
 
 	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<byte[]> getImage (@PathVariable Integer id) throws IOException{		
+	public ResponseEntity<List<byte[]>> getImage (@PathVariable Integer id) throws IOException{		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentDisposition(ContentDisposition.attachment().filename("image.jpeg").build());
 		return ResponseEntity.ok().headers(headers).body(service.getImage(id));

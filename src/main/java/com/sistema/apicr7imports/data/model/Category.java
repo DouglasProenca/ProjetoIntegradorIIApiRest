@@ -1,7 +1,7 @@
 package com.sistema.apicr7imports.data.model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_categoria")
+@Table(name = "categoria")
 public class Category {
 	
 	@Id
@@ -31,18 +31,18 @@ public class Category {
 	@Column(name = "id")
 	Integer categoryId;
 	
-	@Column(name = "categoria")
+	@Column(name = "nome")
 	String categoryName;
 	
-	@Column(name = "[data]")
+	@Column(name = "data_criacao")
 	LocalDate date;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "[user]")
+	@JoinColumn(name = "usuario")
 	User user;
 
 	@Override
 	public String toString() {
-		return categoryId + ";" + categoryName + ";" + new SimpleDateFormat("dd/MM/yyyy").format(date) + ";" + user.getUsername();
+		return categoryId + ";" + categoryName + ";" + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + user.getUsername();
 	}
 }

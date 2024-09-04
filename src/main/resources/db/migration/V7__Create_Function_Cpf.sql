@@ -1,5 +1,3 @@
-USE [cr7imports]
-GO
 /****** Object:  UserDefinedFunction [dbo].[fn_isCPF]    Script Date: 19/11/2023 11:09:45 ******/
 SET ANSI_NULLS ON
 GO

@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE sp_insert_rc_user  
+CREATE OR ALTER PROCEDURE sp_insert_usuario 
     @nome VARCHAR(500)
   , @password VARCHAR(1000)
   , @email VARCHAR(1000)
@@ -20,7 +20,7 @@ SELECT @account_non_expiredBit = IIF(@account_non_expired = 'false', 1,0)
 	 , @credentials_non_expiredBit = IIF(@credentials_non_expired = 'false', 1,0)
 	 , @enabledBit = IIF(@enabled = 'true', 1,0)
 
-INSERT INTO rc_user VALUES(@nome 
+INSERT INTO usuario VALUES(@nome 
 						 , @password
 						 , @email 
 						 , @mailPassword 

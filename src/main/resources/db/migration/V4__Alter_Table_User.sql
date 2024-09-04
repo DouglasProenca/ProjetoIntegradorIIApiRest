@@ -1,3 +1,19 @@
-alter table rc_user add account_non_expired bit
-alter table rc_user add account_non_locked bit
-alter table rc_user add credentials_non_expired bit
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+              WHERE UPPER(TABLE_NAME) = 'USUARIO'
+                AND UPPER(TABLE_SCHEMA) = 'SEGURANCA'
+                AND UPPER(COLUMN_NAME) = UPPER('CONTA_NAO_EXPIRADA'))
+ALTER TABLE rc_user ADD account_non_expired BIT  
+
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+              WHERE UPPER(TABLE_NAME) = 'USUARIO'
+                AND UPPER(TABLE_SCHEMA) = 'SEGURANCA'
+                AND UPPER(COLUMN_NAME) = UPPER('CONTA_NAO_BLOQUEADA'))
+ALTER TABLE rc_user ADD account_non_locked BIT    
+
+
+IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+              WHERE UPPER(TABLE_NAME) = 'USUARIO'
+                AND UPPER(TABLE_SCHEMA) = 'SEGURANCA' 
+                AND UPPER(COLUMN_NAME) = UPPER('CREDENCIAIS_NAO_EXPIRADAS'))  
+ALTER TABLE rc_user ADD credentials_non_expired BIT     

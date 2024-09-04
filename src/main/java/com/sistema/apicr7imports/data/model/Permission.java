@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "rc_permission")
+@Table(name = "permissao",schema = "seguranca")
 public class Permission implements GrantedAuthority, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class Permission implements GrantedAuthority, Serializable {
 	@Column(name = "id")
 	Integer id;
 	
-	@Column(name = "description")
+	@Column(name = "descricao")
 	String description;
 
 	@Override

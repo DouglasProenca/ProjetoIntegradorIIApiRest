@@ -1,7 +1,8 @@
 package com.sistema.apicr7imports.data.model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_produto")
+@Table(name = "produto")
 public class Product {
 
 	@Id
@@ -40,22 +42,24 @@ public class Product {
 	
 	Boolean ativo;
 	 
-	@Column(name = "[date]")
+	@Column(name = "data_criacao")
 	LocalDate data;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "[user]")
+	@JoinColumn(name = "usuario")
 	User user;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "[categoria]")
+	@JoinColumn(name = "categoria")
 	Category category;
 	
-	byte[] imagem;
-
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id")
+	List<ProductImage> images;
+	
 	@Override
 	public String toString() {
-		return id + ";" + nome + ";" + brand.getBrandName() + ";" + valor + ";" + quantidade + ";" + category.getCategoryName() + ";" + new SimpleDateFormat("dd/mm/yyyy").format(data) + ";"
+		return id + ";" + nome + ";" + brand.getBrandName() + ";" + valor + ";" + quantidade + ";" + category.getCategoryName() + ";" + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
 				+ user.getUsername();
 	}
 

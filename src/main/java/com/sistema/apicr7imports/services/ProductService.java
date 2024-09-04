@@ -21,10 +21,12 @@ import com.sistema.apicr7imports.data.dto.request.ProductRequest;
 import com.sistema.apicr7imports.data.model.Brand;
 import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.data.model.Product;
+import com.sistema.apicr7imports.data.model.ProductImage;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
+import com.sistema.apicr7imports.repository.ProductImageRepository;
 import com.sistema.apicr7imports.repository.ProductRepository;
 
 @Service
@@ -38,6 +40,9 @@ public class ProductService {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired 
+	ProductImageRepository imageRepository;
 	
 	@Autowired
 	ExcelEngine excel;
@@ -97,14 +102,17 @@ public class ProductService {
 		return excel.generateExcel((ArrayList<?>) findAll(), "Produtos", titles).toByteArray();
 	}
 	
-	public byte[] getImage(Integer id) throws IOException {
+	public List<byte[]> getImage(Integer id) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		Product product = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Produto não encontrado!"));
+		Optional<List<byte[]>> listImages = Optional.empty(); 
 		
-		if(!(product.getImagem() == null))
-		ImageIO.write(ImageIO.read(new ByteArrayInputStream(product.getImagem())), "jpeg", byteArrayOutputStream);
+	    for (ProductImage productImage : product.getImages()) {
+	    	ImageIO.write(ImageIO.read(new ByteArrayInputStream(productImage.getImage())), "png", byteArrayOutputStream);
+	    	listImages.get().add(byteArrayOutputStream.toByteArray());
+		}	
 	    
-		return byteArrayOutputStream.toByteArray();
+		return listImages.orElseThrow(() -> new ObjectNotFoundException("imagens não encontradas!"));
 	}
 	
 	public Page<ProductDTO> findAllPage(Pageable pageable) {

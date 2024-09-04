@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_marca")
+@Table(name = "marca")
 public class Brand {
 
 	@Id
@@ -36,11 +36,11 @@ public class Brand {
 	@JoinColumn(name = "pais")
 	Country country;
 	
-	@Column(name = "[date]")
+	@Column(name = "data_criacao")
 	LocalDate date;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "[user]")
+	@JoinColumn(name = "usuario")
 	User user;
 
 	@Override

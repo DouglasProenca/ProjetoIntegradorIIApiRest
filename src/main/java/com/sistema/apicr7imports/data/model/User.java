@@ -29,7 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_user")
+@Table(name = "usuario", schema = "seguranca")
 public class User implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,35 +39,37 @@ public class User implements UserDetails, Serializable {
 	@Column(name = "id")
 	Integer userId;
 	
-	@Column(name = "[user]", unique = true)
+	@Column(name = "usuario", unique = true)
 	String userName;
 	
+	@Column(name = "senha")
 	String password;
 	
-	@Column(name = "mail")
+	@Column(name = "email")
 	String userMail;
 	
 	
-	@Column(name = "mailpassword")
+	@Column(name = "email_senha")
 	String mailPassword;
 	
-	@Column(name = "account_non_expired")
+	@Column(name = "conta_nao_expirada")
 	Boolean accountNonExpired;
 	
-	@Column(name = "account_non_locked")
+	@Column(name = "conta_nao_bloqueada")
 	Boolean accountNonLocked;
 	
-	@Column(name = "credentials_non_expired")
+	@Column(name = "credenciais_nao_expiradas")
 	Boolean credentialsNonExpired;
 	
+	@Column(name = "ativo")
 	Boolean enabled;
 	
-	@Column(name = "[data]")
+	@Column(name = "data_criacao")
 	LocalDate date;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "rc_user_permission", joinColumns = { @JoinColumn (name = "id_user") },
-			inverseJoinColumns = { @JoinColumn (name = "id_permission")})
+	@JoinTable(name = "usuario_permissao",schema = "seguranca", joinColumns = { @JoinColumn (name = "usuario") },
+			inverseJoinColumns = { @JoinColumn (name = "permissao")})
 	List<Permission> permissions;
 	
 	public List<String> getRoles() {

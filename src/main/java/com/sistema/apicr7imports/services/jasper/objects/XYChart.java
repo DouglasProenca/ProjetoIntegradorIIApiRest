@@ -10,13 +10,13 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class XYChart implements JRChartCustomizer {
 
-	private boolean rangeGridlinesVisible = true;
-	private boolean domainGridlinesVisible = true;
-	private boolean horTickMarksVisible = true;
-	private boolean vertTickMarksVisible = true;
-	private boolean legendVisible = true;
-	private boolean xyRenderer = false;
-	private String label = "";
+	Boolean rangeGridlinesVisible = true;
+	Boolean domainGridlinesVisible = true;
+	Boolean horTickMarksVisible = true;
+	Boolean vertTickMarksVisible = true;
+	Boolean legendVisible = true;
+	Boolean xyRenderer = false;
+	String label = "";
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {

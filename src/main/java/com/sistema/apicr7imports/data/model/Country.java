@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "rc_pais")
+@Table(name = "pais")
 public class Country extends RepresentationModel<Country> {
 	
 	
