@@ -1,5 +1,8 @@
-#ProjetoIntegradorIIApiRest
+# ProjetoIntegradorIIApiRest
 
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+
+# Resumo do projeto
 O projeto APIRESTCR7Imports foi criado para retornar informações nos formatos JSON, PDF e XLSX. Além disso, a API consulta um endpoint de terceiros (Via CEP) e envia emails.
 
 ![image](https://github.com/DouglasProenca/ProjetoIntegradorIIApiRest/assets/78769051/28207f82-e17a-4705-b868-99cc2e15bdd0)
