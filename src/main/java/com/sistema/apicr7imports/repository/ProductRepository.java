@@ -15,10 +15,10 @@ import com.sistema.apicr7imports.data.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query("SELECT p FROM Product p WHERE p.nome like %:nome%")
+	@Query("SELECT p FROM Product p WHERE p.productName like %:nome%")
 	Optional<List<Product>> findByNome(@Param("nome") String nome);
 	
-	@Query("SELECT b FROM Product b WHERE b.nome like %:nome%")
+	@Query("SELECT b FROM Product b WHERE b.productName like %:nome%")
 	Optional<Page<Product>> findByNomePageable(@Param("nome") String nome, Pageable pageable);
 	
 }

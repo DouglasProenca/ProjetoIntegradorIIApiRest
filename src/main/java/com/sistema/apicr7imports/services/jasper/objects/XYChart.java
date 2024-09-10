@@ -21,8 +21,8 @@ public class XYChart implements JRChartCustomizer {
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
 		JRPropertiesMap pm = jasperChart.getPropertiesMap();
-
-		if (pm != null) {
+		
+		if (pm.hasProperties()) {
 			if (pm.getProperty("rangeGridlinesVisible") != null) {
 				rangeGridlinesVisible = Boolean.parseBoolean(pm.getProperty("rangeGridlinesVisible"));
 			}

@@ -73,33 +73,33 @@ public class ProductService {
 
 	public ProductDTO save(ProductRequest productRequest) {
 		Product product = new Product();
-		product.setNome(productRequest.getNome());
-		product.setQuantidade(productRequest.getQuantidade());
-		product.setValor(productRequest.getValor());
-		product.setAtivo(productRequest.getAtivo());
+		product.setProductName(productRequest.getProductName());
+		product.setAmount(productRequest.getAmount());
+		product.setPrice(productRequest.getPrice());
+		product.setEnabled(productRequest.getEnabled());
 		product.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
 		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
-		product.setData(productRequest.getData());
+		product.setDate(productRequest.getDate());
 		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
 
 	public ProductDTO update(Integer id, ProductRequest productRequest) {
 		Product newProduct = DozerMapper.parseObject(findbyId(id), Product.class);
-		newProduct.setNome(productRequest.getNome());
-		newProduct.setQuantidade(productRequest.getQuantidade());
+		newProduct.setProductName(productRequest.getProductName());
+		newProduct.setAmount(productRequest.getAmount());
 		newProduct.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
 		newProduct.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
-		newProduct.setAtivo(productRequest.getAtivo());
-		newProduct.setValor(productRequest.getValor());
-		newProduct.setData(productRequest.getData());
+		newProduct.setEnabled(productRequest.getEnabled());
+		newProduct.setPrice(productRequest.getPrice());
+		newProduct.setDate(productRequest.getDate());
 		newProduct.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newProduct),ProductDTO.class);
 	}
 	
 	public byte[] getExcel() throws IOException {
 		String[] titles = new String[]{"ID","Nome","Marca","Valor","Quantidade","Categoria","Data","Usuário"};
-		return excel.generateExcel((ArrayList<?>) findAll(), "Produtos", titles).toByteArray();
+		return excel.generateExcel((ArrayList<?>) findAll(), "Produtos", titles);
 	}
 	
 	public List<byte[]> getImage(Integer id) throws IOException {

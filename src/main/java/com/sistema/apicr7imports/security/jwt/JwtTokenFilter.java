@@ -16,7 +16,7 @@ import org.springframework.web.filter.GenericFilterBean;
 public class JwtTokenFilter extends GenericFilterBean {
 	
 	@Autowired
-	private JwtTokenProvider tokenProvider;
+	JwtTokenProvider tokenProvider;
 	
 	public JwtTokenFilter(JwtTokenProvider tokenProvider) {
 		this.tokenProvider = tokenProvider;
@@ -30,9 +30,9 @@ public class JwtTokenFilter extends GenericFilterBean {
 		
 		if (token != null && tokenProvider.validateToken(token)) {
 			Authentication auth = tokenProvider.getAuthentication(token);
-			if (auth != null) {
+			if (auth != null) 
 				SecurityContextHolder.getContext().setAuthentication(auth);
-			}
+			
 		}
 		chain.doFilter(request, response);
 	}

@@ -3,6 +3,7 @@ package com.sistema.apicr7imports.services.jasper.objects;
 
 
 import java.awt.Color;
+import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -18,18 +19,14 @@ public class BarChart implements JRChartCustomizer {
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
-		JRPropertiesMap pm = jasperChart.getPropertiesMap();
-
-		if (pm != null) {
-			if (pm.getProperty("gridLinesVisible") != null)
-				gridLinesVisible = Boolean.parseBoolean(pm.getProperty("gridLinesVisible"));
-			
-		}
+		Optional<JRPropertiesMap> pm = Optional.ofNullable(jasperChart.getPropertiesMap());
+		
+		gridLinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("gridLinesVisible")).orElse("false"));
 
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.setRangeGridlinesVisible(gridLinesVisible);
-		plot.getRangeAxis().setAxisLinePaint(new Color(255, 255, 255));
-		plot.getDomainAxis().setAxisLinePaint(new Color(255, 255, 255));
+		plot.getRangeAxis().setAxisLinePaint(Color.white);
+		plot.getDomainAxis().setAxisLinePaint(Color.white);
 		plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
 	}
 }

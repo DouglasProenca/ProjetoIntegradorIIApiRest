@@ -12,7 +12,7 @@ import com.sistema.apicr7imports.repository.UserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import com.sistema.apicr7imports.util.CodeString;
-import com.sistema.apicr7imports.data.dto.request.CreateUserRequest;
+import com.sistema.apicr7imports.data.dto.request.UserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
@@ -48,10 +48,10 @@ public class UserService {
 		}
 	}
 	
-	public User insert(CreateUserRequest createUserRequest) {
-		User user = DozerMapper.parseObject(createUserRequest, User.class);
-		user.setPassword(BCrypt.withDefaults().hashToString(8, createUserRequest.getPassword().toCharArray()));
-		user.setMailPassword(CodeString.codeString(createUserRequest.getMailPassword()));
+	public User insert(UserRequest userRequest) {
+		User user = DozerMapper.parseObject(userRequest, User.class);
+		user.setPassword(BCrypt.withDefaults().hashToString(8, userRequest.getPassword().toCharArray()));
+		user.setMailPassword(CodeString.codeString(userRequest.getMailPassword()));
 		user.setAccountNonLocked(true);
 		user.setAccountNonExpired(true);
 		return repository.save(user);

@@ -11,16 +11,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonPropertyOrder({ "id", "nome", "data","ativo","quantidade", "valor","category","brand","user"})
+@JsonPropertyOrder({ "productId", "productName", "date","enabled","amount", "price","category","brand","user"})
 public class ProductDTO {
 
-	Integer id;
-	String nome;
+	Integer productId;
+	String productName;
 	BrandDTO brand;
-	Double valor;
-	Integer quantidade;
-	Boolean ativo;
-	LocalDate data;
+	Double price;
+	Integer amount;
+	Boolean enabled;
+	LocalDate date;
 	UserDTO user;
 	CategoryDTO category;
 	

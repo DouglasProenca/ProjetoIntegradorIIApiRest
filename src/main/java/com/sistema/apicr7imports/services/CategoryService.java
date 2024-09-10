@@ -58,7 +58,7 @@ public class CategoryService {
 
 	public CategoryDTO save(CategoryRequest categoryRequest) {
 		Category category = new Category();
-		category.setCategoryName(categoryRequest.getCategoria());
+		category.setCategoryName(categoryRequest.getCategoryName());
 		category.setDate(LocalDate.now());
         category.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(category),CategoryDTO.class);
@@ -66,7 +66,7 @@ public class CategoryService {
 
 	public CategoryDTO update(Integer id, CategoryRequest categoryRequest) {
 		Category newObj = DozerMapper.parseObject(findbyId(id), Category.class);
-		newObj.setCategoryName(categoryRequest.getCategoria());
+		newObj.setCategoryName(categoryRequest.getCategoryName());
 		newObj.setDate(LocalDate.now());
 		newObj.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(newObj), CategoryDTO.class);
@@ -74,7 +74,7 @@ public class CategoryService {
 	
 	public byte[] getExcel() throws IOException {
 		String[] titles = new String[]{"ID","Categoria","Data","Usuário"};	
-		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Categorias", titles).toByteArray();
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Categorias", titles);
 	}
 	
 	public Page<CategoryDTO> findAllPage(Pageable pageable) {

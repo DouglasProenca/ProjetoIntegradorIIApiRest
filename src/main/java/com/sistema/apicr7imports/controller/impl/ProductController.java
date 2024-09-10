@@ -71,7 +71,7 @@ public class ProductController implements IProductController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductDTO> save(@RequestBody  ProductRequest productRequest) {
 		ProductDTO productCreate = service.save(productRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getProductId()).toUri();
 		return ResponseEntity.created(uri).body(productCreate);
 	}
 

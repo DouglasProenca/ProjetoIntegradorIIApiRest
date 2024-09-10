@@ -27,23 +27,28 @@ import lombok.Setter;
 public class Product {
 
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	Integer productId;
 
-	String nome;
+	@Column(name = "nome")
+	String productName;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "marca")
 	Brand brand;
 
-	Double valor;
+	@Column(name = "valor")
+	Double price;
 
-	Integer quantidade;
+	@Column(name = "quantidade")
+	Integer amount;
 	
-	Boolean ativo;
+	@Column(name = "ativo")
+	Boolean enabled;
 	 
 	@Column(name = "data_criacao")
-	LocalDate data;
+	LocalDate date;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario")
@@ -59,7 +64,7 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return id + ";" + nome + ";" + brand.getBrandName() + ";" + valor + ";" + quantidade + ";" + category.getCategoryName() + ";" + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
+		return productId + ";" + productName + ";" + brand.getBrandName() + ";" + price + ";" + amount + ";" + category.getCategoryName() + ";" + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
 				+ user.getUsername();
 	}
 

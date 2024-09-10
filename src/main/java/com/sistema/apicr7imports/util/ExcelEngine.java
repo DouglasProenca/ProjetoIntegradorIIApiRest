@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExcelEngine {
 
-	public ByteArrayOutputStream generateExcel(ArrayList<?> data, String title, String[] titles) throws IOException {
+	public byte[] generateExcel(ArrayList<?> data, String title, String[] titles) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -59,6 +59,6 @@ public class ExcelEngine {
 		workbook.write(byteArrayOutputStream);
 		workbook.close();
 
-		return byteArrayOutputStream;
+		return byteArrayOutputStream.toByteArray();
 	}
 }

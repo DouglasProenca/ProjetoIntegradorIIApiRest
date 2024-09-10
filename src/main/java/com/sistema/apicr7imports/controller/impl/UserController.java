@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.util.CodeString;
 import com.sistema.apicr7imports.controller.IUserController;
-import com.sistema.apicr7imports.data.dto.request.CreateUserRequest;
+import com.sistema.apicr7imports.data.dto.request.UserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.services.UserService;
 
@@ -44,8 +44,8 @@ public class UserController implements IUserController {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> save(@RequestBody CreateUserRequest createUserRequest) {
-		User user = service.insert(createUserRequest);
+	public ResponseEntity<User> save(@RequestBody UserRequest UserRequest) {
+		User user = service.insert(UserRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getUserId()).toUri();
 		return ResponseEntity.created(uri).body(user);
 	}

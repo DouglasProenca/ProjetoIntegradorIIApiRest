@@ -6,12 +6,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.sistema.apicr7imports.data.model.Country;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @JsonPropertyOrder({ "brandId", "brandName", "date", "country", "user" })
 public class BrandDTO {
 

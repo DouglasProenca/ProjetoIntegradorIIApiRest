@@ -61,7 +61,7 @@ public class BrandService {
 
 	public BrandDTO save(BrandRequest brandRequest) {
 		Brand brand = new Brand();
-		brand.setBrandName(brandRequest.getMarca());
+		brand.setBrandName(brandRequest.getBrandName());
 		brand.setCountry(countryService.findbyId(brandRequest.getCountry()));
 		brand.setDate(LocalDate.now());
 		brand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
@@ -70,7 +70,7 @@ public class BrandService {
 
 	public BrandDTO update(Integer id, BrandRequest brandRequest) {
 		Brand newBrand = DozerMapper.parseObject(findbyId(id), Brand.class);
-		newBrand.setBrandName(brandRequest.getMarca());
+		newBrand.setBrandName(brandRequest.getBrandName());
 		newBrand.setCountry(countryService.findbyId(brandRequest.getCountry()));
 		newBrand.setDate(LocalDate.now());
 		newBrand.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
@@ -79,7 +79,7 @@ public class BrandService {
 	
 	public byte[] getExcel() throws IOException {
 		String[] titles = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Marcas", titles).toByteArray();
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Marcas", titles);
 	}
 	
 	public Page<BrandDTO> findAllPage(Pageable pageable) {

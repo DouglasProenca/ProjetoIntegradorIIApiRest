@@ -16,7 +16,7 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:10517576536
+    image: douglasprdesouza305/api-cr7-imports:10693229047
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -78,3 +78,15 @@ services:
        - "3000:3000"
      networks: 
        - aw-network
+
+  nginx:
+     container_name: nginx
+     image: nginx:latest
+     volumes:
+       - ./docker/default.conf:/data/default.conf
+     ports:
+       - "80:88" 
+     depends_on:
+       - cr7ImportsAPI
+     networks:
+       - aw-network   
