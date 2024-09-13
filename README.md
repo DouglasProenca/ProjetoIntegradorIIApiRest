@@ -27,3 +27,6 @@ Projeto em desenolvimento de uma APIRest.
 - ``Docker``
 - ``SQL Server``
 - ``Mockito``
+
+## 📁 Acesso ao projeto Web Service CR7
+Acesse clicando [aqui](https://github.com/DouglasProenca/web-Service-CR7/tree/main).  
