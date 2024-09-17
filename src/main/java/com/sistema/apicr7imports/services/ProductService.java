@@ -26,14 +26,14 @@ import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
-import com.sistema.apicr7imports.repository.ProductImageRepository;
-import com.sistema.apicr7imports.repository.ProductRepository;
+import com.sistema.apicr7imports.repository.IProductImageRepository;
+import com.sistema.apicr7imports.repository.IProductRepository;
 
 @Service
 public class ProductService {
 
 	@Autowired
-	ProductRepository repository;
+	IProductRepository repository;
 	
 	@Autowired
 	BrandService brandService;
@@ -42,7 +42,7 @@ public class ProductService {
 	CategoryService categoryService;
 	
 	@Autowired 
-	ProductImageRepository imageRepository;
+	IProductImageRepository imageRepository;
 	
 	@Autowired
 	ExcelEngine excel;

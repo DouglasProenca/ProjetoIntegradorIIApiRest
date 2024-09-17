@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.apicr7imports.data.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface IUserRepository extends JpaRepository<User, Integer> {
 
 	@Modifying(clearAutomatically = true)
 	@Transactional

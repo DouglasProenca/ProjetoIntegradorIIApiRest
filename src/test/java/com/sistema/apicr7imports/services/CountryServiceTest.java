@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.mocks.MockCountry;
-import com.sistema.apicr7imports.repository.CountryRepository;
+import com.sistema.apicr7imports.repository.ICountryRepository;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +29,7 @@ class CountryServiceTest {
 	private CountryService service;
 	
 	@Mock
-	CountryRepository countryRepository;
+	ICountryRepository countryRepository;
 	
 	@SuppressWarnings("deprecation")
 	@BeforeEach

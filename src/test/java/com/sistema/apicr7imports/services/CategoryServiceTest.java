@@ -20,7 +20,7 @@ import com.sistema.apicr7imports.data.dto.CategoryDTO;
 import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.mocks.MockCategory;
-import com.sistema.apicr7imports.repository.CategoryRepository;
+import com.sistema.apicr7imports.repository.ICategoryRepository;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +32,7 @@ class CategoryServiceTest {
 	private CategoryService service;
 
 	@Mock
-	CategoryRepository categoryRepository;
+	ICategoryRepository categoryRepository;
 
 	@SuppressWarnings("deprecation")
 	@BeforeEach

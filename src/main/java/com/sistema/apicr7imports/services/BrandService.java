@@ -20,14 +20,14 @@ import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
-import com.sistema.apicr7imports.repository.BrandRepository;
+import com.sistema.apicr7imports.repository.IBrandRepository;
 
 
 @Service
 public class BrandService {
 
 	@Autowired
-	BrandRepository repository;
+	IBrandRepository repository;
 	
 	@Autowired
 	CountryService countryService;

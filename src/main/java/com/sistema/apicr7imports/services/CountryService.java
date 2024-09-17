@@ -18,14 +18,14 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.controller.impl.CountryController;
 import com.sistema.apicr7imports.data.model.Country;
-import com.sistema.apicr7imports.repository.CountryRepository;
+import com.sistema.apicr7imports.repository.ICountryRepository;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
 @Service
 public class CountryService {
 
 	@Autowired
-	CountryRepository countryRepository;
+	ICountryRepository countryRepository;
 	
 	@Autowired
 	PagedResourcesAssembler<Country> assembler;

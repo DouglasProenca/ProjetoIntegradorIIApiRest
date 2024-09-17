@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import com.sistema.apicr7imports.repository.UserRepository;
+import com.sistema.apicr7imports.repository.IUserRepository;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -22,7 +22,7 @@ import com.sistema.apicr7imports.mapper.DozerMapper;
 public class UserService {
 
 	@Autowired
-	UserRepository repository;
+	IUserRepository repository;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;

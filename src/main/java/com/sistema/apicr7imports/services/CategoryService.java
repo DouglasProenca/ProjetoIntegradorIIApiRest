@@ -20,14 +20,14 @@ import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
-import com.sistema.apicr7imports.repository.CategoryRepository;
+import com.sistema.apicr7imports.repository.ICategoryRepository;
 
 
 @Service
 public class CategoryService {
 
 	@Autowired 
-	CategoryRepository repository;
+	ICategoryRepository repository;
 	
 	@Autowired
 	ExcelEngine excel;

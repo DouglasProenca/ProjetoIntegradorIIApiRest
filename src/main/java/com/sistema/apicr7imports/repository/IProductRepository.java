@@ -10,16 +10,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.sistema.apicr7imports.data.model.Brand;
-
+import com.sistema.apicr7imports.data.model.Product;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, Integer>{
+public interface IProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query("SELECT b FROM Brand b WHERE b.brandName like %:marca%")
-	Optional<List<Brand>> findByMarca(@Param("marca") String marca);
+	@Query("SELECT p FROM Product p WHERE p.productName like %:nome%")
+	Optional<List<Product>> findByNome(@Param("nome") String nome);
 	
-	@Query("SELECT b FROM Brand b WHERE b.brandName like %:marca%")
-	Optional<Page<Brand>> findByMarcaPageable(@Param("marca") String marca,Pageable pageable);
-
+	@Query("SELECT b FROM Product b WHERE b.productName like %:nome%")
+	Optional<Page<Product>> findByNomePageable(@Param("nome") String nome, Pageable pageable);
+	
 }
