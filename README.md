@@ -1,12 +1,32 @@
-#ProjetoIntegradorIIApiRest
+# CR7Imports APIRest
 
-O projeto APIRESTCR7Imports foi criado para retornar informações nos formatos JSON, PDF e XLSX. Além disso, a API consulta um endpoint de terceiros (Via CEP) e envia emails.
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-![image](https://github.com/DouglasProenca/ProjetoIntegradorIIApiRest/assets/78769051/28207f82-e17a-4705-b868-99cc2e15bdd0)
+# Resumo do projeto
+Projeto em desenolvimento de uma APIRest.
 
-![image](https://github.com/DouglasProenca/ProjetoIntegradorIIApiRest/assets/78769051/e21a7bda-d1bf-4abf-bf7a-90ee89090ab3)
+- `Funcionalidade 1` `CRUD de Categoria`: Permite cadastrar, deletar, atualizar e visualizar.
+- `Funcionalidade 2` `CRUD de Marca`: Permite cadastrar, deletar, atualizar e visualizar.
+- `Funcionalidade 3` `CRUD de Produto`: Permite cadastrar, deletar, atualizar e visualizar.
+- `Funcionalidade 4` `Relatórios`: Relatórios sintético, analítico e gerencial gerados em Jasper.
+- `Funcionalidade 5` `Excel`: excels de categoria, marca e produto gerados pela API.
+- `Funcionalidade 6` `E-Mail`: Envio de e-mail com ou sem anexo.
 
-![image](https://github.com/DouglasProenca/ProjetoIntegradorIIApiRest/assets/78769051/6f4026c2-c7dc-4da1-9ce1-224c4edd53f1)
+## ✔️ Técnicas e tecnologias utilizadas
 
-![image](https://github.com/DouglasProenca/ProjetoIntegradorIIApiRest/assets/78769051/767ad7ae-04e9-44ef-9ccf-a30217321a47)
+- ``Java 8``
+- ``Eclipse IDEA``
+- ``Feing Client``
+- ``Spring Cloud``
+- ``Spring Security``
+- ``Swagger - springdoc``
+- ``Prometheus``
+- ``Dozermapper``
+- ``Flywaydb``
+- ``Jasper``
+- ``Docker``
+- ``SQL Server``
+- ``Mockito``
 
+## 📁 Acesso ao projeto Web Service CR7
+Acesse clicando [aqui](https://github.com/DouglasProenca/web-Service-CR7/tree/main).  
