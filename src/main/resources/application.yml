@@ -49,6 +49,9 @@ management:
         show-details: always
       prometheus:
         enabled: true	
+   metrics:
+        enable:
+             all: true				
 
 ## Token valido por 1h  
 security:
