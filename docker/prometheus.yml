@@ -1,10 +1,10 @@
 global:
-    scrap-interval: 5s
-	
-scrap-configs:
-  - job-name: "Api-job"
-    metrics-path: "actuator/prometheus"		
-	static-confgis: 
-	  - targets: ["localhost:8088"]
-	  labels: 
-		application: "api-cr7"
+  scrape_interval: 5s  
+
+scrape_configs:
+  - job_name: "Api-job"
+    metrics_path: "/apicr7imports/actuator/prometheus"
+    static_configs:  
+      - targets: ["host.docker.internal:8088"]
+        labels:
+          application: "cr7ImportsAPI"  

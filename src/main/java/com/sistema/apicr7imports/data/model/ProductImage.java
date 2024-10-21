@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.data.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,11 +27,15 @@ public class ProductImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	
-	@Column(name = "produto")
-	Integer product;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "produto")
+	Product product;
 	
 	@Column(name = "imagem")
 	byte[] image;
+	
+	@Column(name = "data_criacao")
+	LocalDate date;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario")

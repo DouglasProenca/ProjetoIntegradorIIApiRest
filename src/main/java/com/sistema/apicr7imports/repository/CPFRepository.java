@@ -19,6 +19,6 @@ public class CPFRepository {
 		Query query = entityManager.createNativeQuery("SELECT [dbo].[fn_isCPF] ( ?1 ) AS is_cpf");
 		query.setParameter(1, cpf);
 
-		return Boolean.valueOf(query.getResultList().get(0).toString());
+		return Boolean.valueOf(query.getSingleResult().toString());
 	}
 }

@@ -1,7 +1,6 @@
 package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +62,7 @@ public class BrandController implements IBrandController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BrandDTO> save(@RequestBody BrandRequest brandRequest) {
 		BrandDTO brandCreate = service.save(brandRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri();
-		return ResponseEntity.created(uri).body(brandCreate);
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri()).body(brandCreate);
 	}
 
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -74,8 +72,6 @@ public class BrandController implements IBrandController {
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("marcas.xlsx").build());
-		return ResponseEntity.ok().headers(headers).body(service.getExcel());
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,ContentDisposition.attachment().filename("marcas.xlsx").build().toString()).body(service.getExcel());
 	}
 }

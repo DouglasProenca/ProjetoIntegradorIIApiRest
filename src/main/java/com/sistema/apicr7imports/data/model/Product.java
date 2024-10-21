@@ -58,8 +58,7 @@ public class Product {
 	@JoinColumn(name = "categoria")
 	Category category;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	List<ProductImage> images;
 	
 	@Override

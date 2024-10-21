@@ -1,7 +1,6 @@
 package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sistema.apicr7imports.controller.IProductController;
@@ -71,8 +71,7 @@ public class ProductController implements IProductController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductDTO> save(@RequestBody  ProductRequest productRequest) {
 		ProductDTO productCreate = service.save(productRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getProductId()).toUri();
-		return ResponseEntity.created(uri).body(productCreate);
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(productCreate.getProductId()).toUri()).body(productCreate);
 	}
 
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -82,15 +81,17 @@ public class ProductController implements IProductController {
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("produtos.xlsx").build());
-		return ResponseEntity.ok().headers(headers).body(service.getExcel());
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename("produtos.xlsx").build().toString()).body(service.getExcel());
 	}
 
-	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<List<byte[]>> getImage (@PathVariable Integer id) throws IOException{		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("image.jpeg").build());
-		return ResponseEntity.ok().headers(headers).body(service.getImage(id));
+	@GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> getImage (@PathVariable Integer id) throws IOException{		
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,ContentDisposition.attachment().filename("image.png").build().toString()).body(service.getImage(id).get(0));
+	}
+	
+	@PostMapping(value = "/image/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<byte[]> saveImage (@PathVariable Integer id
+			                                ,@RequestParam("file") MultipartFile file) throws IOException{		
+		return ResponseEntity.ok().header(ContentDisposition.attachment().filename("image.png").build().toString()).body(service.saveImage(id, file));
 	}
 }

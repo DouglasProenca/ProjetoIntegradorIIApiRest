@@ -1,7 +1,6 @@
 package com.sistema.apicr7imports.controller.impl;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +38,7 @@ public class CategoryController implements ICategoryController {
 	
 	@GetMapping(value = "/excel", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<byte[]> getExcel () throws IOException{		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("categorias.xlsx").build());
-		return ResponseEntity.ok().headers(headers).body(service.getExcel());
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename("categorias.xlsx").build().toString()).body(service.getExcel());
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,8 +61,7 @@ public class CategoryController implements ICategoryController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> save(@RequestBody CategoryRequest categoryRequest) {
 		CategoryDTO categoryCreate = service.save(categoryRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getCategoryId()).toUri();
-		return ResponseEntity.created(uri).body(categoryCreate);
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getCategoryId()).toUri()).body(categoryCreate);
 	}
 	
 	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -13,5 +13,5 @@ import com.sistema.apicr7imports.data.dto.response.CEPResponse;
 public interface ViaCEPService {
 
 	@GetMapping("/ws/{cep}/json")
-	public CEPResponse getCEPResponse(@PathVariable("cep") String cep);
+	CEPResponse getCEPResponse(@PathVariable("cep") String cep);
 }

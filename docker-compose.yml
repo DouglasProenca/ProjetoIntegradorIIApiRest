@@ -16,7 +16,7 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:10693229047
+    image: douglasprdesouza305/api-cr7-imports:11226459919
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -64,10 +64,10 @@ services:
      container_name: prometheus
      image: prom/prometheus:latest	  
      volumes: 
-       - ./docker/prometheus.yml:/data/prometheus.yml
+       - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
        - prometheus-data:/prometheus
-     networks: 
-       - aw-network
+     extra_hosts:
+       - 'host.docker.internal:host-gateway'
      ports: 
        - "9090:9090"  
 
@@ -83,7 +83,7 @@ services:
      container_name: nginx
      image: nginx:latest
      volumes:
-       - ./docker/default.conf:/data/default.conf
+       - ./docker/default.conf:/etc/nginx/conf.d/default.conf
      ports:
        - "80:88" 
      depends_on:

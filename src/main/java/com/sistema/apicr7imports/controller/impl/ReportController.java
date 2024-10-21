@@ -28,24 +28,18 @@ public class ReportController implements IReportController {
 
 	@GetMapping(value = "/managentmentReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> managentmentPDF() throws SQLException, JRException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("managentment.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.generateManagentmentReport());
+		return ResponseEntity.created(null).header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename("managentment.pdf").build().toString()).body(service.generateManagentmentReport());
 	}
 
 	@GetMapping(value = "/analyticalReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> analitycalPDF(@RequestParam(value = "dateini") LocalDate initial_date,
 			                                    @RequestParam(value = "datefin") LocalDate final_date) throws JRException, SQLException, ParseException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("analitycal.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.generateAnalyticalReport(initial_date,final_date));
+		return ResponseEntity.created(null).header(HttpHeaders.CONTENT_DISPOSITION,ContentDisposition.attachment().filename("analitycal.pdf").build().toString()).body(service.generateAnalyticalReport(initial_date,final_date));
 	}
 	
 	@GetMapping(value = "/syntheticReport", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> syntheticPDF(@RequestParam(value = "dateini") LocalDate initial_date,
 			                                   @RequestParam(value = "datefin") LocalDate final_date) throws JRException, SQLException, ParseException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDisposition(ContentDisposition.attachment().filename("Synthetic.pdf").build());
-		return ResponseEntity.created(null).headers(headers).body(service.generateSyntheticReport(initial_date,final_date));
+		return ResponseEntity.created(null).header(HttpHeaders.CONTENT_DISPOSITION,ContentDisposition.attachment().filename("Synthetic.pdf").build().toString()).body(service.generateSyntheticReport(initial_date,final_date));
 	}
 }

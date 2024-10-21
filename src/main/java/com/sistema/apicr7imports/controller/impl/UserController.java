@@ -1,6 +1,5 @@
 package com.sistema.apicr7imports.controller.impl;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +45,7 @@ public class UserController implements IUserController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> save(@RequestBody UserRequest UserRequest) {
 		User user = service.insert(UserRequest);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getUserId()).toUri();
-		return ResponseEntity.created(uri).body(user);
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getUserId()).toUri()).body(user);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

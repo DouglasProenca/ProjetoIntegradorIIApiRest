@@ -54,7 +54,7 @@ public interface IProductController {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	ResponseEntity<List<byte[]>> getImage (@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id) throws IOException;
+	ResponseEntity<byte[]> getImage (@Parameter(description = "ID de Cadastro no Banco", required = true, example = "1") @PathVariable Integer id) throws IOException;
 	
 	@Operation(description = "Trazer produto por id")
 	@ApiResponses(value = {
