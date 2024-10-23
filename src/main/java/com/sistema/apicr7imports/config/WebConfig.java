@@ -12,8 +12,7 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-			.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE");
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -23,7 +22,11 @@ public class WebConfig implements WebMvcConfigurer{
 		.favorParameter(false)
 		.ignoreAcceptHeader(false)
 		.useRegisteredExtensionsOnly(false)
-		.defaultContentType(MediaType.ALL);
+		.defaultContentType(MediaType.APPLICATION_JSON
+				          , MediaType.APPLICATION_OCTET_STREAM
+				          , MediaType.APPLICATION_PDF
+				          , MediaType.MULTIPART_FORM_DATA
+				          , MediaType.IMAGE_PNG);
 	}
 
 }
