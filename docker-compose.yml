@@ -7,6 +7,7 @@ name: cr7imports
 volumes:
    prometheus-data:
    grafana-data:
+   redis_data:
 
 networks:
     aw-network:
@@ -16,7 +17,7 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:11226459919
+    image: douglasprdesouza305/api-cr7-imports:11442785412
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -90,3 +91,11 @@ services:
        - cr7ImportsAPI
      networks:
        - aw-network   
+
+  redis:
+     container_name: redis
+     image: redis:alpine
+     ports:
+       - "6379:6379"
+     volumes:
+       - redis_data:/data	   

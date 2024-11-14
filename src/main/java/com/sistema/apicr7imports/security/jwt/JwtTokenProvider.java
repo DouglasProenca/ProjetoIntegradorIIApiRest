@@ -3,12 +3,14 @@ package com.sistema.apicr7imports.security.jwt;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,25 +37,40 @@ public class JwtTokenProvider {
 	@Autowired
 	UserDetailsService userDetailsService;
 	
+	@Autowired
+    RedisTemplate<String, String> redisTemplate;
+	
 	@PostConstruct
 	protected void init() {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 	
 	public String createToken(String username, List<String> roles) {
-		Claims claims = Jwts.claims().setSubject(username);
-		claims.put("roles", roles);
 		
-		Date now = new Date();
-		Date validity = new Date(now.getTime() + Long.valueOf(validityInMilliseconds));
+		String token = redisTemplate.opsForValue().get(username);
 		
-		return Jwts.builder()
-				.setSubject(username)
-				.setClaims(claims)
-				.setIssuedAt(now)
-				.setExpiration(validity)
-				.signWith(SignatureAlgorithm.HS256, secretKey)
-				.compact();
+		if(token == null) {
+		
+			Claims claims = Jwts.claims().setSubject(username);
+			claims.put("roles", roles);
+		
+			Date now = new Date();
+			Date validity = new Date(now.getTime() + Long.valueOf(validityInMilliseconds));
+		
+			token = Jwts.builder()
+					.setSubject(username)
+					.setClaims(claims)
+					.setIssuedAt(now)
+					.setExpiration(validity)
+					.signWith(SignatureAlgorithm.HS256, secretKey)
+					.compact();
+		
+			redisTemplate.opsForValue().set(username, token, 1, TimeUnit.HOURS);
+		
+			return token;
+		}
+		
+		return token;
 	}
 	
 	public Authentication getAuthentication(String token) {

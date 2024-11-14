@@ -5,7 +5,10 @@ spring:
     url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
     username: sa
     password: Banana!90
-    
+
+  redis:
+    host: localhost
+    port: 6379
 
   flyway:
     baselineOnMigrate: true
@@ -48,10 +51,7 @@ management:
         enabled: true
         show-details: always
       prometheus:
-        enabled: true	
-   metrics:
-        enable:
-             all: true				
+        enabled: true				
 
 ## Token valido por 1h  
 security:
