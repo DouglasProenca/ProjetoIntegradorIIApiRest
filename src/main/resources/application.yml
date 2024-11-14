@@ -7,7 +7,7 @@ spring:
     password: Banana!90
 
   redis:
-    host: localhost
+    host: host.docker.internal
     port: 6379
 
   flyway:
