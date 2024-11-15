@@ -17,11 +17,12 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:11847468545
+    image: douglasprdesouza305/api-cr7-imports:11847558925
     restart: always
     environment:
       - TZ=America/Sao_Paulo
       - SPRING_BOOT_ENVIRONMENT=Production
+      - SPRING_PROFILES_ACTIVE=producao
       - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
       - SPRING_DATASOURCE_USERNAME=sa
       - SPRING_DATASOURCE_PASSWORD=Banana!90
