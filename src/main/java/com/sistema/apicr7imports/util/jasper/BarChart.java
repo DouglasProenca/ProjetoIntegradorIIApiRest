@@ -1,7 +1,5 @@
 package com.sistema.apicr7imports.util.jasper;
 
-
-
 import java.awt.Color;
 import java.util.Optional;
 
@@ -15,13 +13,11 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class BarChart implements JRChartCustomizer {
 
-	Boolean gridLinesVisible;
-
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
 		Optional<JRPropertiesMap> pm = Optional.ofNullable(jasperChart.getPropertiesMap());
 		
-		gridLinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("gridLinesVisible")).orElse("false"));
+		Boolean gridLinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("gridLinesVisible")).orElse("false"));
 
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		plot.setRangeGridlinesVisible(gridLinesVisible);

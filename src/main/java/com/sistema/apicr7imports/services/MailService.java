@@ -2,11 +2,11 @@ package com.sistema.apicr7imports.services;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -22,20 +22,37 @@ import com.sistema.apicr7imports.data.model.User;
 @Service
 public class MailService {
 	
+	@Value("${spring.mail.port}")
+	Integer port;
+	
+	@Value("${spring.mail.host}")
+	String host;
+	
+	@Value("${spring.mail.transport.protocol}")
+	String protocol;
+	
+	@Value("${spring.mail.smtp.auth")
+	String auth;
+	
+	@Value("${spring.mail.smtp.starttls.enable}")
+	String enabled;
+	
+	@Value("${spring.mail.debug}")
+	String debug;
+	
 	private JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-         mailSender.setHost("smtp.gmail.com");
-         mailSender.setPort(587);
+         mailSender.setHost(host);
+         mailSender.setPort(port);
 	     mailSender.setUsername(((User) authentication.getPrincipal()).getUserMail());
 	     mailSender.setPassword(CodeString.decodeString(((User) authentication.getPrincipal()).getMailPassword()));
 	     
-	     Properties props = mailSender.getJavaMailProperties();
-	     props.put("mail.transport.protocol", "smtp");
-	     props.put("mail.smtp.auth", "true");
-	     props.put("mail.smtp.starttls.enable", "true");
-	     props.put("mail.debug", "false"); // Pode ser false em produção
+	     mailSender.getJavaMailProperties().put("mail.transport.protocol", protocol);
+	     mailSender.getJavaMailProperties().put("mail.smtp.auth", auth);
+	     mailSender.getJavaMailProperties().put("mail.smtp.starttls.enable", enabled);
+	     mailSender.getJavaMailProperties().put("mail.debug", debug); 
 
 	     return mailSender;
 	 }

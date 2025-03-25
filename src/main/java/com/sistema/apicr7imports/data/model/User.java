@@ -29,7 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "usuario", schema = "seguranca")
+@Table(name = "usuario")
 public class User implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;

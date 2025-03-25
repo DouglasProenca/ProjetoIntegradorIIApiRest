@@ -12,17 +12,13 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class PizzaChart implements JRChartCustomizer {
 
-	Boolean linkVisible;
-	Boolean legendVisible = false;
-	Color shadowPaint;
-
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
 		Optional<JRPropertiesMap> pm = Optional.ofNullable(jasperChart.getPropertiesMap());
 		
-		linkVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("linkVisible")).orElse("false"));
-		legendVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("legendVisible")).orElse("false"));
-		shadowPaint = convertColor(pm.map(p -> p.getProperty("shadowPaint")).orElse("255,255,255"));
+		Boolean linkVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("linkVisible")).orElse("false"));
+		Boolean legendVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("legendVisible")).orElse("false"));
+		Color shadowPaint = convertColor(pm.map(p -> p.getProperty("shadowPaint")).orElse("255,255,255"));
 		
 
 		PiePlot plot = (PiePlot) chart.getPlot();

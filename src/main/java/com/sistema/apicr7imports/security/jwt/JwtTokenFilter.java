@@ -13,18 +13,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class JwtTokenFilter extends GenericFilterBean {
 	
 	@Autowired
 	JwtTokenProvider tokenProvider;
-	
-	public JwtTokenFilter(JwtTokenProvider tokenProvider) {
-		this.tokenProvider = tokenProvider;
-	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		String token = tokenProvider.resolveToken((HttpServletRequest) request);
 		

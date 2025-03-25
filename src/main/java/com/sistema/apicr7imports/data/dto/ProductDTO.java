@@ -4,12 +4,10 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @JsonPropertyOrder({ "productId", "productName", "date","enabled","amount", "price","category","brand","user"})
 public class ProductDTO {

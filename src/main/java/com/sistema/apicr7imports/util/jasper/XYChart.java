@@ -12,25 +12,17 @@ import net.sf.jasperreports.engine.JRPropertiesMap;
 
 public class XYChart implements JRChartCustomizer {
 
-	Boolean rangeGridlinesVisible;
-	Boolean domainGridlinesVisible;
-	Boolean horTickMarksVisible;
-	Boolean vertTickMarksVisible;
-	Boolean legendVisible;
-	Boolean xyRenderer;
-	String label = "";
-
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
 		Optional<JRPropertiesMap> pm = Optional.ofNullable(jasperChart.getPropertiesMap());
 		
-		rangeGridlinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("rangeGridlinesVisible")).orElse("true"));
-		domainGridlinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("domainGridlinesVisible")).orElse("true"));
-		horTickMarksVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("horTickMarksVisible")).orElse("true"));
-		vertTickMarksVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("vertTickMarksVisible")).orElse("true"));
-		legendVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("legendVisible")).orElse("true"));
-		xyRenderer = Boolean.parseBoolean(pm.map(p -> p.getProperty("xyRenderer")).orElse("false"));
-		label = pm.map(p -> p.getProperty("label")).orElse("");
+		Boolean rangeGridlinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("rangeGridlinesVisible")).orElse("true"));
+		Boolean domainGridlinesVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("domainGridlinesVisible")).orElse("true"));
+		Boolean horTickMarksVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("horTickMarksVisible")).orElse("true"));
+		Boolean vertTickMarksVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("vertTickMarksVisible")).orElse("true"));
+		Boolean legendVisible = Boolean.parseBoolean(pm.map(p -> p.getProperty("legendVisible")).orElse("true"));
+		Boolean xyRenderer = Boolean.parseBoolean(pm.map(p -> p.getProperty("xyRenderer")).orElse("false"));
+		String label = pm.map(p -> p.getProperty("label")).orElse("");
 			
 
 		XYPlot plot = (XYPlot) chart.getPlot();

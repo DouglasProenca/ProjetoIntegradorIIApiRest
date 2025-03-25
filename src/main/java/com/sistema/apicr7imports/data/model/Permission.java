@@ -11,11 +11,9 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "permissao",schema = "seguranca")
 public class Permission implements GrantedAuthority, Serializable {

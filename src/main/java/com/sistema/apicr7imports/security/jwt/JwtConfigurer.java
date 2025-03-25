@@ -6,14 +6,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 	
 	@Autowired
 	JwtTokenProvider tokenProvider;
-
-	public JwtConfigurer(JwtTokenProvider tokenProvider) {
-		this.tokenProvider = tokenProvider;
-	}
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
