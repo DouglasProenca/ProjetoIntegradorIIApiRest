@@ -1,10 +1,16 @@
 spring:
 
+#  datasource:
+#   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
+#    username: sa
+#   password: Banana!90
+
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
-    username: sa
-    password: Banana!90
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Cr7Imports?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: password	
 
   redis:
     host: localhost
@@ -12,9 +18,10 @@ spring:
 
   flyway:
     baselineOnMigrate: true
-    enabled: true
-    schemas:
-    - migrations
+    enabled: false
+ #  enabled: true
+ #   schemas:
+ #   - migrations
     
   jpa:
     defer-datasource-initialization: false
@@ -40,6 +47,17 @@ spring:
     servlet:
       path: /apicr7imports
 
+  mail:
+    port: 587
+    host: smtp.gmail.com
+    transport:
+      protocol: smtp
+    smtp:
+      auth: true	
+      starttls:
+         enable: true
+    debug: false;	 
+
 ## Actuator
 management:
    endpoints:
@@ -59,3 +77,9 @@ security:
            token:
                expire_length: 3600000
                secret_key: secret    
+
+## Swagger
+springdoc:
+   swagger-ui:
+      tags-sorter: alpha
+      operations-sorter: alpha				 

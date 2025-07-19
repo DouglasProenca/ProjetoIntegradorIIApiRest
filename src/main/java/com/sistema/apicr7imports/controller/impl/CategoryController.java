@@ -64,7 +64,7 @@ public class CategoryController implements ICategoryController {
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(categoryCreate.getCategoryId()).toUri()).body(categoryCreate);
 	}
 	
-	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryRequest categoryRequest) {
 		return ResponseEntity.ok().body(service.update(id,categoryRequest));
 	}

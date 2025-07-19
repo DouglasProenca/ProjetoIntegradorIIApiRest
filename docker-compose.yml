@@ -17,7 +17,7 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:11847558925
+    image: douglasprdesouza305/api-cr7-imports:11847682521
     restart: always
     environment:
       - TZ=America/Sao_Paulo

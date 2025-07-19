@@ -16,7 +16,7 @@ public class CPFRepository {
 	EntityManager entityManager;
 	
 	public Boolean isCPF(String cpf) throws SQLException {
-		Query query = entityManager.createNativeQuery("SELECT [dbo].[fn_isCPF] ( ?1 ) AS is_cpf");
+		Query query = entityManager.createNativeQuery("SELECT fn_isCPF( ?1 ) AS is_cpf");
 		query.setParameter(1, cpf);
 
 		return Boolean.valueOf(query.getSingleResult().toString());

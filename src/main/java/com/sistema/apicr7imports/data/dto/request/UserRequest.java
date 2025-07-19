@@ -17,5 +17,6 @@ public class UserRequest {
 	String mailPassword;
 	LocalDate date;
 	Boolean enabled;
+	Integer permission;
 	
 }

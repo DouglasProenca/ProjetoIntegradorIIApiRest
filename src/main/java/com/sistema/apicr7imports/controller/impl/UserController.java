@@ -45,7 +45,7 @@ public class UserController implements IUserController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> save(@RequestBody UserRequest UserRequest) {
 		User user = service.insert(UserRequest);
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getUserId()).toUri()).body(user);
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(user.getUserId()).toUri()).body(user);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

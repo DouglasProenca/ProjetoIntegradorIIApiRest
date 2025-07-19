@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class ProductRequest {
 
-	String ProductName;
+	String productName;
 	Integer brand;
 	Double price;
 	Integer amount;

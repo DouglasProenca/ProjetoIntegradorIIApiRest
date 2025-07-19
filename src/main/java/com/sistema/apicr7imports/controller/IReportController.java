@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.sf.jasperreports.engine.JRException;
 
-@Tag(name = "Relatórios Da Aplicação") 
+@Tag(name = "Relatório") 
 public interface IReportController {
 
 	@Operation(description = "Relatório Gerencial")

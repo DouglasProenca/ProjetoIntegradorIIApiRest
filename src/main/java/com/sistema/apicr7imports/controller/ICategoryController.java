@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Tipos de Roupas") 
+@Tag(name = "Categoria") 
 public interface ICategoryController {
 
 	@Operation(description = "Trazer todos os tipos de roupas cadastrados")

@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Tipos de Marcas")
+@Tag(name = "Marca")
 public interface IBrandController {
 	
 	@Operation(description = "Trazer todos os tipos de marcas cadastradas")
@@ -78,7 +78,7 @@ public interface IBrandController {
 		    @ApiResponse(responseCode = "404", description = "Marca não encontrada."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	ResponseEntity<List<BrandDTO>> findByBrand(@Parameter(description = "Nome da Marca.", required = true, example = "teste") @RequestParam(value = "marca") String brand);
+	ResponseEntity<List<BrandDTO>> findByBrand(@Parameter(description = "Nome da Marca.", required = true, example = "Nike") String brand);
 	
 	@Operation(description = "Insere uma marca")
 	@ApiResponses(value = {

@@ -32,6 +32,7 @@
 		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
 		<spring-plugin-core.version>1.2.0.RELEASE</spring-plugin-core.version>
 		<spring.cloud.version>3.1.8</spring.cloud.version>
+		<mysql-connector-java.version>8.0.33</mysql-connector-java.version>
 	</properties>
 
 	<dependencies>
@@ -109,6 +110,12 @@
 			<artifactId>mssql-jdbc</artifactId>
 			<version>${mssql-jdbc.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
+		
+		<dependency>
+   		   <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+           <version>${mysql-connector-java.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>at.favre.lib</groupId>
@@ -137,6 +144,11 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-sqlserver</artifactId>
+		</dependency> 
+		
+		<dependency>
+    		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
 		<dependency>
@@ -191,10 +203,10 @@
 			<artifactId>commons-codec</artifactId>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
+		</dependency>-->
 
 	</dependencies>
 

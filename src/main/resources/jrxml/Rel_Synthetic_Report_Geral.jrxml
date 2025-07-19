@@ -15,8 +15,8 @@
       ,c.nome
       ,v.total
       ,v.data_criacao data
-from negocio.venda v
-inner join negocio.cliente c
+from venda v
+inner join cliente c
  on v.id = c.id
 where v.data_criacao BETWEEN $P{data1} and $P{data2}
 order by v.id]]>

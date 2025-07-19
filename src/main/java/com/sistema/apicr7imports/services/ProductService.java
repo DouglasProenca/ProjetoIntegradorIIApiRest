@@ -88,16 +88,16 @@ public class ProductService {
 	}
 
 	public ProductDTO update(Integer id, ProductRequest productRequest) {
-		Product newProduct = DozerMapper.parseObject(findbyId(id), Product.class);
-		newProduct.setProductName(productRequest.getProductName());
-		newProduct.setAmount(productRequest.getAmount());
-		newProduct.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
-		newProduct.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
-		newProduct.setEnabled(productRequest.getEnabled());
-		newProduct.setPrice(productRequest.getPrice());
-		newProduct.setDate(productRequest.getDate());
-		newProduct.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-		return DozerMapper.parseObject(repository.save(newProduct),ProductDTO.class);
+		Product product = DozerMapper.parseObject(findbyId(id), Product.class);
+		product.setProductName(productRequest.getProductName());
+		product.setAmount(productRequest.getAmount());
+		product.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
+		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
+		product.setEnabled(productRequest.getEnabled());
+		product.setPrice(productRequest.getPrice());
+		product.setDate(productRequest.getDate());
+		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
 	
 	public byte[] getExcel() throws IOException {

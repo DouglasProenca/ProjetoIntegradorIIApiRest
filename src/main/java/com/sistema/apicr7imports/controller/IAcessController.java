@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Autenticação Da Aplicação")
+@Tag(name = "Autenticação")
 public interface IAcessController {
 
 	@Operation(description = "Autenticar usuário e retornar um token de acesso")

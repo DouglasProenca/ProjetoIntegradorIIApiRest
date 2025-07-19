@@ -61,14 +61,14 @@ public class MailService {
         MimeMessage message = getJavaMailSender().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         
-        if(!(mailRequest.getAnexoFile() == null || mailRequest.getAnexoFile().equals(""))) {
-        	byte[] fileContent = Base64.getDecoder().decode(mailRequest.getAnexoFile());
-        	helper.addAttachment(mailRequest.getAnexoTitulo(), new ByteArrayResource(fileContent));
+        if(!(mailRequest.getAttachmentFile() == null || mailRequest.getAttachmentFile().equals(""))) {
+        	byte[] fileContent = Base64.getDecoder().decode(mailRequest.getAttachmentFile());
+        	helper.addAttachment(mailRequest.getAttachmentTitle(), new ByteArrayResource(fileContent));
         }
         
-        helper.setTo(mailRequest.getDestinatario());
-        helper.setSubject(mailRequest.getAssunto());
-        helper.setText(mailRequest.getTexto());
+        helper.setTo(mailRequest.getAdress());
+        helper.setSubject(mailRequest.getSubject());
+        helper.setText(mailRequest.getText());
 
         getJavaMailSender().send(message);
     }

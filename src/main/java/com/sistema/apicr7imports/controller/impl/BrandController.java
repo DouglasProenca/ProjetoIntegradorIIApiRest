@@ -49,7 +49,7 @@ public class BrandController implements IBrandController {
 	}
 
 	@GetMapping(value = "/searchbrand", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BrandDTO>> findByBrand(@RequestParam(value = "marca") String brand) {
+	public ResponseEntity<List<BrandDTO>> findByBrand(@RequestParam String brand) {
 		return ResponseEntity.ok().body(service.findbyBrand(brand));
 	}
 
@@ -65,7 +65,7 @@ public class BrandController implements IBrandController {
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(brandCreate.getBrandId()).toUri()).body(brandCreate);
 	}
 
-	@PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BrandDTO> update(@PathVariable Integer id, @RequestBody BrandRequest brandRequest) {
 		return ResponseEntity.ok().body(service.update(id,brandRequest));
 	}

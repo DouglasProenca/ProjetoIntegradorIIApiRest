@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public class MailRequest {
 
-	String destinatario;
-	String assunto;
-	String texto;
-	String anexoTitulo;
-	String anexoFile;
+	String adress;
+	String subject;
+	String text;
+	String attachmentTitle;
+	String attachmentFile;
 	
 }

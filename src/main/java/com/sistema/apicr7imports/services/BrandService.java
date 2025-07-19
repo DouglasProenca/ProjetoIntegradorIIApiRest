@@ -46,7 +46,7 @@ public class BrandService {
 	}
 
 	public List<BrandDTO> findbyBrand(String name) {
-		Optional<List<Brand>> list = repository.findByMarca(name);
+		Optional<List<Brand>> list = repository.findByBrandNameContaining(name);
 		return DozerMapper.parseListObject(list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!")), BrandDTO.class);
 	}
 
@@ -78,8 +78,7 @@ public class BrandService {
 	}
 	
 	public byte[] getExcel() throws IOException {
-		String[] titles = new String[]{"ID","Marca","Pais","Data","Usuário"};
-		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Marcas", titles);
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Marcas", new String[]{"ID","Marca","Pais","Data","Usuário"});
 	}
 	
 	public Page<BrandDTO> findAllPage(Pageable pageable) {
@@ -87,8 +86,7 @@ public class BrandService {
 	}
 	
 	public Page<BrandDTO> findbyBrandPageable(String name,Pageable pageable) {
-		Optional<Page<Brand>> list = repository.findByMarcaPageable(name,pageable);
-		return list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"))
-				   .map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
+		Optional<Page<Brand>> list = repository.findByBrandNameContaining(name,pageable);
+		return list.filter(l -> !l.isEmpty()).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!")).map(brand -> DozerMapper.parseObject(brand, BrandDTO.class));
 	}
 }
