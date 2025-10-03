@@ -29,4 +29,8 @@ jobs:
     - name: Build and push multi-arch Docker Image
       run: |
         # Build and push the image for both amd64 and arm64 architectures
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:${{ github.run_id }} --push -f /home/runner/work/ProjetoIntegradorIIApiRest/ProjetoIntegradorIIApiRest/Dockerfile .
+        # -t ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:${{ github.run_id }} \
+        docker buildx build --platform linux/amd64,linux/arm64 \
+          -t ${{ secrets.DOCKER_USERNAME }}/api-cr7-imports:latest \
+          --push \
+          -f Dockerfile .  
