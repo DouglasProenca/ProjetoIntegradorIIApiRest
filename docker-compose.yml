@@ -1,7 +1,7 @@
 ## docker-compose up 
 # Para criar imagem
-#docker build -t douglasprdesouza305/web-service-cr7-imports:1.0.0 .
-#docker push douglasprdesouza305/web-service-cr7-imports:1.0.0
+#docker build -t douglasprdesouza305/cr7-imports-gateway:1.0.0 .
+#docker push douglasprdesouza305/cr7-imports-gateway:1.0.0
 name: cr7imports
 
 volumes:
@@ -17,18 +17,14 @@ services:
 
   cr7ImportsAPI:
     container_name: cr7ImportsAPI
-    image: douglasprdesouza305/api-cr7-imports:11847682521
+    image: douglasprdesouza305/api-cr7-imports:${CR7IMPORTSAPI_VERSION}
     restart: always
     environment:
       - TZ=America/Sao_Paulo
-      - SPRING_BOOT_ENVIRONMENT=Production
-      - SPRING_PROFILES_ACTIVE=producao
-      - SPRING_DATASOURCE_URL=jdbc:sqlserver://host.docker.internal;databaseName=Cr7Imports;encrypt=true;trustServerCertificate=true
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=Banana!90
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_BOOT_ENVIRONMENT=${CR7IMPORTSAPI_BOOT_ENVIRONMENT}
+      - SPRING_PROFILES_ACTIVE=${CR7IMPORTSAPI_PROFILES_ACTIVE}
     ports:
-      - "8088:8080"
+      - "${CR7IMPORTSAPI_PORT}"
     volumes:
         - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
         - ~/.m2:/root/.m2
@@ -51,16 +47,46 @@ services:
       - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
       - ~/.m2:/root/.m2
 
+  cr7ConfigServer:
+     container_name: cr7Configserver
+     image: douglasprdesouza305/cr7-imports-configserver:1.0.0
+     restart: always
+     environment:
+      - TZ=America/Sao_Paulo
+      - SPRING_BOOT_ENVIRONMENT=Production
+      - SPRING_PROFILES_ACTIVE=local 
+     ports:
+      - "8889:8889"
+     volumes:
+      - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+      - ~/.m2:/root/.m2	  
+
+  cr7Gateway:
+     container_name: cr7Gateway
+     image: douglasprdesouza305/cr7-imports-gateway:latest
+     restart: always
+     environment:
+     - TZ=America/Sao_Paulo
+     - SPRING_BOOT_ENVIRONMENT=Production
+     - SPRING_PROFILES_ACTIVE=producao 
+     ports:
+     - "8888:8888"
+     volumes:
+     - ./ProjetoIntegradorIIApiRest:/ProjetoIntegradorIIApiRest
+     - ~/.m2:/root/.m2	  	  
+     depends_on:
+     - cr7ConfigServer
+
   dozzle:
     container_name: dozzle
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:${DOZZLE_VERSION}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker/users.yml:/data/users.yml
+      - ${DOZZLE_USERS_FILE}:/data/users.yml
     ports:
-      - "9999:8080"
+      - "${DOZZLE_PORT}"
     environment:
-      DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_AUTH_PROVIDER: ${DOZZLE_AUTH_PROVIDER}
  
   prometheus:
      container_name: prometheus
@@ -95,8 +121,9 @@ services:
 
   redis:
      container_name: redis
-     image: redis:alpine
+     image: redis:${REDIS_VERSION}
+     command: redis-server --requirepass ${REDIS_PASSWORD}
      ports:
-       - "6379:6379"
+       - ${REDIS_PORT}
      volumes:
        - redis_data:/data	   

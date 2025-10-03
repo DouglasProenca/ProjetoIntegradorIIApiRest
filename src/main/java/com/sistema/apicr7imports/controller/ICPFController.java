@@ -1,7 +1,5 @@
 package com.sistema.apicr7imports.controller;
 
-import java.sql.SQLException;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,5 +20,5 @@ public interface ICPFController {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.") 
 	    })
-	ResponseEntity<CpfResponse> verifyCPF(@Parameter(description = "CPF", required = true) @PathVariable String cpf) throws SQLException;
+	ResponseEntity<CpfResponse> verifyCPF(@Parameter(description = "CPF", required = true) @PathVariable String cpf);
 }

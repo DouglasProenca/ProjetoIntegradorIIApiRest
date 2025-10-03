@@ -43,7 +43,7 @@ public class Brand {
 
 	@Override
 	public String toString() {
-		return brandId + ";" + brandName + ";" + country.getNamePort() + ";" +date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + user.getUsername();
+		return String.join("", brandId.toString(), ";", brandName, ";", country.getNamePort(), ";", date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), ";", user.getUsername());
 	}
 	
 }

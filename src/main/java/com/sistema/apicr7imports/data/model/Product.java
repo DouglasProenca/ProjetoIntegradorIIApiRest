@@ -61,8 +61,8 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return productId + ";" + productName + ";" + brand.getBrandName() + ";" + price + ";" + amount + ";" + category.getCategoryName() + ";" + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
-				+ user.getUsername();
+		return String.join("", productId.toString(), ";", productName, ";", brand.getBrandName(), ";", price.toString(), ";", amount.toString(), ";", category.getCategoryName(), ";", date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), ";"
+				, user.getUsername());
 	}
 
 }

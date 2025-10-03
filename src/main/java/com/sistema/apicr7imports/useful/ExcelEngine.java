@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.util;
+package com.sistema.apicr7imports.useful;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

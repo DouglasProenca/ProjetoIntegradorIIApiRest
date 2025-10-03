@@ -1,6 +1,5 @@
 package com.sistema.apicr7imports.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,14 +14,17 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.sistema.apicr7imports.security.jwt.JwtConfigurer;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
 
+import lombok.RequiredArgsConstructor;
+
 @EnableWebSecurity
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private JwtTokenProvider tokenProvider;
+	private final JwtTokenProvider tokenProvider;
 
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
@@ -34,8 +36,8 @@ public class SecurityConfig {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 	
-	 @Bean
-	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        return http
                     .httpBasic(basic -> basic.disable())
                     .csrf(AbstractHttpConfigurer::disable)
@@ -44,7 +46,8 @@ public class SecurityConfig {
                     .authorizeHttpRequests(
                             authorizeHttpRequests -> authorizeHttpRequests
                                     .antMatchers("/acesso/login", "/api-docs/**", "/swagger-ui/**").permitAll()
-                                    .antMatchers("/apicr7imports/private/**").authenticated().antMatchers("/apicr7imports/users/blocked").denyAll()
+                                    .antMatchers("/apicr7imports/private/**").authenticated()
+                                    .antMatchers("/apicr7imports/users/blocked").denyAll()
                     )
                     .cors(withDefaults())
                     .apply(new JwtConfigurer(tokenProvider))

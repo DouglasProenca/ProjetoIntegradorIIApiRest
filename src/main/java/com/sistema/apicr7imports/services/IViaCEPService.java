@@ -10,8 +10,8 @@ import com.sistema.apicr7imports.data.dto.response.CEPResponse;
 
 @Service
 @FeignClient(name = "cep", url = "https://viacep.com.br")
-public interface ViaCEPService {
+public interface IViaCEPService {
 
 	@GetMapping("/ws/{cep}/json")
-	CEPResponse getCEPResponse(@PathVariable("cep") String cep);
+	CEPResponse getCEPResponse(@PathVariable String cep);
 }

@@ -36,9 +36,9 @@ public interface ICategoryController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<CategoryDTO>> findAllPage(@Parameter(description = "Página.", required = false, example = "1")
-			                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                      @RequestParam(defaultValue = "0") Integer page,
 			                                      @Parameter(description = "limite.", required = false, example = "10")
-			                                      @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                      @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de roupas cadastrados por id")
 	@ApiResponses(value = {
@@ -56,11 +56,11 @@ public interface ICategoryController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<CategoryDTO>> findByCategoryPage(@Parameter(description = "Nome da categoria.", required = true, example = "teste") 
-														 @RequestParam(value = "category") String category,
+														 @RequestParam String category,
 														 @Parameter(description = "Página.", required = false, example = "1")
-			                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                             @RequestParam(defaultValue = "0") Integer page,
 			                                             @Parameter(description = "limite.", required = false, example = "10")
-			                                             @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                             @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de roupas cadastrado por Categoria")
 	@ApiResponses(value = {
@@ -69,7 +69,7 @@ public interface ICategoryController {
 		    @ApiResponse(responseCode = "404", description = "Categoria não encontrada."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	ResponseEntity<List<CategoryDTO>> findByCategoria(@Parameter(description = "Nome da Categoria.", required = true, example = "teste") @RequestParam(value= "categoria") String categoria);
+	ResponseEntity<List<CategoryDTO>> findByCategoria(@Parameter(description = "Nome da Categoria.", required = true, example = "teste") @RequestParam String categoria);
 	
 	@Operation(description = "Gera Excel das categorias de roupas")
 	@ApiResponses(value = {

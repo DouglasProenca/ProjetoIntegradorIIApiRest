@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.services;
+package com.sistema.apicr7imports.services.impl;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.util.ExcelEngine;
+import lombok.RequiredArgsConstructor;
+
 import com.sistema.apicr7imports.data.dto.BrandDTO;
 import com.sistema.apicr7imports.data.dto.request.BrandRequest;
 import com.sistema.apicr7imports.data.model.Brand;
@@ -21,27 +21,24 @@ import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.IBrandRepository;
-
+import com.sistema.apicr7imports.services.IBrandService;
+import com.sistema.apicr7imports.services.ICountryService;
+import com.sistema.apicr7imports.useful.ExcelEngine;
 
 @Service
-public class BrandService {
+@RequiredArgsConstructor
+public class BrandService implements IBrandService {
 
-	@Autowired
-	IBrandRepository repository;
-	
-	@Autowired
-	CountryService countryService;
-	
-	@Autowired
-	ExcelEngine excel;
+	private final IBrandRepository repository;
+	private final ICountryService countryService;
+	private final ExcelEngine excel;
 
 	public List<BrandDTO> findAll() {
 		return DozerMapper.parseListObject(repository.findAll(), BrandDTO.class);
 	}
 
 	public BrandDTO findbyId(Integer id) {
-		Brand brand = repository.findById(id)
-				   .orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
+		Brand brand = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Marca não encontrada!"));
 		return DozerMapper.parseObject(brand, BrandDTO.class);
 	}
 

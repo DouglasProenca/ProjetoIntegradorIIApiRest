@@ -42,6 +42,6 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return categoryId + ";" + categoryName + ";" + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + user.getUsername();
+		return String.join("",categoryId.toString() , ";", categoryName, ";", date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), ";", user.getUsername());
 	}
 }

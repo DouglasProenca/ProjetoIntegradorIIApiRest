@@ -1,5 +1,7 @@
 package com.sistema.apicr7imports.controller;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,8 @@ public interface IAcessController {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
-	ResponseEntity<AcessResponse> login(@Parameter(description = "Usuário de Cadastro", required = true) @FormParam("username") String username,
-			                            @Parameter(description = "Senha de Cadastro", required = true) @FormParam("password") String password);
+	ResponseEntity<AcessResponse> login(@Parameter(description = "Usuário de Cadastro", required = true) @NotNull @FormParam("username") String username,
+			                            @Parameter(description = "Senha de Cadastro", required = true) @NotNull @FormParam("password") String password);
 	
 	@Operation(description = "Autenticar usuário e retornar um token de acesso por request Body")
 	@ApiResponses(value = { 
@@ -32,6 +34,6 @@ public interface IAcessController {
 			@ApiResponse(responseCode = "403", description = "FORBIDDEN - Usuário ou Seha errado, sem permissão para acesso."),
 			@ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 			})
-	ResponseEntity<AcessResponse> login(@RequestBody AcessRequest acessRequest);
+	ResponseEntity<AcessResponse> login(@RequestBody @Valid AcessRequest acessRequest);
 	
 }

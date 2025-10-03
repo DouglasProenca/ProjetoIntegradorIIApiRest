@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.apicr7imports.repository.IUserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
 public class UserDetailsServiceImplemented implements UserDetailsService {

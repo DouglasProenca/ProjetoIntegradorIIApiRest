@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.services;
+package com.sistema.apicr7imports.services.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
@@ -6,7 +6,8 @@ import java.util.Base64;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,44 +16,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.util.CodeString;
+import com.sistema.apicr7imports.config.MailConfigProperties;
 import com.sistema.apicr7imports.data.dto.request.MailRequest;
 import com.sistema.apicr7imports.data.model.User;
+import com.sistema.apicr7imports.services.IMailService;
+import com.sistema.apicr7imports.useful.CodeStringHelper;
 
 @Service
-public class MailService {
+@RequiredArgsConstructor
+public class MailService implements IMailService {
 	
-	@Value("${spring.mail.port}")
-	Integer port;
-	
-	@Value("${spring.mail.host}")
-	String host;
-	
-	@Value("${spring.mail.transport.protocol}")
-	String protocol;
-	
-	@Value("${spring.mail.smtp.auth")
-	String auth;
-	
-	@Value("${spring.mail.smtp.starttls.enable}")
-	String enabled;
-	
-	@Value("${spring.mail.debug}")
-	String debug;
+    private final MailConfigProperties mailConfigProperties;
 	
 	private JavaMailSender getJavaMailSender() throws UnsupportedEncodingException, NullPointerException {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 	     JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-         mailSender.setHost(host);
-         mailSender.setPort(port);
+         mailSender.setHost(mailConfigProperties.getHost());
+         mailSender.setPort(mailConfigProperties.getPort());
 	     mailSender.setUsername(((User) authentication.getPrincipal()).getUserMail());
-	     mailSender.setPassword(CodeString.decodeString(((User) authentication.getPrincipal()).getMailPassword()));
+	     mailSender.setPassword(CodeStringHelper.decodeString(((User) authentication.getPrincipal()).getMailPassword()));
 	     
-	     mailSender.getJavaMailProperties().put("mail.transport.protocol", protocol);
-	     mailSender.getJavaMailProperties().put("mail.smtp.auth", auth);
-	     mailSender.getJavaMailProperties().put("mail.smtp.starttls.enable", enabled);
-	     mailSender.getJavaMailProperties().put("mail.debug", debug); 
+	     mailSender.getJavaMailProperties().put("mail.transport.protocol", mailConfigProperties.getTransport().getProtocol());
+	     mailSender.getJavaMailProperties().put("mail.smtp.auth", true);
+	     mailSender.getJavaMailProperties().put("mail.smtp.starttls.enable", true);
+	     mailSender.getJavaMailProperties().put("mail.debug", false); 
 
 	     return mailSender;
 	 }

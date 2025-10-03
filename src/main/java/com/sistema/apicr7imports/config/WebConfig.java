@@ -15,18 +15,16 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE");
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer ) {
-		configurer.favorPathExtension(false)
-		.favorParameter(false)
-		.ignoreAcceptHeader(false)
-		.useRegisteredExtensionsOnly(false)
-		.defaultContentType(MediaType.APPLICATION_JSON
-				          , MediaType.APPLICATION_OCTET_STREAM
-				          , MediaType.APPLICATION_PDF
-				          , MediaType.MULTIPART_FORM_DATA
-				          , MediaType.IMAGE_PNG);
+		configurer.favorParameter(false)
+		          .ignoreAcceptHeader(false)
+		          .useRegisteredExtensionsOnly(false)
+		          .defaultContentType(MediaType.APPLICATION_JSON
+				                    , MediaType.APPLICATION_OCTET_STREAM
+				                    , MediaType.APPLICATION_PDF
+				                    , MediaType.MULTIPART_FORM_DATA
+				                    , MediaType.IMAGE_PNG);
 	}
 
 }

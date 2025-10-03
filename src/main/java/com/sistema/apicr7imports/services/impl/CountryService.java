@@ -1,8 +1,7 @@
-package com.sistema.apicr7imports.services;
+package com.sistema.apicr7imports.services.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -19,16 +18,18 @@ import org.springframework.stereotype.Service;
 import com.sistema.apicr7imports.controller.impl.CountryController;
 import com.sistema.apicr7imports.data.model.Country;
 import com.sistema.apicr7imports.repository.ICountryRepository;
+import com.sistema.apicr7imports.services.ICountryService;
+
+import lombok.RequiredArgsConstructor;
+
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 
 @Service
-public class CountryService {
+@RequiredArgsConstructor
+public class CountryService implements ICountryService {
 
-	@Autowired
-	ICountryRepository countryRepository;
-	
-	@Autowired
-	PagedResourcesAssembler<Country> assembler;
+	private final ICountryRepository countryRepository;
+	private final PagedResourcesAssembler<Country> assembler;
 
 	public List<Country> findAll() {
 		List<Country> list = countryRepository.findAll();

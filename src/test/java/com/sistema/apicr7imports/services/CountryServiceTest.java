@@ -26,7 +26,7 @@ class CountryServiceTest {
 	MockCountry input;
 	
 	@InjectMocks
-	private CountryService service;
+	private ICountryService service;
 	
 	@Mock
 	ICountryRepository countryRepository;

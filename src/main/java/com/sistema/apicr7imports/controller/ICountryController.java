@@ -33,9 +33,9 @@ public interface ICountryController {
 		    @ApiResponse(responseCode = "403", description = "FORBIDDEN - sem permissão para acesso."),
 		    @ApiResponse(responseCode = "500", description = "Erro geral da Aplicação.")
 		})
-	ResponseEntity<PagedModel<EntityModel<Country>>> findAllPage(@RequestParam(value = "page", defaultValue = "0") Integer page
-                                                                ,@RequestParam(value = "limit", defaultValue = "10") Integer limit
-                                                                ,@RequestParam(value = "direction", defaultValue = "asc") String direction);
+	ResponseEntity<PagedModel<EntityModel<Country>>> findAllPage(@RequestParam(defaultValue = "0") Integer page
+                                                                ,@RequestParam(defaultValue = "10") Integer limit
+                                                                ,@RequestParam(defaultValue = "asc") String direction);
 
 
 

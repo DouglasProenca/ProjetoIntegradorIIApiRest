@@ -9,62 +9,57 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.sistema.apicr7imports.config.SecurityJwtConfigProperties;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class JwtTokenProvider {
 	
-	@Value("${security.jwt.token.secret_key}")
-	String secretKey;
+	private final SecurityJwtConfigProperties securityJwtConfigProperties;
+	private final UserDetailsService userDetailsService;
 	
-	@Value("${security.jwt.token.expire_length}")
-	String validityInMilliseconds;
+   @Autowired
+   RedisTemplate<String, String> redisTemplate;
 	
-	@Autowired
-	UserDetailsService userDetailsService;
-	
-	//@Autowired
-   // RedisTemplate<String, String> redisTemplate;
-	
-	@PostConstruct
-	protected void init() {
-		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-	}
+	//@PostConstruct
+	//protected void init() {
+	//	securityJwtConfigProperties.setSecret_key(Base64.getEncoder().encodeToString(securityJwtConfigProperties.getSecret_key().getBytes()));
+	//}
 	
 	public String createToken(String username, List<String> roles) {
 		
-		//String token = redisTemplate.opsForValue().get(username);
-		String token = null;
+		String token = redisTemplate.opsForValue().get(username);
 		if(token == null) {
 		
 			Claims claims = Jwts.claims().setSubject(username);
 			claims.put("roles", roles);
 		
 			Date now = new Date();
-			Date validity = new Date(now.getTime() + Long.valueOf(validityInMilliseconds));
+			Date validity = new Date(now.getTime() + Long.valueOf(securityJwtConfigProperties.getExpire_length()));
 
 			token = Jwts.builder()
 					.setSubject(username)
 					.setClaims(claims)
 					.setIssuedAt(now)
 					.setExpiration(validity)
-					.signWith(SignatureAlgorithm.HS256, secretKey)
+					.signWith(SignatureAlgorithm.HS256, securityJwtConfigProperties.getSecret_key())
 					.compact();
 		
-			//redisTemplate.opsForValue().set(username, token, 1, TimeUnit.HOURS);
+			redisTemplate.opsForValue().set(username, token, 1, TimeUnit.HOURS);
 		
 			return token;
 		}
@@ -78,7 +73,7 @@ public class JwtTokenProvider {
 	}
 
 	private String getUsername(String token) {
-		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parser().setSigningKey(securityJwtConfigProperties.getSecret_key()).parseClaimsJws(token).getBody().getSubject();
 	}
 	
 	public String resolveToken(HttpServletRequest req) {
@@ -91,7 +86,7 @@ public class JwtTokenProvider {
 	
 	public Boolean validateToken(String token) {
 		try {
-			if (Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration().before(new Date())) 
+			if (Jwts.parser().setSigningKey(securityJwtConfigProperties.getSecret_key()).parseClaimsJws(token).getBody().getExpiration().before(new Date())) 
 				throw new InvalidJwtAuthenticationException("Expired or invalid JWT token");
 				
 			return true;

@@ -22,7 +22,7 @@ public class ClientService {
 	IClientRepository repository;
 	
 	@Autowired
-	CPFService cpfService;
+	ICPFService cpfService;
 	
 	public ClientDTO findbyId(Integer id) {
 		Client client = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado!"));

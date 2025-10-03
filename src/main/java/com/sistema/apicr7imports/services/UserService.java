@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 
 import com.sistema.apicr7imports.repository.IUserRepository;
-
+import com.sistema.apicr7imports.useful.CodeStringHelper;
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import lombok.AllArgsConstructor;
 
-import com.sistema.apicr7imports.util.CodeString;
 import com.sistema.apicr7imports.data.dto.request.UserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.exception.ForeignKeyException;
@@ -19,13 +19,12 @@ import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
-	@Autowired
-	IUserRepository repository;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
+ 
+	private final IUserRepository repository;
+	private final PasswordEncoder passwordEncoder;
 
 	public List<User> findAll() {
 		return repository.findAll();
@@ -51,7 +50,7 @@ public class UserService {
 	public User insert(UserRequest userRequest) {
 		User user = DozerMapper.parseObject(userRequest, User.class);
 		user.setPassword(BCrypt.withDefaults().hashToString(8, userRequest.getPassword().toCharArray()));
-		user.setMailPassword(CodeString.codeString(userRequest.getMailPassword()));
+		user.setMailPassword(CodeStringHelper.codeString(userRequest.getMailPassword()));
 		user.setAccountNonLocked(true);
 		user.setAccountNonExpired(true);
 		return repository.save(user);

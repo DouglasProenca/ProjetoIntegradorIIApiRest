@@ -1,8 +1,7 @@
-package com.sistema.apicr7imports.services;
+package com.sistema.apicr7imports.services.impl;
 
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,15 +11,16 @@ import org.springframework.stereotype.Service;
 import com.sistema.apicr7imports.data.dto.response.AcessResponse;
 import com.sistema.apicr7imports.exception.InvalidJwtAuthenticationException;
 import com.sistema.apicr7imports.security.jwt.JwtTokenProvider;
+import com.sistema.apicr7imports.services.IAcessService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class AcessService {
+@RequiredArgsConstructor
+public class AcessService implements IAcessService {
 
-	@Autowired
-	AuthenticationManager authenticationManager;
-
-	@Autowired
-	JwtTokenProvider tokenProvider;
+	private final AuthenticationManager authenticationManager;
+	private final JwtTokenProvider tokenProvider;
 
 	public AcessResponse getAcess(String username, String password) {
 		try {

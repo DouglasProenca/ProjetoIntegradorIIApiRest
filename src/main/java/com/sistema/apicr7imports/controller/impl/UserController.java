@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sistema.apicr7imports.util.CodeString;
 import com.sistema.apicr7imports.controller.IUserController;
 import com.sistema.apicr7imports.data.dto.request.UserRequest;
 import com.sistema.apicr7imports.data.model.User;
 import com.sistema.apicr7imports.services.UserService;
+import com.sistema.apicr7imports.useful.CodeStringHelper;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -52,7 +52,7 @@ public class UserController implements IUserController {
 	public ResponseEntity<Void> update(@RequestBody User obj, @PathVariable Integer id) {
 		obj.setUserId(id);
 		obj.setPassword(BCrypt.withDefaults().hashToString(8, obj.getPassword().toCharArray()));
-		obj.setMailPassword(CodeString.codeString(obj.getMailPassword()));
+		obj.setMailPassword(CodeStringHelper.codeString(obj.getMailPassword()));
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}

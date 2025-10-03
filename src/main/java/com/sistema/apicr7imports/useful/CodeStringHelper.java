@@ -1,10 +1,8 @@
-package com.sistema.apicr7imports.util;
+package com.sistema.apicr7imports.useful;
 
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.stereotype.Component;
 
-@Component
-public class CodeString {
+public class CodeStringHelper {
 	
 	public static String codeString(String string) {
 	    return new Base64().encodeToString(string.getBytes());

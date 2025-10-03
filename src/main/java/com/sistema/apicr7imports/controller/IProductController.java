@@ -36,9 +36,9 @@ public interface IProductController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<ProductDTO>> findAllPage(@Parameter(description = "Página.", required = false, example = "1")
-			                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                     @RequestParam(defaultValue = "0") Integer page,
 			                                     @Parameter(description = "limite.", required = false, example = "10")
-			                                     @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                     @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Gera Excel dos produtos")
 	@ApiResponses(value = {
@@ -74,9 +74,9 @@ public interface IProductController {
 	ResponseEntity<Page<ProductDTO>> findByProductPage(@Parameter(description = "Nome do Produto.", required = true, example = "teste") 
 													   @RequestParam(value = "prouduct") String product,
 													   @Parameter(description = "Página.", required = false, example = "1")
-			                                           @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                           @RequestParam(defaultValue = "0") Integer page,
 			                                           @Parameter(description = "limite.", required = false, example = "10")
-			                                           @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                           @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de produtos cadastrados por nome")
 	@ApiResponses(value = {

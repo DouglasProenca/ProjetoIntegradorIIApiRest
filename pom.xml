@@ -22,9 +22,8 @@
 		<java.version>1.8</java.version>
 		<dozer-core.version>6.4.1</dozer-core.version>
 		<springdoc.version>1.0.0</springdoc.version>
-		<mssql-jdbc.version>8.2.0.jre8</mssql-jdbc.version>
 		<javaee-web-api.version>7.0</javaee-web-api.version>
-		<jasperreports.version>6.20.5</jasperreports.version>
+		<jasperreports.version>6.21.4</jasperreports.version>
 		<bcrypt.version>0.10.2</bcrypt.version>
 		<commons-io.version>2.11.0</commons-io.version>
 		<poi-ooxml.version>5.2.2</poi-ooxml.version>
@@ -103,6 +102,18 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+    		<artifactId>spring-cloud-starter-config</artifactId>
+    		<version>${spring.cloud.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+			<version>${spring.cloud.version}</version>
+		</dependency>
+
 		<!-- FIM dependencias Spring Boot -->
 
 		<dependency>
@@ -140,11 +151,6 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-sqlserver</artifactId>
-		</dependency> 
 		
 		<dependency>
     		<groupId>org.flywaydb</groupId>
@@ -203,10 +209,10 @@
 			<artifactId>commons-codec</artifactId>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>-->
+		</dependency>
 
 	</dependencies>
 

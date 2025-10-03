@@ -1,4 +1,4 @@
-package com.sistema.apicr7imports.services;
+package com.sistema.apicr7imports.services.impl;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.sistema.apicr7imports.util.ExcelEngine;
 import com.sistema.apicr7imports.data.dto.CategoryDTO;
 import com.sistema.apicr7imports.data.dto.request.CategoryRequest;
 import com.sistema.apicr7imports.data.model.Category;
@@ -21,24 +19,25 @@ import com.sistema.apicr7imports.exception.ForeignKeyException;
 import com.sistema.apicr7imports.exception.ObjectNotFoundException;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.repository.ICategoryRepository;
+import com.sistema.apicr7imports.services.ICategoryService;
+import com.sistema.apicr7imports.useful.ExcelEngine;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Service
-public class CategoryService {
+@RequiredArgsConstructor
+public class CategoryService implements ICategoryService {
 
-	@Autowired 
-	ICategoryRepository repository;
-	
-	@Autowired
-	ExcelEngine excel;
+	private final ICategoryRepository repository;
+	private final ExcelEngine excel;
 
 	public List<CategoryDTO> findAll() {
 		return DozerMapper.parseListObject(repository.findAll(), CategoryDTO.class);
 	}
 
 	public CategoryDTO findbyId(Integer id) {
-		Category category = repository.findById(id)
-				.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
+		Category category = repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada!"));
 		return DozerMapper.parseObject(category, CategoryDTO.class);
 	}
 
@@ -73,8 +72,7 @@ public class CategoryService {
 	}
 	
 	public byte[] getExcel() throws IOException {
-		String[] titles = new String[]{"ID","Categoria","Data","Usuário"};	
-		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Categorias", titles);
+		return excel.generateExcel((ArrayList<?>) repository.findAll(), "Categorias", new String[]{"ID","Categoria","Data","Usuário"});
 	}
 	
 	public Page<CategoryDTO> findAllPage(Pageable pageable) {

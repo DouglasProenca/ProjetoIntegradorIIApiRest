@@ -21,6 +21,7 @@ import com.sistema.apicr7imports.data.model.Category;
 import com.sistema.apicr7imports.mapper.DozerMapper;
 import com.sistema.apicr7imports.mocks.MockCategory;
 import com.sistema.apicr7imports.repository.ICategoryRepository;
+import com.sistema.apicr7imports.services.impl.CategoryService;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)

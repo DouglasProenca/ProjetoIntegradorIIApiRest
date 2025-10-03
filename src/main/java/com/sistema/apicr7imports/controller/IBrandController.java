@@ -36,9 +36,9 @@ public interface IBrandController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<BrandDTO>> findAllPage(@Parameter(description = "Página.", required = false ,example = "1")
-			                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                   @RequestParam(defaultValue = "0") Integer page,
 			                                   @Parameter(description = "limite.", required = false, example = "10")
-			                                   @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                   @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Gera Excel das Marcas")
 	@ApiResponses(value = {
@@ -65,11 +65,11 @@ public interface IBrandController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<BrandDTO>> findByBrandPage(@Parameter(description = "Nome da marca.", required = true, example = "teste") 
-												   @RequestParam(value = "brand") String brand,
+												   @RequestParam String brand,
 												   @Parameter(description = "Página.", required = false, example = "1")
-			                                       @RequestParam(value = "page", defaultValue = "0") Integer page,
+			                                       @RequestParam(defaultValue = "0") Integer page,
 			                                       @Parameter(description = "limite.", required = false, example = "10")
-			                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit);
+			                                       @RequestParam(defaultValue = "10") Integer limit);
 	
 	@Operation(description = "Trazer tipos de marcas cadastradas por nome")
 	@ApiResponses(value = {

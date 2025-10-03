@@ -2,7 +2,6 @@ package com.sistema.apicr7imports.controller.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -11,20 +10,21 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.apicr7imports.controller.ICountryController;
 import com.sistema.apicr7imports.data.model.Country;
-import com.sistema.apicr7imports.services.CountryService;
+import com.sistema.apicr7imports.services.ICountryService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/private/country")
 public class CountryController implements ICountryController {
 
-	@Autowired
-	CountryService service;
+	private final ICountryService service;
 	
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Country>> findAll() {
@@ -32,7 +32,7 @@ public class CountryController implements ICountryController {
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Country> findById(@PathVariable Integer id) {
+	public ResponseEntity<Country> findById(Integer id) {
 		return ResponseEntity.ok().body(service.findbyId(id));
 	}
 	
