@@ -15,7 +15,7 @@ networks:
 
 services:
 
-  cr7ImportsAPI:
+  apicr7imports:
     container_name: cr7ImportsAPI
     image: douglasprdesouza305/api-cr7-imports:${CR7IMPORTSAPI_VERSION}
     restart: always
