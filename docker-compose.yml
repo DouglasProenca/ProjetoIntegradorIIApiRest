@@ -76,6 +76,21 @@ services:
      - ~/.m2:/root/.m2	  	  
      depends_on:
      - cr7ConfigServer
+     - cr7Discovery
+
+  cr7Discovery:
+    container_name: cr7Discovery
+    image: douglasprdesouza305/cr7-imports-descovery:latest
+    restart: always	 
+    environment:
+     - "SPRING_PROFILES_ACTIVE=producao"
+    ports:
+     - "8761:8761"	   
+    deploy:
+      replicas: 1
+      resources:
+           limits:
+              memory: 800M
 
   dozzle:
     container_name: dozzle
@@ -115,7 +130,7 @@ services:
      ports:
        - "80:88" 
      depends_on:
-       - cr7ImportsAPI
+       - apicr7imports
      networks:
        - aw-network   
 
@@ -126,4 +141,4 @@ services:
      ports:
        - ${REDIS_PORT}
      volumes:
-       - redis_data:/data	   
+       - redis_data:/data		   
