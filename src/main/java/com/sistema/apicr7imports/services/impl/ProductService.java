@@ -77,7 +77,7 @@ public class ProductService implements IProductService {
 		product.setEnabled(productRequest.getEnabled());
 		product.setBrand(DozerMapper.parseObject(brandService.findbyId(productRequest.getBrand()),Brand.class));
 		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
-		product.setDate(productRequest.getDate());
+		product.setDate(LocalDate.now());
 		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}
@@ -90,7 +90,7 @@ public class ProductService implements IProductService {
 		product.setCategory(DozerMapper.parseObject(categoryService.findbyId(productRequest.getCategory()),Category.class));
 		product.setEnabled(productRequest.getEnabled());
 		product.setPrice(productRequest.getPrice());
-		product.setDate(productRequest.getDate());
+		product.setDate(LocalDate.now());
 		product.setUser(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
 		return DozerMapper.parseObject(repository.save(product),ProductDTO.class);
 	}

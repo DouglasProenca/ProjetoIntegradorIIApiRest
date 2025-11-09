@@ -12,7 +12,6 @@ public class ProductRequest {
 	Double price;
 	Integer amount;
 	Boolean enabled;
-	LocalDate date;
 	Integer category;
 	
 }

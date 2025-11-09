@@ -72,7 +72,7 @@ public interface IProductController {
 		    @ApiResponse(responseCode = "500", description = "Erro de Servidor interno")
 		})
 	ResponseEntity<Page<ProductDTO>> findByProductPage(@Parameter(description = "Nome do Produto.", required = true, example = "teste") 
-													   @RequestParam(value = "prouduct") String product,
+													   @RequestParam String product,
 													   @Parameter(description = "Página.", required = false, example = "1")
 			                                           @RequestParam(defaultValue = "0") Integer page,
 			                                           @Parameter(description = "limite.", required = false, example = "10")
