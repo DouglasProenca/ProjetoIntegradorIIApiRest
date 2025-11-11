@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM amazoncorretto:8
 WORKDIR /app
 COPY target/cr7-api-imports.jar /app/cr7-api-imports.jar
 EXPOSE 8088
